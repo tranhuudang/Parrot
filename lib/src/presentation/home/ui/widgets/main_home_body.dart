@@ -32,7 +32,7 @@ class MainHomeBody extends ConsumerWidget {
             child: Column(
               children: [
                 buildAvailableFlutterSDKreleases(state, notifier),
-                buildTargetFlutterProjectSelection(notifier, context),
+                buildTargetFlutterProjectSelection(state, notifier, context),
                 if (state.projectPath.isNotEmpty) ...[
                   Padding(
                     padding: const EdgeInsets.only(left: 8),
@@ -68,29 +68,40 @@ class MainHomeBody extends ConsumerWidget {
     );
   }
 
-  Row buildTargetFlutterProjectSelection(
-      MainHomeNotifier notifier, BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+  Widget buildTargetFlutterProjectSelection(
+      MainHomeState state, MainHomeNotifier notifier, BuildContext context) {
+    return Column(
       children: [
-        Text('Target Flutter Project:'.i18n),
-        8.width,
-        Expanded(
-          child: TextFormField(
-            enabled: false,
-            controller: notifier.projectPathController,
-            readOnly: true,
-            style: TextStyle(color: context.theme.colorScheme.primary),
-            decoration: InputDecoration(
-              hintText: 'Selected Flutter Project Path'.i18n,
-              border: InputBorder.none,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text('Target Flutter Project:'.i18n),
+            8.width,
+            Expanded(
+              child: TextFormField(
+                enabled: false,
+                controller: notifier.projectPathController,
+                readOnly: true,
+                style: TextStyle(
+                    color: context.theme.colorScheme.primary,
+                    overflow: TextOverflow.ellipsis),
+                decoration: InputDecoration(
+                  hintText: 'Selected Flutter Project Path'.i18n,
+                  border: InputBorder.none,
+                ),
+              ),
             ),
-          ),
-        ),
-        ElevatedButton.icon(
-          icon: const Icon(FluentIcons.folder_16_regular),
-          onPressed: () => notifier.selectProjectPath(),
-          label: Text('Select Project Path'.i18n),
+            16.width,
+            ElevatedButton.icon(
+              icon: state.projectPath.isNotEmpty
+                  ? Icon(FluentIcons.edit_16_regular)
+                  : Icon(FluentIcons.folder_16_regular),
+              onPressed: () => notifier.selectProjectPath(),
+              label: state.projectPath.isNotEmpty
+                  ? Text('Edit'.i18n)
+                  : Text('Select Project Path'.i18n),
+            ),
+          ],
         ),
       ],
     );
@@ -155,6 +166,17 @@ class MainHomeBody extends ConsumerWidget {
           onPressed: () => notifier.refreshAvailableDevices(),
           icon: const Icon(FluentIcons.arrow_sync_16_regular),
         ),
+        Spacer(),
+        // Button navigator to a website that guides user how to configure FVM on their code editor
+        TextButton.icon(
+          icon: Icon(FluentIcons.question_circle_16_regular),
+          iconAlignment: IconAlignment.end,
+          onPressed: () {
+            openUrl(
+                'https://www.github.com/tranhuudang/parrot/docs/configure_your_code_editor/README.md');
+          },
+          label: Text('Configure your code editor'.i18n),
+        ),
       ],
     );
   }
@@ -212,13 +234,13 @@ class MainHomeBody extends ConsumerWidget {
       MainHomeState state, MainHomeNotifier notifier) {
     return Row(
       children: [
-        Text("${'Available Flutter SDK releases:'.i18n} "),
+        Text("${'Flutter SDK releases'.i18n} "),
         8.width,
         RoundedDottedDropdownButton<String>(
           value: state.selectedOnlineVersion.isNotEmpty
               ? state.selectedOnlineVersion
               : null,
-          hint: Text("Select Flutter Version".i18n),
+          // hint: Text("Select Flutter Version".i18n),
           items: state.availableVersions
               .map((version) => DropdownMenuItem(
                     value: version,

@@ -218,10 +218,10 @@ extension Localization on Object {
       "vi_vi": "Chọn phiên bản Flutter",
       "zh_cn": "选择 Flutter 版本"
     },
-    "Available Flutter SDK releases:": {
-      "en_us": "Available Flutter SDK releases:",
-      "vi_vi": "Các bản phát hành Flutter SDK có sẵn:",
-      "zh_cn": "可用的 Flutter SDK 版本："
+    "Flutter SDK releases": {
+      "en_us": "Flutter SDK releases",
+      "vi_vi": "Bản phát hành Flutter SDK",
+      "zh_cn": "可用的 Flutter SDK 版本"
     },
     "Switch": {"en_us": "Switch", "vi_vi": "Chuyển đổi", "zh_cn": "切换"},
     "Select new Flutter version to switch:": {

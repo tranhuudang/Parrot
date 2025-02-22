@@ -9,6 +9,8 @@ import 'package:upgrader/upgrader.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:windows_status_bar/windows_status_bar_widget.dart';
 
+import '../widgets/sidebar_widget.dart';
+
 class DesktopNavigationFrame extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
 
@@ -85,7 +87,9 @@ class _DesktopNavigationFrameState extends State<DesktopNavigationFrame>
                           LocalDirectory.appLogo,
                         ),
                       )),
-                  const Text(DefaultSettings.appShortName),
+                  Text(
+                    "${DefaultSettings.appShortName}",
+                  ),
                   const Spacer(),
                   IconButton(
                       onPressed: () {
@@ -95,7 +99,18 @@ class _DesktopNavigationFrameState extends State<DesktopNavigationFrame>
                 ],
               ),
             Expanded(
-              child: widget.navigationShell,
+              child: Row(
+                children: [
+                  SidebarWidget(
+                    selectedIndex: globalNavigationShell.currentIndex,
+                    onDestinationSelected: goBranch,
+                  ),
+                  VerticalDivider(thickness: .5, width: .5,),
+                  Expanded(
+                    child: widget.navigationShell,
+                  ),
+                ],
+              ),
             ),
             Container(
               height: dcWindowsStatusBarHeight,
