@@ -103,12 +103,11 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     }
   }
 
-    // Download the selected Flutter version
+  // Download the selected Flutter version
   Future<void> downloadFlutterVersionByName(String version) async {
     state = state.copyWith(isDownloading: true); // Update loading state
     try {
-      Process process =
-          await Process.start('fvm', ['install', version]);
+      Process process = await Process.start('fvm', ['install', version]);
       process.stdout.transform(utf8.decoder).listen((data) {
         List<Widget> newList =
             List.from(state.commandOutput); // Make a copy of the list
@@ -138,16 +137,21 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     try {
       ProcessResult result = await Process.run('fvm', ['api', 'list']);
       String jsonString = result.stdout.toString();
-      jsonString = jsonString.substring(
-          jsonString.indexOf("["), jsonString.lastIndexOf("]") + 1);
+      // jsonString = jsonString.substring(
+      //     jsonString.indexOf("["), jsonString.lastIndexOf("]") + 1);
+      final data = json.decode(jsonString);
+      final cacheSize = DownloadedFlutterSDKs.fromJson(data).size;
+      DebugLog.info("Cache size: $cacheSize");
       List<DownloadedFlutterSDK> downloadedFlutterSDKs =
-          DownloadedFlutterSDKs.fromJson(json.decode(jsonString)).sdks;
+          DownloadedFlutterSDKs.fromJson(data).sdks;
+      // Showing if the downloadedFlutterSDKs is not empty
       List<String> versions =
           downloadedFlutterSDKs.map((sdk) => sdk.name).toList();
       DebugLog.info(versions.toString());
 
       state = state.copyWith(
-        downloadedFlutterVersions: versions,
+        cacheSize: cacheSize,
+        downloadedFlutterSDKs: downloadedFlutterSDKs,
         isFetchingDownloaded: false, // Set loading state to false
       );
     } catch (e) {
@@ -304,7 +308,8 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     try {
       // Try to gracefully exit Flutter process
       flutterProcess!.stdin.writeln('q');
-      await Future.delayed(const Duration(seconds: 2)); // Give time for graceful shutdown
+      await Future.delayed(
+          const Duration(seconds: 2)); // Give time for graceful shutdown
       if (flutterProcess != null && flutterProcess!.kill()) {
         DebugLog.info("Flutter process killed successfully.");
       }
@@ -314,7 +319,6 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       DebugLog.error("Error stopping Flutter project: $e");
     }
   }
-
 
   Future<void> hotReloadFlutterProject() async {
     if (flutterProcess == null) return;

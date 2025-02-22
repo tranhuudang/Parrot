@@ -27,11 +27,15 @@ class DownloadedFlutterSDK with _$DownloadedFlutterSDK {
 @freezed
 class DownloadedFlutterSDKs with _$DownloadedFlutterSDKs {
   const factory DownloadedFlutterSDKs({
+    required String size,
     required List<DownloadedFlutterSDK> sdks,
   }) = _DownloadedFlutterSDKs;
 
-  factory DownloadedFlutterSDKs.fromJson(List<dynamic> jsonList) =>
+  factory DownloadedFlutterSDKs.fromJson(Map<String, dynamic> json) =>
       DownloadedFlutterSDKs(
-        sdks: jsonList.map((json) => DownloadedFlutterSDK.fromJson(json as Map<String, dynamic>)).toList(),
+        size: json['size'] as String,
+        sdks: (json['versions'] as List<dynamic>)
+            .map((json) => DownloadedFlutterSDK.fromJson(json))
+            .toList(),
       );
 }

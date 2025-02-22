@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_version_manager/src/presentation/home/data/model/downloaded_flutter_sdks.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'main_home_state.freezed.dart';
@@ -9,7 +10,7 @@ class MainHomeState with _$MainHomeState {
     required String fvmVersion,
     required List<String> availableVersions,
     required String selectedOnlineVersion,
-    required List<String> downloadedFlutterVersions,
+    required List<DownloadedFlutterSDK> downloadedFlutterSDKs,
     required String selectedVersion,
     required List<Widget> commandOutput,
     required bool isCheckingFvm,
@@ -24,14 +25,14 @@ class MainHomeState with _$MainHomeState {
     required List<String> availablePlatforms,
     required bool isRunning,
     required bool isHotReloading,
-    required double cacheSize,
+    required String cacheSize,
   }) = _MainHomeState;
 
   factory MainHomeState.initial() => const MainHomeState(
         fvmVersion: '',
         availableVersions: [],
         selectedOnlineVersion: '',
-        downloadedFlutterVersions: [],
+        downloadedFlutterSDKs: [],
         selectedVersion: '',
         commandOutput: [],
         isCheckingFvm: false,
@@ -46,6 +47,6 @@ class MainHomeState with _$MainHomeState {
         isHotReloading: false,
         selectedPlatform: '',
         availablePlatforms: [],
-        cacheSize: 0,
+        cacheSize: '',
       );
 }

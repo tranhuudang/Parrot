@@ -418,6 +418,7 @@ DownloadedFlutterSDKs _$DownloadedFlutterSDKsFromJson(
 
 /// @nodoc
 mixin _$DownloadedFlutterSDKs {
+  String get size => throw _privateConstructorUsedError;
   List<DownloadedFlutterSDK> get sdks => throw _privateConstructorUsedError;
 
   /// Serializes this DownloadedFlutterSDKs to a JSON map.
@@ -436,7 +437,7 @@ abstract class $DownloadedFlutterSDKsCopyWith<$Res> {
           $Res Function(DownloadedFlutterSDKs) then) =
       _$DownloadedFlutterSDKsCopyWithImpl<$Res, DownloadedFlutterSDKs>;
   @useResult
-  $Res call({List<DownloadedFlutterSDK> sdks});
+  $Res call({String size, List<DownloadedFlutterSDK> sdks});
 }
 
 /// @nodoc
@@ -455,9 +456,14 @@ class _$DownloadedFlutterSDKsCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? size = null,
     Object? sdks = null,
   }) {
     return _then(_value.copyWith(
+      size: null == size
+          ? _value.size
+          : size // ignore: cast_nullable_to_non_nullable
+              as String,
       sdks: null == sdks
           ? _value.sdks
           : sdks // ignore: cast_nullable_to_non_nullable
@@ -475,7 +481,7 @@ abstract class _$$DownloadedFlutterSDKsImplCopyWith<$Res>
       __$$DownloadedFlutterSDKsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<DownloadedFlutterSDK> sdks});
+  $Res call({String size, List<DownloadedFlutterSDK> sdks});
 }
 
 /// @nodoc
@@ -492,9 +498,14 @@ class __$$DownloadedFlutterSDKsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? size = null,
     Object? sdks = null,
   }) {
     return _then(_$DownloadedFlutterSDKsImpl(
+      size: null == size
+          ? _value.size
+          : size // ignore: cast_nullable_to_non_nullable
+              as String,
       sdks: null == sdks
           ? _value._sdks
           : sdks // ignore: cast_nullable_to_non_nullable
@@ -507,12 +518,14 @@ class __$$DownloadedFlutterSDKsImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$DownloadedFlutterSDKsImpl implements _DownloadedFlutterSDKs {
   const _$DownloadedFlutterSDKsImpl(
-      {required final List<DownloadedFlutterSDK> sdks})
+      {required this.size, required final List<DownloadedFlutterSDK> sdks})
       : _sdks = sdks;
 
   factory _$DownloadedFlutterSDKsImpl.fromJson(Map<String, dynamic> json) =>
       _$$DownloadedFlutterSDKsImplFromJson(json);
 
+  @override
+  final String size;
   final List<DownloadedFlutterSDK> _sdks;
   @override
   List<DownloadedFlutterSDK> get sdks {
@@ -523,7 +536,7 @@ class _$DownloadedFlutterSDKsImpl implements _DownloadedFlutterSDKs {
 
   @override
   String toString() {
-    return 'DownloadedFlutterSDKs(sdks: $sdks)';
+    return 'DownloadedFlutterSDKs(size: $size, sdks: $sdks)';
   }
 
   @override
@@ -531,13 +544,14 @@ class _$DownloadedFlutterSDKsImpl implements _DownloadedFlutterSDKs {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DownloadedFlutterSDKsImpl &&
+            (identical(other.size, size) || other.size == size) &&
             const DeepCollectionEquality().equals(other._sdks, _sdks));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_sdks));
+  int get hashCode => Object.hash(
+      runtimeType, size, const DeepCollectionEquality().hash(_sdks));
 
   /// Create a copy of DownloadedFlutterSDKs
   /// with the given fields replaced by the non-null parameter values.
@@ -558,12 +572,15 @@ class _$DownloadedFlutterSDKsImpl implements _DownloadedFlutterSDKs {
 
 abstract class _DownloadedFlutterSDKs implements DownloadedFlutterSDKs {
   const factory _DownloadedFlutterSDKs(
-          {required final List<DownloadedFlutterSDK> sdks}) =
+          {required final String size,
+          required final List<DownloadedFlutterSDK> sdks}) =
       _$DownloadedFlutterSDKsImpl;
 
   factory _DownloadedFlutterSDKs.fromJson(Map<String, dynamic> json) =
       _$DownloadedFlutterSDKsImpl.fromJson;
 
+  @override
+  String get size;
   @override
   List<DownloadedFlutterSDK> get sdks;
 

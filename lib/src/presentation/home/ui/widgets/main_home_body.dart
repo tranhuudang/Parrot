@@ -195,10 +195,10 @@ class MainHomeBody extends ConsumerWidget {
           value:
               state.selectedVersion.isNotEmpty ? state.selectedVersion : null,
           hint: Text("Select Flutter Version".i18n),
-          items: state.downloadedFlutterVersions
-              .map((version) => DropdownMenuItem(
-                    value: version,
-                    child: Text(version),
+          items: state.downloadedFlutterSDKs
+              .map((flutterSDK) => DropdownMenuItem(
+                    value: flutterSDK.name,
+                    child: Text(flutterSDK.name),
                   ))
               .toList(),
           onChanged: (value) {

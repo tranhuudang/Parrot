@@ -43,6 +43,7 @@ Map<String, dynamic> _$$DownloadedFlutterSDKImplToJson(
 _$DownloadedFlutterSDKsImpl _$$DownloadedFlutterSDKsImplFromJson(
         Map<String, dynamic> json) =>
     _$DownloadedFlutterSDKsImpl(
+      size: json['size'] as String,
       sdks: (json['sdks'] as List<dynamic>)
           .map((e) => DownloadedFlutterSDK.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -51,5 +52,6 @@ _$DownloadedFlutterSDKsImpl _$$DownloadedFlutterSDKsImplFromJson(
 Map<String, dynamic> _$$DownloadedFlutterSDKsImplToJson(
         _$DownloadedFlutterSDKsImpl instance) =>
     <String, dynamic>{
+      'size': instance.size,
       'sdks': instance.sdks,
     };

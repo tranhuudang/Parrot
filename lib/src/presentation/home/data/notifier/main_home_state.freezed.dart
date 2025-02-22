@@ -19,7 +19,7 @@ mixin _$MainHomeState {
   String get fvmVersion => throw _privateConstructorUsedError;
   List<String> get availableVersions => throw _privateConstructorUsedError;
   String get selectedOnlineVersion => throw _privateConstructorUsedError;
-  List<String> get downloadedFlutterVersions =>
+  List<DownloadedFlutterSDK> get downloadedFlutterSDKs =>
       throw _privateConstructorUsedError;
   String get selectedVersion => throw _privateConstructorUsedError;
   List<Widget> get commandOutput => throw _privateConstructorUsedError;
@@ -35,7 +35,7 @@ mixin _$MainHomeState {
   List<String> get availablePlatforms => throw _privateConstructorUsedError;
   bool get isRunning => throw _privateConstructorUsedError;
   bool get isHotReloading => throw _privateConstructorUsedError;
-  double get cacheSize => throw _privateConstructorUsedError;
+  String get cacheSize => throw _privateConstructorUsedError;
 
   /// Create a copy of MainHomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -54,7 +54,7 @@ abstract class $MainHomeStateCopyWith<$Res> {
       {String fvmVersion,
       List<String> availableVersions,
       String selectedOnlineVersion,
-      List<String> downloadedFlutterVersions,
+      List<DownloadedFlutterSDK> downloadedFlutterSDKs,
       String selectedVersion,
       List<Widget> commandOutput,
       bool isCheckingFvm,
@@ -69,7 +69,7 @@ abstract class $MainHomeStateCopyWith<$Res> {
       List<String> availablePlatforms,
       bool isRunning,
       bool isHotReloading,
-      double cacheSize});
+      String cacheSize});
 }
 
 /// @nodoc
@@ -90,7 +90,7 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
     Object? fvmVersion = null,
     Object? availableVersions = null,
     Object? selectedOnlineVersion = null,
-    Object? downloadedFlutterVersions = null,
+    Object? downloadedFlutterSDKs = null,
     Object? selectedVersion = null,
     Object? commandOutput = null,
     Object? isCheckingFvm = null,
@@ -120,10 +120,10 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
           ? _value.selectedOnlineVersion
           : selectedOnlineVersion // ignore: cast_nullable_to_non_nullable
               as String,
-      downloadedFlutterVersions: null == downloadedFlutterVersions
-          ? _value.downloadedFlutterVersions
-          : downloadedFlutterVersions // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      downloadedFlutterSDKs: null == downloadedFlutterSDKs
+          ? _value.downloadedFlutterSDKs
+          : downloadedFlutterSDKs // ignore: cast_nullable_to_non_nullable
+              as List<DownloadedFlutterSDK>,
       selectedVersion: null == selectedVersion
           ? _value.selectedVersion
           : selectedVersion // ignore: cast_nullable_to_non_nullable
@@ -183,7 +183,7 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
       cacheSize: null == cacheSize
           ? _value.cacheSize
           : cacheSize // ignore: cast_nullable_to_non_nullable
-              as double,
+              as String,
     ) as $Val);
   }
 }
@@ -200,7 +200,7 @@ abstract class _$$MainHomeStateImplCopyWith<$Res>
       {String fvmVersion,
       List<String> availableVersions,
       String selectedOnlineVersion,
-      List<String> downloadedFlutterVersions,
+      List<DownloadedFlutterSDK> downloadedFlutterSDKs,
       String selectedVersion,
       List<Widget> commandOutput,
       bool isCheckingFvm,
@@ -215,7 +215,7 @@ abstract class _$$MainHomeStateImplCopyWith<$Res>
       List<String> availablePlatforms,
       bool isRunning,
       bool isHotReloading,
-      double cacheSize});
+      String cacheSize});
 }
 
 /// @nodoc
@@ -234,7 +234,7 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
     Object? fvmVersion = null,
     Object? availableVersions = null,
     Object? selectedOnlineVersion = null,
-    Object? downloadedFlutterVersions = null,
+    Object? downloadedFlutterSDKs = null,
     Object? selectedVersion = null,
     Object? commandOutput = null,
     Object? isCheckingFvm = null,
@@ -264,10 +264,10 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
           ? _value.selectedOnlineVersion
           : selectedOnlineVersion // ignore: cast_nullable_to_non_nullable
               as String,
-      downloadedFlutterVersions: null == downloadedFlutterVersions
-          ? _value._downloadedFlutterVersions
-          : downloadedFlutterVersions // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      downloadedFlutterSDKs: null == downloadedFlutterSDKs
+          ? _value._downloadedFlutterSDKs
+          : downloadedFlutterSDKs // ignore: cast_nullable_to_non_nullable
+              as List<DownloadedFlutterSDK>,
       selectedVersion: null == selectedVersion
           ? _value.selectedVersion
           : selectedVersion // ignore: cast_nullable_to_non_nullable
@@ -327,7 +327,7 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
       cacheSize: null == cacheSize
           ? _value.cacheSize
           : cacheSize // ignore: cast_nullable_to_non_nullable
-              as double,
+              as String,
     ));
   }
 }
@@ -339,7 +339,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
       {required this.fvmVersion,
       required final List<String> availableVersions,
       required this.selectedOnlineVersion,
-      required final List<String> downloadedFlutterVersions,
+      required final List<DownloadedFlutterSDK> downloadedFlutterSDKs,
       required this.selectedVersion,
       required final List<Widget> commandOutput,
       required this.isCheckingFvm,
@@ -356,7 +356,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
       required this.isHotReloading,
       required this.cacheSize})
       : _availableVersions = availableVersions,
-        _downloadedFlutterVersions = downloadedFlutterVersions,
+        _downloadedFlutterSDKs = downloadedFlutterSDKs,
         _commandOutput = commandOutput,
         _availablePlatforms = availablePlatforms;
 
@@ -373,13 +373,13 @@ class _$MainHomeStateImpl implements _MainHomeState {
 
   @override
   final String selectedOnlineVersion;
-  final List<String> _downloadedFlutterVersions;
+  final List<DownloadedFlutterSDK> _downloadedFlutterSDKs;
   @override
-  List<String> get downloadedFlutterVersions {
-    if (_downloadedFlutterVersions is EqualUnmodifiableListView)
-      return _downloadedFlutterVersions;
+  List<DownloadedFlutterSDK> get downloadedFlutterSDKs {
+    if (_downloadedFlutterSDKs is EqualUnmodifiableListView)
+      return _downloadedFlutterSDKs;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_downloadedFlutterVersions);
+    return EqualUnmodifiableListView(_downloadedFlutterSDKs);
   }
 
   @override
@@ -424,11 +424,11 @@ class _$MainHomeStateImpl implements _MainHomeState {
   @override
   final bool isHotReloading;
   @override
-  final double cacheSize;
+  final String cacheSize;
 
   @override
   String toString() {
-    return 'MainHomeState(fvmVersion: $fvmVersion, availableVersions: $availableVersions, selectedOnlineVersion: $selectedOnlineVersion, downloadedFlutterVersions: $downloadedFlutterVersions, selectedVersion: $selectedVersion, commandOutput: $commandOutput, isCheckingFvm: $isCheckingFvm, isInstallingFvm: $isInstallingFvm, isFetchingVersions: $isFetchingVersions, isDownloading: $isDownloading, isFetchingDownloaded: $isFetchingDownloaded, isSwitching: $isSwitching, isGettingAvailableDevices: $isGettingAvailableDevices, projectPath: $projectPath, selectedPlatform: $selectedPlatform, availablePlatforms: $availablePlatforms, isRunning: $isRunning, isHotReloading: $isHotReloading, cacheSize: $cacheSize)';
+    return 'MainHomeState(fvmVersion: $fvmVersion, availableVersions: $availableVersions, selectedOnlineVersion: $selectedOnlineVersion, downloadedFlutterSDKs: $downloadedFlutterSDKs, selectedVersion: $selectedVersion, commandOutput: $commandOutput, isCheckingFvm: $isCheckingFvm, isInstallingFvm: $isInstallingFvm, isFetchingVersions: $isFetchingVersions, isDownloading: $isDownloading, isFetchingDownloaded: $isFetchingDownloaded, isSwitching: $isSwitching, isGettingAvailableDevices: $isGettingAvailableDevices, projectPath: $projectPath, selectedPlatform: $selectedPlatform, availablePlatforms: $availablePlatforms, isRunning: $isRunning, isHotReloading: $isHotReloading, cacheSize: $cacheSize)';
   }
 
   @override
@@ -442,8 +442,8 @@ class _$MainHomeStateImpl implements _MainHomeState {
                 .equals(other._availableVersions, _availableVersions) &&
             (identical(other.selectedOnlineVersion, selectedOnlineVersion) ||
                 other.selectedOnlineVersion == selectedOnlineVersion) &&
-            const DeepCollectionEquality().equals(
-                other._downloadedFlutterVersions, _downloadedFlutterVersions) &&
+            const DeepCollectionEquality()
+                .equals(other._downloadedFlutterSDKs, _downloadedFlutterSDKs) &&
             (identical(other.selectedVersion, selectedVersion) ||
                 other.selectedVersion == selectedVersion) &&
             const DeepCollectionEquality()
@@ -483,7 +483,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
         fvmVersion,
         const DeepCollectionEquality().hash(_availableVersions),
         selectedOnlineVersion,
-        const DeepCollectionEquality().hash(_downloadedFlutterVersions),
+        const DeepCollectionEquality().hash(_downloadedFlutterSDKs),
         selectedVersion,
         const DeepCollectionEquality().hash(_commandOutput),
         isCheckingFvm,
@@ -515,7 +515,7 @@ abstract class _MainHomeState implements MainHomeState {
       {required final String fvmVersion,
       required final List<String> availableVersions,
       required final String selectedOnlineVersion,
-      required final List<String> downloadedFlutterVersions,
+      required final List<DownloadedFlutterSDK> downloadedFlutterSDKs,
       required final String selectedVersion,
       required final List<Widget> commandOutput,
       required final bool isCheckingFvm,
@@ -530,7 +530,7 @@ abstract class _MainHomeState implements MainHomeState {
       required final List<String> availablePlatforms,
       required final bool isRunning,
       required final bool isHotReloading,
-      required final double cacheSize}) = _$MainHomeStateImpl;
+      required final String cacheSize}) = _$MainHomeStateImpl;
 
   @override
   String get fvmVersion;
@@ -539,7 +539,7 @@ abstract class _MainHomeState implements MainHomeState {
   @override
   String get selectedOnlineVersion;
   @override
-  List<String> get downloadedFlutterVersions;
+  List<DownloadedFlutterSDK> get downloadedFlutterSDKs;
   @override
   String get selectedVersion;
   @override
@@ -569,7 +569,7 @@ abstract class _MainHomeState implements MainHomeState {
   @override
   bool get isHotReloading;
   @override
-  double get cacheSize;
+  String get cacheSize;
 
   /// Create a copy of MainHomeState
   /// with the given fields replaced by the non-null parameter values.

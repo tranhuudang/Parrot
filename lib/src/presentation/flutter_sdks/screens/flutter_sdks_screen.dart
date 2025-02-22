@@ -122,27 +122,43 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
           ),
           8.height,
           Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: state.availableVersions.length,
-              itemBuilder: (context, index) {
-                final version = state.availableVersions[index];
-                return ListTile(
-                  title: Text(version),
-                  trailing: IconButton(
-                    icon: state.isDownloading
-                        ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator())
-                        : const Icon(FluentIcons.arrow_download_16_regular),
-                    onPressed: state.isDownloading
-                        ? null
-                        : () => notifier.downloadFlutterVersionByName(version),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: state.downloadedFlutterSDKs.length,
+                    itemBuilder: (context, index) {
+                      final version = state.downloadedFlutterSDKs[index];
+                      return ListTile(
+                        title: Text(version.name),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (version.isSetup)
+                              const Icon(FluentIcons.checkmark_16_regular),
+                            IconButton(
+                              icon: state.isDownloading
+                                  ? const SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator())
+                                  : const Icon(
+                                      FluentIcons.arrow_download_16_regular),
+                              onPressed: state.isDownloading
+                                  ? null
+                                  : () => notifier.downloadFlutterVersionByName(
+                                      version.name),
+                            ),
+                          ],
+                        ),
+                        onTap: () => notifier.selectOnlineVersion(version.name),
+                      );
+                    },
                   ),
-                  onTap: () => notifier.selectOnlineVersion(version),
-                );
-              },
+                ],
+              ),
             ),
           ),
         ],
