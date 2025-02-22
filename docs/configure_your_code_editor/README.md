@@ -2,7 +2,7 @@
 
 This guide will help you set up Flutter Version Management (FVM) in Visual Studio Code and Android Studio for better Flutter version control.
 
-## Visual Studio Code Setup
+## <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg" width="20" height="20"> Visual Studio Code Setup
 
 1. Install the [Flutter extension](https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter) if you haven't already.
 
@@ -27,7 +27,7 @@ This guide will help you set up Flutter Version Management (FVM) in Visual Studi
 }
 ```
 
-## Android Studio Setup
+## <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Android_Studio_Logo_2024.svg" width="20" height="20"> Android Studio Setup
 
 1. Open Android Studio Settings/Preferences.
 
@@ -39,7 +39,7 @@ This guide will help you set up Flutter Version Management (FVM) in Visual Studi
 
 ## Usage
 
-1. Switch Flutter versions using Parrot or FVM command bellow:
+1. Switch Flutter versions using `Parrot` or `FVM command` below:
 ```bash
 fvm use <version>
 ```
@@ -47,6 +47,5 @@ fvm use <version>
 2. Your editor will automatically use the project-specific Flutter SDK.
 
 3. All Flutter commands will now use the version specified in your project.
-
 
 For more information, visit the [FVM documentation](https://fvm.app/docs/getting_started/overview).
