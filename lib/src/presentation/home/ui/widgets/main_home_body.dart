@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_version_manager/src/core/core.dart';
 import 'package:flutter_version_manager/src/core/utils/launchUrl.dart';
 import 'package:flutter_version_manager/src/presentation/home/data/notifier/main_home_state.dart';
-import 'package:flutter_version_manager/src/presentation/home/ui/screens/install_fvm_instruction.dart';
 import 'package:flutter_version_manager/src/presentation/home/ui/widgets/platform_selector.dart';
 import '../../../presentation.dart';
 import '../../data/notifier/main_home_notifier.dart';
@@ -286,10 +285,7 @@ class MainHomeBody extends ConsumerWidget {
             state.fvmVersion.isEmpty
                 ? FilledButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const InstallFVMScreen()));
+                     openUrl('https://www.github.com/tranhuudang/parrot/docs/install_fvm/README.md');
                     },
                     child: Text('Install FVM CLI'.i18n),
                   )
