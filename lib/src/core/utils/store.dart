@@ -1,4 +1,4 @@
-import 'package:flutter_version_manager/src/core/utils/launchUrl.dart';
+import 'package:flutter_version_manager/src/core/utils/path_handler.dart';
 
 void goToStoreListing() async {
   openUrl('ms-windows-store://pdp/?productid=9NQN1PJ0FDR1');

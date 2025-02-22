@@ -56,13 +56,15 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
         jsonString = jsonString.substring(
             jsonString.indexOf("["), jsonString.lastIndexOf("]") + 1);
         List<dynamic> jsonData = json.decode(jsonString);
-        OnlineFlutterSDKVersions releases =
+        OnlineFlutterSDKVersions onlineFlutterSDKVersions =
             OnlineFlutterSDKVersions.fromJson(jsonData);
-        List<String> versions =
-            releases.versions.map((release) => release.version).toList();
+        // List<String> versions =
+        //     releases.versions.map((release) => release.version).toList();
         state = state.copyWith(
-          availableVersions: versions,
-          selectedOnlineVersion: versions.isNotEmpty ? versions.first : '',
+          onlineFlutterVersions: onlineFlutterSDKVersions.versions,
+          selectedOnlineVersion: onlineFlutterSDKVersions.versions.isNotEmpty
+              ? onlineFlutterSDKVersions.versions.first.version
+              : '',
           isFetchingVersions: false, // Set loading state to false
         );
       }
@@ -210,7 +212,10 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
 
   // Select the online Flutter version
   void selectOnlineVersion(String version) {
-    if (state.availableVersions.contains(version)) {
+    if (state.onlineFlutterVersions
+        .map((flutterSDK) => flutterSDK.version)
+        .toList()
+        .contains(version)) {
       state = state.copyWith(selectedOnlineVersion: version);
     }
   }

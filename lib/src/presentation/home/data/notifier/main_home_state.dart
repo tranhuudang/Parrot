@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_version_manager/src/presentation/home/data/model/downloaded_flutter_sdks.dart';
+import 'package:flutter_version_manager/src/presentation/home/data/model/flutter_versions.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'main_home_state.freezed.dart';
@@ -8,7 +9,7 @@ part 'main_home_state.freezed.dart';
 class MainHomeState with _$MainHomeState {
   const factory MainHomeState({
     required String fvmVersion,
-    required List<String> availableVersions,
+    required List<OnlineFlutterSDK> onlineFlutterVersions,
     required String selectedOnlineVersion,
     required List<DownloadedFlutterSDK> downloadedFlutterSDKs,
     required String selectedVersion,
@@ -30,7 +31,7 @@ class MainHomeState with _$MainHomeState {
 
   factory MainHomeState.initial() => const MainHomeState(
         fvmVersion: '',
-        availableVersions: [],
+        onlineFlutterVersions: [],
         selectedOnlineVersion: '',
         downloadedFlutterSDKs: [],
         selectedVersion: '',

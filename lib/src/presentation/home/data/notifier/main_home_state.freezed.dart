@@ -17,7 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$MainHomeState {
   String get fvmVersion => throw _privateConstructorUsedError;
-  List<String> get availableVersions => throw _privateConstructorUsedError;
+  List<OnlineFlutterSDK> get onlineFlutterVersions =>
+      throw _privateConstructorUsedError;
   String get selectedOnlineVersion => throw _privateConstructorUsedError;
   List<DownloadedFlutterSDK> get downloadedFlutterSDKs =>
       throw _privateConstructorUsedError;
@@ -52,7 +53,7 @@ abstract class $MainHomeStateCopyWith<$Res> {
   @useResult
   $Res call(
       {String fvmVersion,
-      List<String> availableVersions,
+      List<OnlineFlutterSDK> onlineFlutterVersions,
       String selectedOnlineVersion,
       List<DownloadedFlutterSDK> downloadedFlutterSDKs,
       String selectedVersion,
@@ -88,7 +89,7 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
   @override
   $Res call({
     Object? fvmVersion = null,
-    Object? availableVersions = null,
+    Object? onlineFlutterVersions = null,
     Object? selectedOnlineVersion = null,
     Object? downloadedFlutterSDKs = null,
     Object? selectedVersion = null,
@@ -112,10 +113,10 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
           ? _value.fvmVersion
           : fvmVersion // ignore: cast_nullable_to_non_nullable
               as String,
-      availableVersions: null == availableVersions
-          ? _value.availableVersions
-          : availableVersions // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      onlineFlutterVersions: null == onlineFlutterVersions
+          ? _value.onlineFlutterVersions
+          : onlineFlutterVersions // ignore: cast_nullable_to_non_nullable
+              as List<OnlineFlutterSDK>,
       selectedOnlineVersion: null == selectedOnlineVersion
           ? _value.selectedOnlineVersion
           : selectedOnlineVersion // ignore: cast_nullable_to_non_nullable
@@ -198,7 +199,7 @@ abstract class _$$MainHomeStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {String fvmVersion,
-      List<String> availableVersions,
+      List<OnlineFlutterSDK> onlineFlutterVersions,
       String selectedOnlineVersion,
       List<DownloadedFlutterSDK> downloadedFlutterSDKs,
       String selectedVersion,
@@ -232,7 +233,7 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? fvmVersion = null,
-    Object? availableVersions = null,
+    Object? onlineFlutterVersions = null,
     Object? selectedOnlineVersion = null,
     Object? downloadedFlutterSDKs = null,
     Object? selectedVersion = null,
@@ -256,10 +257,10 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
           ? _value.fvmVersion
           : fvmVersion // ignore: cast_nullable_to_non_nullable
               as String,
-      availableVersions: null == availableVersions
-          ? _value._availableVersions
-          : availableVersions // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      onlineFlutterVersions: null == onlineFlutterVersions
+          ? _value._onlineFlutterVersions
+          : onlineFlutterVersions // ignore: cast_nullable_to_non_nullable
+              as List<OnlineFlutterSDK>,
       selectedOnlineVersion: null == selectedOnlineVersion
           ? _value.selectedOnlineVersion
           : selectedOnlineVersion // ignore: cast_nullable_to_non_nullable
@@ -337,7 +338,7 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
 class _$MainHomeStateImpl implements _MainHomeState {
   const _$MainHomeStateImpl(
       {required this.fvmVersion,
-      required final List<String> availableVersions,
+      required final List<OnlineFlutterSDK> onlineFlutterVersions,
       required this.selectedOnlineVersion,
       required final List<DownloadedFlutterSDK> downloadedFlutterSDKs,
       required this.selectedVersion,
@@ -355,20 +356,20 @@ class _$MainHomeStateImpl implements _MainHomeState {
       required this.isRunning,
       required this.isHotReloading,
       required this.cacheSize})
-      : _availableVersions = availableVersions,
+      : _onlineFlutterVersions = onlineFlutterVersions,
         _downloadedFlutterSDKs = downloadedFlutterSDKs,
         _commandOutput = commandOutput,
         _availablePlatforms = availablePlatforms;
 
   @override
   final String fvmVersion;
-  final List<String> _availableVersions;
+  final List<OnlineFlutterSDK> _onlineFlutterVersions;
   @override
-  List<String> get availableVersions {
-    if (_availableVersions is EqualUnmodifiableListView)
-      return _availableVersions;
+  List<OnlineFlutterSDK> get onlineFlutterVersions {
+    if (_onlineFlutterVersions is EqualUnmodifiableListView)
+      return _onlineFlutterVersions;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_availableVersions);
+    return EqualUnmodifiableListView(_onlineFlutterVersions);
   }
 
   @override
@@ -428,7 +429,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
 
   @override
   String toString() {
-    return 'MainHomeState(fvmVersion: $fvmVersion, availableVersions: $availableVersions, selectedOnlineVersion: $selectedOnlineVersion, downloadedFlutterSDKs: $downloadedFlutterSDKs, selectedVersion: $selectedVersion, commandOutput: $commandOutput, isCheckingFvm: $isCheckingFvm, isInstallingFvm: $isInstallingFvm, isFetchingVersions: $isFetchingVersions, isDownloading: $isDownloading, isFetchingDownloaded: $isFetchingDownloaded, isSwitching: $isSwitching, isGettingAvailableDevices: $isGettingAvailableDevices, projectPath: $projectPath, selectedPlatform: $selectedPlatform, availablePlatforms: $availablePlatforms, isRunning: $isRunning, isHotReloading: $isHotReloading, cacheSize: $cacheSize)';
+    return 'MainHomeState(fvmVersion: $fvmVersion, onlineFlutterVersions: $onlineFlutterVersions, selectedOnlineVersion: $selectedOnlineVersion, downloadedFlutterSDKs: $downloadedFlutterSDKs, selectedVersion: $selectedVersion, commandOutput: $commandOutput, isCheckingFvm: $isCheckingFvm, isInstallingFvm: $isInstallingFvm, isFetchingVersions: $isFetchingVersions, isDownloading: $isDownloading, isFetchingDownloaded: $isFetchingDownloaded, isSwitching: $isSwitching, isGettingAvailableDevices: $isGettingAvailableDevices, projectPath: $projectPath, selectedPlatform: $selectedPlatform, availablePlatforms: $availablePlatforms, isRunning: $isRunning, isHotReloading: $isHotReloading, cacheSize: $cacheSize)';
   }
 
   @override
@@ -439,7 +440,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
             (identical(other.fvmVersion, fvmVersion) ||
                 other.fvmVersion == fvmVersion) &&
             const DeepCollectionEquality()
-                .equals(other._availableVersions, _availableVersions) &&
+                .equals(other._onlineFlutterVersions, _onlineFlutterVersions) &&
             (identical(other.selectedOnlineVersion, selectedOnlineVersion) ||
                 other.selectedOnlineVersion == selectedOnlineVersion) &&
             const DeepCollectionEquality()
@@ -481,7 +482,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
   int get hashCode => Object.hashAll([
         runtimeType,
         fvmVersion,
-        const DeepCollectionEquality().hash(_availableVersions),
+        const DeepCollectionEquality().hash(_onlineFlutterVersions),
         selectedOnlineVersion,
         const DeepCollectionEquality().hash(_downloadedFlutterSDKs),
         selectedVersion,
@@ -513,7 +514,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
 abstract class _MainHomeState implements MainHomeState {
   const factory _MainHomeState(
       {required final String fvmVersion,
-      required final List<String> availableVersions,
+      required final List<OnlineFlutterSDK> onlineFlutterVersions,
       required final String selectedOnlineVersion,
       required final List<DownloadedFlutterSDK> downloadedFlutterSDKs,
       required final String selectedVersion,
@@ -535,7 +536,7 @@ abstract class _MainHomeState implements MainHomeState {
   @override
   String get fvmVersion;
   @override
-  List<String> get availableVersions;
+  List<OnlineFlutterSDK> get onlineFlutterVersions;
   @override
   String get selectedOnlineVersion;
   @override

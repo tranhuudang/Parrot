@@ -1,7 +1,7 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_version_manager/src/core/core.dart';
-import 'package:flutter_version_manager/src/core/utils/launchUrl.dart';
+import 'package:flutter_version_manager/src/core/utils/path_handler.dart';
 import 'package:flutter_version_manager/src/presentation/home/data/notifier/main_home_state.dart';
 import 'package:flutter_version_manager/src/presentation/home/ui/widgets/platform_selector.dart';
 import '../../../presentation.dart';
@@ -240,10 +240,10 @@ class MainHomeBody extends ConsumerWidget {
               ? state.selectedOnlineVersion
               : null,
           // hint: Text("Select Flutter Version".i18n),
-          items: state.availableVersions
-              .map((version) => DropdownMenuItem(
-                    value: version,
-                    child: Text(version),
+          items: state.onlineFlutterVersions
+              .map((flutterSDK) => DropdownMenuItem(
+                    value: flutterSDK.version,
+                    child: Text(flutterSDK.version),
                   ))
               .toList(),
           onChanged: (value) {

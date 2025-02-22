@@ -1,6 +1,6 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_version_manager/src/core/core.dart';
-import 'package:flutter_version_manager/src/core/utils/launchUrl.dart';
+import 'package:flutter_version_manager/src/core/utils/path_handler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../presentation.dart';
 import '../widgets/main_home_body.dart';
@@ -67,62 +67,11 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
       Expanded(
         child: SizedBox(
           height: 109,
-          // decoration: BoxDecoration(
-          //   gradient: LinearGradient(
-          //     begin: Alignment.centerLeft,
-          //     end: Alignment.centerRight,
-          //     colors: [
-          //       Colors.black,
-          //       Colors.transparent,
-          //       Colors.transparent,
-          //     ],
-          //   ),
-          // ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Stack(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Opacity(
-                      opacity: .01,
-                      child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Image.asset(
-                            'assets/flutter.png',
-                            height: 30,
-                            width: 30,
-                          )),
-                    ),
-                    Opacity(
-                      opacity: .05,
-                      child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Image.asset(
-                            'assets/flutter.png',
-                            height: 50,
-                            width: 50,
-                          )),
-                    ),
-                    Opacity(
-                      opacity: .1,
-                      child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Image.asset(
-                            'assets/flutter.png',
-                            height: 80,
-                            width: 80,
-                          )),
-                    ),
-                    Opacity(
-                      opacity: .2,
-                      child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Image.asset('assets/flutter.png')),
-                    ),
-                  ],
-                ),
+                const HeaderFlutters(),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

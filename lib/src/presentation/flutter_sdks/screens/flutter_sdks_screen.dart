@@ -22,47 +22,7 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
             padding: const EdgeInsets.all(8),
             child: Stack(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Opacity(
-                      opacity: .01,
-                      child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Image.asset(
-                            LocalDirectory.flutterLogo,
-                            height: 30,
-                            width: 30,
-                          )),
-                    ),
-                    Opacity(
-                      opacity: .05,
-                      child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Image.asset(
-                            LocalDirectory.flutterLogo,
-                            height: 50,
-                            width: 50,
-                          )),
-                    ),
-                    Opacity(
-                      opacity: .1,
-                      child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Image.asset(
-                            LocalDirectory.flutterLogo,
-                            height: 80,
-                            width: 80,
-                          )),
-                    ),
-                    Opacity(
-                      opacity: .2,
-                      child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Image.asset(LocalDirectory.flutterLogo)),
-                    ),
-                  ],
-                ),
+                const HeaderFlutters(),
                 Padding(
                   padding: const EdgeInsets.only(left: 8, top: 3),
                   child: Column(
@@ -76,12 +36,24 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
                       // Label showing cache size of downloaded Flutter SDKs and button to open the folder that contains the Flutter SDKs
                       Row(
                         children: [
-                          Text('Cache size: ${state.cacheSize}'),
-                          8.width,
+                          Text(
+                            'Cache size: ${state.cacheSize}',
+                            style: context.theme.textTheme.labelMedium,
+                          ),
+                          4.width,
                           // Icon button to open the folder that contains the Flutter SDKs
                           IconButton(
-                            onPressed: () {},
-                            icon: const Icon(FluentIcons.folder_16_regular),
+                            onPressed: () {
+                              openDirectory(state
+                                  .downloadedFlutterSDKs[0].directory
+                                  .substring(
+                                      0,
+                                      state.downloadedFlutterSDKs[0].directory
+                                          .indexOf(state
+                                              .downloadedFlutterSDKs[0].name)));
+                            },
+                            icon: const Icon(FluentIcons.folder_16_regular,
+                                size: 20),
                           ),
                         ],
                       ),
@@ -128,32 +100,49 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
                   ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: state.downloadedFlutterSDKs.length,
+                    itemCount: state.onlineFlutterVersions.length,
                     itemBuilder: (context, index) {
-                      final version = state.downloadedFlutterSDKs[index];
+                      final onlineFlutterSDK =
+                          state.onlineFlutterVersions[index];
+                      bool isDownloaded = state.downloadedFlutterSDKs.any(
+                          (element) =>
+                              element.name == onlineFlutterSDK.version);
                       return ListTile(
-                        title: Text(version.name),
+                        title: Text(onlineFlutterSDK.version),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            if (version.isSetup)
-                              const Icon(FluentIcons.checkmark_16_regular),
-                            IconButton(
-                              icon: state.isDownloading
-                                  ? const SizedBox(
-                                      height: 20,
-                                      width: 20,
-                                      child: CircularProgressIndicator())
-                                  : const Icon(
-                                      FluentIcons.arrow_download_16_regular),
-                              onPressed: state.isDownloading
-                                  ? null
-                                  : () => notifier.downloadFlutterVersionByName(
-                                      version.name),
+                            // Icon button to open the folder that contains the downloaded Flutter SDK
+                            if (isDownloaded)
+                            IconButton(icon:
+                              const Icon(FluentIcons.folder_16_regular),
+                              onPressed: () {
+                                openDirectory(state.downloadedFlutterSDKs
+                                    .firstWhere((element) =>
+                                        element.name == onlineFlutterSDK.version)
+                                    .directory);
+                              },
                             ),
+                            // Icon button to download the Flutter SDK
+                            if (!isDownloaded)
+                              IconButton(
+                                icon: state.isDownloading
+                                    ? const SizedBox(
+                                        height: 20,
+                                        width: 20,
+                                        child: CircularProgressIndicator())
+                                    : const Icon(
+                                        FluentIcons.arrow_download_16_regular),
+                                onPressed: state.isDownloading
+                                    ? null
+                                    : () =>
+                                        notifier.downloadFlutterVersionByName(
+                                            onlineFlutterSDK.version),
+                              ),
                           ],
                         ),
-                        onTap: () => notifier.selectOnlineVersion(version.name),
+                        onTap: () => notifier
+                            .selectOnlineVersion(onlineFlutterSDK.version),
                       );
                     },
                   ),
