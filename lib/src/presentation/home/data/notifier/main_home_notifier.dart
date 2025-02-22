@@ -103,6 +103,35 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     }
   }
 
+    // Download the selected Flutter version
+  Future<void> downloadFlutterVersionByName(String version) async {
+    state = state.copyWith(isDownloading: true); // Update loading state
+    try {
+      Process process =
+          await Process.start('fvm', ['install', version]);
+      process.stdout.transform(utf8.decoder).listen((data) {
+        List<Widget> newList =
+            List.from(state.commandOutput); // Make a copy of the list
+        newList.insert(0, Text(data)); // Modify the list
+        state = state.copyWith(
+            commandOutput: newList); // Update state with the new list
+      });
+      process.exitCode.then((exitCode) {
+        if (exitCode == 0) {
+          state = state.copyWith(
+              isDownloading: false); // Set loading state to false
+        } else {
+          state = state.copyWith(
+              isDownloading: false); // Set loading state to false
+        }
+      });
+    } catch (e) {
+      DebugLog.error("Error: $e");
+      state =
+          state.copyWith(isDownloading: false); // Set loading state to false
+    }
+  }
+
   // Fetch the downloaded Flutter versions
   Future<void> fetchDownloadedFlutterVersions() async {
     state = state.copyWith(isFetchingDownloaded: true); // Update loading state

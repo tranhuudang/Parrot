@@ -93,8 +93,8 @@ class MainHomeBody extends ConsumerWidget {
             16.width,
             ElevatedButton.icon(
               icon: state.projectPath.isNotEmpty
-                  ? Icon(FluentIcons.edit_16_regular)
-                  : Icon(FluentIcons.folder_16_regular),
+                  ? const Icon(FluentIcons.edit_16_regular)
+                  : const Icon(FluentIcons.folder_16_regular),
               onPressed: () => notifier.selectProjectPath(),
               label: state.projectPath.isNotEmpty
                   ? Text('Edit'.i18n)
@@ -165,16 +165,16 @@ class MainHomeBody extends ConsumerWidget {
           onPressed: () => notifier.refreshAvailableDevices(),
           icon: const Icon(FluentIcons.arrow_sync_16_regular),
         ),
-        Spacer(),
+        const Spacer(),
         // Button navigator to a website that guides user how to configure FVM on their code editor
         TextButton.icon(
-          icon: Icon(FluentIcons.question_circle_16_regular),
+          icon: const Icon(FluentIcons.question_circle_16_regular),
           iconAlignment: IconAlignment.end,
           onPressed: () {
             openUrl(
-                'https://www.github.com/tranhuudang/parrot/docs/configure_your_code_editor/README.md');
+                'https://www.github.com/tranhuudang/parrot/tree/master/docs/configure_your_code_editor/README.md');
           },
-          label: Text('Configure your code editor'.i18n),
+          label: Text('Configure code editor'.i18n),
         ),
       ],
     );
@@ -285,7 +285,8 @@ class MainHomeBody extends ConsumerWidget {
             state.fvmVersion.isEmpty
                 ? FilledButton(
                     onPressed: () {
-                     openUrl('https://www.github.com/tranhuudang/parrot/docs/install_fvm/README.md');
+                      openUrl(
+                          'https://www.github.com/tranhuudang/parrot/tree/master/docs/install_fvm/README.md');
                     },
                     child: Text('Install FVM CLI'.i18n),
                   )

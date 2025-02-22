@@ -1,6 +1,8 @@
 import 'package:flutter_version_manager/src/core/router/route_name.dart';
 import 'package:flutter_version_manager/src/core/router/route_path.dart';
+import 'package:flutter_version_manager/src/presentation/dev_notes/note_taking_screen.dart';
 import 'package:flutter_version_manager/src/presentation/donation/donation_screen.dart';
+import 'package:flutter_version_manager/src/presentation/flutter_sdks/screens/flutter_sdks_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:i18n_extension/i18n_extension.dart';
 import '../../presentation/home/ui/screens/desktop_home_screen.dart';
@@ -12,11 +14,13 @@ final _shellNavigatorSettingKey =
     GlobalKey<NavigatorState>(debugLabel: 'Setting');
 final _shellNavigatorDonationKey =
     GlobalKey<NavigatorState>(debugLabel: 'donation');
+    final _shellFlutterSDKsKey =
+    GlobalKey<NavigatorState>(debugLabel: 'FlutterSDKs');
 final _shellNavigatorInfoKey = GlobalKey<NavigatorState>(debugLabel: 'Info');
 final _shellNavigatorDashboardKey =
     GlobalKey<NavigatorState>(debugLabel: 'Dashboard');
-final _shellNavigatorDesktopAccountKey =
-    GlobalKey<NavigatorState>(debugLabel: 'DesktopAccount');
+final _shellNavigatorNoteTakingKey =
+    GlobalKey<NavigatorState>(debugLabel: 'NoteTaking');
 final globalNavigationShellKey =
     GlobalKey<NavigatorState>(debugLabel: 'GlobalNavigationShell');
 late StatefulNavigationShell globalNavigationShell;
@@ -55,16 +59,16 @@ GoRouter routerConfigDesktop = GoRouter(
             ),
           ],
         ),
-        // 1 account branch
+        // 1 note taking branch
         StatefulShellBranch(
-          navigatorKey: _shellNavigatorDesktopAccountKey,
+          navigatorKey: _shellNavigatorNoteTakingKey,
           routes: [
             // top route inside branch
             GoRoute(
-              name: RouteName.desktopUserSettings,
-              path: RoutePath.desktopUserSettings,
+              name: RouteName.noteTaking,
+              path: RoutePath.noteTaking,
               pageBuilder: (context, state) {
-                return NoTransitionPage(child: I18n(child: Container()));
+                return NoTransitionPage(child: I18n(child: const NoteEditorScreen()));
               },
               routes: const [],
             ),
@@ -115,19 +119,19 @@ GoRouter routerConfigDesktop = GoRouter(
           ],
         ),
         // 5 place holder
-        // StatefulShellBranch(
-        //   navigatorKey: _shellNavigatorPlaceHolderKey,
-        //   routes: [
-        //     // top route inside branch
-        //     GoRoute(
-        //       name: RouteName.infos,
-        //       path: RoutePath.infos,
-        //       pageBuilder: (context, state) {
-        //         return NoTransitionPage(child: I18n(child: const SizedBox.shrink()));
-        //       },
-        //     ),
-        //   ],
-        // ),
+        StatefulShellBranch(
+          navigatorKey: _shellFlutterSDKsKey,
+          routes: [
+            // top route inside branch
+            GoRoute(
+              name: RouteName.flutterSDKs,
+              path: RoutePath.flutterSDKs,
+              pageBuilder: (context, state) {
+                return NoTransitionPage(child: I18n(child: const FlutterSDKReleasesScreen()));
+              },
+            ),
+          ],
+        ),
       ],
     ),
   ],

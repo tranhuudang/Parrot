@@ -24,6 +24,7 @@ class MainHomeState with _$MainHomeState {
     required List<String> availablePlatforms,
     required bool isRunning,
     required bool isHotReloading,
+    required double cacheSize,
   }) = _MainHomeState;
 
   factory MainHomeState.initial() => const MainHomeState(
@@ -45,5 +46,6 @@ class MainHomeState with _$MainHomeState {
         isHotReloading: false,
         selectedPlatform: '',
         availablePlatforms: [],
+        cacheSize: 0,
       );
 }

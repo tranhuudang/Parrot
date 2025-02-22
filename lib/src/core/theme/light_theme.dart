@@ -1,15 +1,12 @@
-
-
 import 'package:flutter_version_manager/src/presentation/presentation.dart';
 import 'package:flutter/services.dart';
 
-import '../core.dart';
 
-const lightThemeBackgroundColor = Color(0xfffffef5);
+const lightThemeBackgroundColor = Color(0xffffffff);
 
 ThemeData lightTheme({required ColorScheme colorScheme}) {
   return ThemeData(
-    scaffoldBackgroundColor: isWindows ? colorScheme.surface : lightThemeBackgroundColor,
+    scaffoldBackgroundColor: lightThemeBackgroundColor,
     cardTheme: CardTheme(
       color: colorScheme.surfaceContainerLow,
       margin: const EdgeInsets.only(bottom: 8),
@@ -20,9 +17,12 @@ ThemeData lightTheme({required ColorScheme colorScheme}) {
     appBarTheme: AppBarTheme(
       titleSpacing: 0,
       //iconTheme: IconThemeData(color: colorScheme.primary),
-      titleTextStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: colorScheme.onSurface),
+      titleTextStyle: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: colorScheme.onSurface),
       centerTitle: false,
-      backgroundColor: isWindows ? colorScheme.surface : lightThemeBackgroundColor,
+      backgroundColor: lightThemeBackgroundColor,
       systemOverlayStyle: const SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark,
         statusBarBrightness: Brightness.light,

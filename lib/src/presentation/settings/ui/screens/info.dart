@@ -1,6 +1,5 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_version_manager/src/core/utils/launchUrl.dart';
-import 'package:flutter_version_manager/src/presentation/donation/donation_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_version_manager/src/presentation/presentation.dart';
 import 'package:flutter_version_manager/src/core/core.dart';
@@ -11,18 +10,23 @@ class InfoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: const CustomBackButton(),
-        title: CustomTitle(
-            title: 'About'.i18n, iconData: FluentIcons.info_12_regular),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
+      body: Column(
         children: [
-          _buildAboutSection(context),
-          _buildLicensesSection(context),
-          _buildPrivacyPolicySection(context),
-          30.height,
+          CustomAppBar(
+            title: 'About'.i18n,
+            children: const [],
+          ),
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                _buildAboutSection(context),
+                _buildLicensesSection(context),
+                _buildPrivacyPolicySection(context),
+                30.height,
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -41,7 +45,7 @@ class InfoView extends StatelessWidget {
             ),
             8.height,
             Text(
-             "${DefaultSettings.appShortName} | ${DefaultSettings.appTitleDescription}",
+              "${DefaultSettings.appShortName} | ${DefaultSettings.appTitleDescription}",
               style: context.theme.textTheme.titleLarge?.copyWith(
                   color: context.theme.colorScheme.onSurface,
                   fontWeight: FontWeight.bold),
@@ -63,7 +67,10 @@ class InfoView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _buildIconButton(
-                icon: const Icon(FontAwesomeIcons.linkedin, size: 20,),
+                icon: const Icon(
+                  FontAwesomeIcons.linkedin,
+                  size: 20,
+                ),
                 url: 'https://www.linkedin.com/in/dang-tran-huu/'),
             _buildIconButton(
                 icon: const Icon(
@@ -72,7 +79,10 @@ class InfoView extends StatelessWidget {
                 ),
                 url: 'https://github.com/tranhuudang'),
             _buildIconButton(
-                icon: const Icon(FluentIcons.mail_20_regular, size: 24,),
+                icon: const Icon(
+                  FluentIcons.mail_20_regular,
+                  size: 24,
+                ),
                 url: 'mailto:dt148f148@gmail.com'),
           ],
         ),
@@ -138,7 +148,7 @@ class InfoView extends StatelessWidget {
   // Helper function to create IconButtons with URL launching
   Widget _buildIconButton({required Icon icon, required String url}) {
     return IconButton(
-        onPressed: ()  {
+        onPressed: () {
           openUrl(url);
         },
         icon: icon);

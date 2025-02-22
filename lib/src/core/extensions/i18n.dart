@@ -27,7 +27,6 @@ extension Localization on Object {
   // },
 
   static final _t = Translations.byId<Object>('en_us', {
-
     'Have feedback or suggestions for us?': {
       'en_us': 'Have feedback or suggestions for us?',
       'vi_vi': 'Bạn có góp ý hoặc đề xuất cho chúng tôi không?',
@@ -38,22 +37,18 @@ extension Localization on Object {
       'vi_vi': 'Có gì mới?',
       'zh_cn': '有什么新内容？'
     },
-
     'Feedback': {'en_us': 'Feedback', 'vi_vi': 'Góp ý', 'zh_cn': '反馈'},
     'Type your report here': {
       'en_us': 'Type your report here',
       'vi_vi': 'Nhập phản hồi của bạn tại đây',
       'zh_cn': '在此输入您的报告'
     },
-
     'Rate us': {'en_us': 'Rate us', 'vi_vi': 'Đánh giá', 'zh_cn': '给我们评分'},
-
     "We'd love to hear your feedback!": {
       'en_us': "We'd love to hear your feedback!",
       'vi_vi': 'Chúng tôi rất muốn nghe phản hồi của bạn!',
       'zh_cn': '我们很想听到您的反馈！'
     },
-
     'All rights reserved.': {
       'en_us': 'All rights reserved.',
       'vi_vi': 'Mọi quyền được bảo lưu.',
@@ -64,9 +59,7 @@ extension Localization on Object {
       'vi_vi': 'Đã có mặt ở',
       'zh_cn': '可用于'
     },
-
     'About': {'en_us': 'About', 'vi_vi': 'Thông tin', 'zh_cn': '关于'},
-
     'Restore the settings to their default as when the application was first installed.':
         {
       'en_us':
@@ -157,7 +150,6 @@ extension Localization on Object {
       'vi_vi': 'Chọn một ngôn ngữ',
       'zh_cn': '选择一种语言'
     },
-
     'Light mode': {'en_us': 'Light', 'vi_vi': 'Sáng', 'zh_cn': '浅色模式'},
     'Dark mode': {'en_us': 'Dark', 'vi_vi': 'Tối', 'zh_cn': '深色模式'},
     'Adaptive': {'en_us': 'Adaptive', 'vi_vi': 'Tự động', 'zh_cn': '自适应'},
@@ -168,7 +160,6 @@ extension Localization on Object {
       'vi_vi': 'Tùy chỉnh',
       'zh_cn': '偏好设置'
     },
-
     'Help Us Improve': {
       'en_us': 'Help Us Improve',
       'vi_vi': 'Phản hồi',
@@ -206,7 +197,6 @@ extension Localization on Object {
     },
     'or': {'en_us': 'or', 'vi_vi': 'hoặc', 'zh_cn': '或'},
     'Donate': {'en_us': 'Donate', 'vi_vi': 'Quyên góp', 'zh_cn': '捐款'},
-
     "*You must install FVM CLI to use this app.": {
       "en_us": "*You must install FVM CLI to use this app.",
       "vi_vi": "*Bạn phải cài đặt FVM CLI để sử dụng ứng dụng này.",
@@ -277,6 +267,12 @@ extension Localization on Object {
       "vi_vi": "Cài đặt FVM CLI",
       "zh_cn": "安装 FVM CLI"
     },
+    "Configure code editor": {
+      'en_us': "Configure code editor",
+      'vi_vi': 'Cấu hình trình soạn code',
+      'zh_cn': '配置代码编辑器'
+    },
+    "Edit": {'en_us': "Edit", 'vi_vi': 'Chỉnh sửa', 'zh_cn': '编辑'}
   });
 
   String get i18n => localize(this, _t);

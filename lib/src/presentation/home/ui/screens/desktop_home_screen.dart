@@ -65,7 +65,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
   Row buildAppHeader(BuildContext context) {
     return Row(children: [
       Expanded(
-        child: Container(
+        child: SizedBox(
           height: 109,
           // decoration: BoxDecoration(
           //   gradient: LinearGradient(
@@ -127,15 +127,15 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.only(left: 8),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          8.height,
+                          3.height,
                           Row(
                             children: [
                               Text(
-                                "${DefaultSettings.appShortName}",
+                                DefaultSettings.appShortName,
                                 style: context.theme.textTheme.titleMedium,
                               ),
                               Text(
@@ -145,7 +145,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                               Opacity(
                                 opacity: .5,
                                 child: Text(
-                                  "${DefaultSettings.appTitleDescription.i18n}",
+                                  DefaultSettings.appTitleDescription.i18n,
                                   style: context.theme.textTheme.titleMedium,
                                 ),
                               ),
@@ -165,8 +165,8 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                                 MouseRegion(
                                   cursor: SystemMouseCursors.click,
                                   child: GestureDetector(
-                                    onTap: () =>
-                                        openUrl('https://github.com/tranhuudang'),
+                                    onTap: () => openUrl(
+                                        'https://github.com/tranhuudang'),
                                     child: const Icon(
                                       FontAwesomeIcons.github,
                                       size: 16,
@@ -181,8 +181,8 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                                         FluentIcons.mail_20_regular,
                                         size: 20,
                                       ),
-                                      onTap: () =>
-                                          openUrl('mailto:dt148f148@gmail.com')),
+                                      onTap: () => openUrl(
+                                          'mailto:dt148f148@gmail.com')),
                                 ),
                               ],
                             ),

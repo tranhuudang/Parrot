@@ -68,6 +68,7 @@ dependencies:
   riverpod: ^2.6.1
   flutter_riverpod: ^2.6.1
   cached_network_svg_image: ^1.2.0
+  flutter_quill: ^10.8.5
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -87,8 +87,8 @@ class _DesktopNavigationFrameState extends State<DesktopNavigationFrame>
                           LocalDirectory.appLogo,
                         ),
                       )),
-                  Text(
-                    "${DefaultSettings.appShortName}",
+                  const Text(
+                    DefaultSettings.appShortName,
                   ),
                   const Spacer(),
                   IconButton(
@@ -105,7 +105,10 @@ class _DesktopNavigationFrameState extends State<DesktopNavigationFrame>
                     selectedIndex: globalNavigationShell.currentIndex,
                     onDestinationSelected: goBranch,
                   ),
-                  VerticalDivider(thickness: .5, width: .5,),
+                  const VerticalDivider(
+                    thickness: .5,
+                    width: .5,
+                  ),
                   Expanded(
                     child: widget.navigationShell,
                   ),

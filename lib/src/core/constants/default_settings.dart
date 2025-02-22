@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_version_manager/src/core/core.dart';
 import '../../domain/domain.dart';
 
 class DefaultSettings {

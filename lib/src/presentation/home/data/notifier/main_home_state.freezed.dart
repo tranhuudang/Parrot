@@ -35,6 +35,7 @@ mixin _$MainHomeState {
   List<String> get availablePlatforms => throw _privateConstructorUsedError;
   bool get isRunning => throw _privateConstructorUsedError;
   bool get isHotReloading => throw _privateConstructorUsedError;
+  double get cacheSize => throw _privateConstructorUsedError;
 
   /// Create a copy of MainHomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -67,7 +68,8 @@ abstract class $MainHomeStateCopyWith<$Res> {
       String selectedPlatform,
       List<String> availablePlatforms,
       bool isRunning,
-      bool isHotReloading});
+      bool isHotReloading,
+      double cacheSize});
 }
 
 /// @nodoc
@@ -103,6 +105,7 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
     Object? availablePlatforms = null,
     Object? isRunning = null,
     Object? isHotReloading = null,
+    Object? cacheSize = null,
   }) {
     return _then(_value.copyWith(
       fvmVersion: null == fvmVersion
@@ -177,6 +180,10 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
           ? _value.isHotReloading
           : isHotReloading // ignore: cast_nullable_to_non_nullable
               as bool,
+      cacheSize: null == cacheSize
+          ? _value.cacheSize
+          : cacheSize // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
@@ -207,7 +214,8 @@ abstract class _$$MainHomeStateImplCopyWith<$Res>
       String selectedPlatform,
       List<String> availablePlatforms,
       bool isRunning,
-      bool isHotReloading});
+      bool isHotReloading,
+      double cacheSize});
 }
 
 /// @nodoc
@@ -241,6 +249,7 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
     Object? availablePlatforms = null,
     Object? isRunning = null,
     Object? isHotReloading = null,
+    Object? cacheSize = null,
   }) {
     return _then(_$MainHomeStateImpl(
       fvmVersion: null == fvmVersion
@@ -315,6 +324,10 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
           ? _value.isHotReloading
           : isHotReloading // ignore: cast_nullable_to_non_nullable
               as bool,
+      cacheSize: null == cacheSize
+          ? _value.cacheSize
+          : cacheSize // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -340,7 +353,8 @@ class _$MainHomeStateImpl implements _MainHomeState {
       required this.selectedPlatform,
       required final List<String> availablePlatforms,
       required this.isRunning,
-      required this.isHotReloading})
+      required this.isHotReloading,
+      required this.cacheSize})
       : _availableVersions = availableVersions,
         _downloadedFlutterVersions = downloadedFlutterVersions,
         _commandOutput = commandOutput,
@@ -409,10 +423,12 @@ class _$MainHomeStateImpl implements _MainHomeState {
   final bool isRunning;
   @override
   final bool isHotReloading;
+  @override
+  final double cacheSize;
 
   @override
   String toString() {
-    return 'MainHomeState(fvmVersion: $fvmVersion, availableVersions: $availableVersions, selectedOnlineVersion: $selectedOnlineVersion, downloadedFlutterVersions: $downloadedFlutterVersions, selectedVersion: $selectedVersion, commandOutput: $commandOutput, isCheckingFvm: $isCheckingFvm, isInstallingFvm: $isInstallingFvm, isFetchingVersions: $isFetchingVersions, isDownloading: $isDownloading, isFetchingDownloaded: $isFetchingDownloaded, isSwitching: $isSwitching, isGettingAvailableDevices: $isGettingAvailableDevices, projectPath: $projectPath, selectedPlatform: $selectedPlatform, availablePlatforms: $availablePlatforms, isRunning: $isRunning, isHotReloading: $isHotReloading)';
+    return 'MainHomeState(fvmVersion: $fvmVersion, availableVersions: $availableVersions, selectedOnlineVersion: $selectedOnlineVersion, downloadedFlutterVersions: $downloadedFlutterVersions, selectedVersion: $selectedVersion, commandOutput: $commandOutput, isCheckingFvm: $isCheckingFvm, isInstallingFvm: $isInstallingFvm, isFetchingVersions: $isFetchingVersions, isDownloading: $isDownloading, isFetchingDownloaded: $isFetchingDownloaded, isSwitching: $isSwitching, isGettingAvailableDevices: $isGettingAvailableDevices, projectPath: $projectPath, selectedPlatform: $selectedPlatform, availablePlatforms: $availablePlatforms, isRunning: $isRunning, isHotReloading: $isHotReloading, cacheSize: $cacheSize)';
   }
 
   @override
@@ -456,30 +472,34 @@ class _$MainHomeStateImpl implements _MainHomeState {
             (identical(other.isRunning, isRunning) ||
                 other.isRunning == isRunning) &&
             (identical(other.isHotReloading, isHotReloading) ||
-                other.isHotReloading == isHotReloading));
+                other.isHotReloading == isHotReloading) &&
+            (identical(other.cacheSize, cacheSize) ||
+                other.cacheSize == cacheSize));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      fvmVersion,
-      const DeepCollectionEquality().hash(_availableVersions),
-      selectedOnlineVersion,
-      const DeepCollectionEquality().hash(_downloadedFlutterVersions),
-      selectedVersion,
-      const DeepCollectionEquality().hash(_commandOutput),
-      isCheckingFvm,
-      isInstallingFvm,
-      isFetchingVersions,
-      isDownloading,
-      isFetchingDownloaded,
-      isSwitching,
-      isGettingAvailableDevices,
-      projectPath,
-      selectedPlatform,
-      const DeepCollectionEquality().hash(_availablePlatforms),
-      isRunning,
-      isHotReloading);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        fvmVersion,
+        const DeepCollectionEquality().hash(_availableVersions),
+        selectedOnlineVersion,
+        const DeepCollectionEquality().hash(_downloadedFlutterVersions),
+        selectedVersion,
+        const DeepCollectionEquality().hash(_commandOutput),
+        isCheckingFvm,
+        isInstallingFvm,
+        isFetchingVersions,
+        isDownloading,
+        isFetchingDownloaded,
+        isSwitching,
+        isGettingAvailableDevices,
+        projectPath,
+        selectedPlatform,
+        const DeepCollectionEquality().hash(_availablePlatforms),
+        isRunning,
+        isHotReloading,
+        cacheSize
+      ]);
 
   /// Create a copy of MainHomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -509,7 +529,8 @@ abstract class _MainHomeState implements MainHomeState {
       required final String selectedPlatform,
       required final List<String> availablePlatforms,
       required final bool isRunning,
-      required final bool isHotReloading}) = _$MainHomeStateImpl;
+      required final bool isHotReloading,
+      required final double cacheSize}) = _$MainHomeStateImpl;
 
   @override
   String get fvmVersion;
@@ -547,6 +568,8 @@ abstract class _MainHomeState implements MainHomeState {
   bool get isRunning;
   @override
   bool get isHotReloading;
+  @override
+  double get cacheSize;
 
   /// Create a copy of MainHomeState
   /// with the given fields replaced by the non-null parameter values.
