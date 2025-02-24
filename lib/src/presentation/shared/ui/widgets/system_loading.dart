@@ -19,7 +19,7 @@ class SystemLoadingIndicator extends StatelessWidget {
           ),
         ),
         if (isLoading)
-          Center(
+          const Center(
             child: SizedBox(
                 height: 30, width: 30, child: CircularProgressIndicator()),
           )

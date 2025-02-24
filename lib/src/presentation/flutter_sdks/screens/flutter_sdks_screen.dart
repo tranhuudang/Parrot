@@ -37,7 +37,7 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
                       Row(
                         children: [
                           Text(
-                            'Cache size: ${state.cacheSize}',
+                            '${'Cache size'.i18n}: ${state.cacheSize}',
                             style: context.theme.textTheme.labelMedium,
                           ),
                           4.width,
@@ -140,7 +140,10 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
                               height: double.infinity,
                               child: Row(
                                 children: [
-                                  Text('Release date'.i18n),
+                                  Expanded(
+                                      child: Text('Release date'.i18n,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1)),
                                 ],
                               ),
                             ),
@@ -238,7 +241,7 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
                                             state.downloadButtonIndex ==
                                                 index) ...[
                                           Text(
-                                            'Fetching from server...',
+                                            'Fetching from server...'.i18n,
                                             style: TextStyle(
                                                 color:
                                                     context.theme.dividerColor,
@@ -346,19 +349,19 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
                 8.height,
                 8.height,
                 Text(
-                  'Dart SDK version: ${onlineFlutterSDK.dartSdkVersion}',
+                  '${'Dart SDK version:'.i18n} ${onlineFlutterSDK.dartSdkVersion}',
                   style: context.theme.textTheme.labelMedium,
                 ),
                 8.height,
                 Text(
-                  'Dart SDK architecture: ${onlineFlutterSDK.dartSdkArch}',
+                  '${'Dart SDK architecture:'.i18n} ${onlineFlutterSDK.dartSdkArch}',
                   style: context.theme.textTheme.labelMedium,
                 ),
                 8.height,
                 Row(
                   children: [
                     Text(
-                      'Download:',
+                      'Download:'.i18n,
                       style: context.theme.textTheme.labelMedium,
                     ),
                     8.width,

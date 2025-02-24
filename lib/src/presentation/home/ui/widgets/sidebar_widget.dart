@@ -49,7 +49,7 @@ class _SidebarWidgetState extends State<SidebarWidget> {
               ),
               _buildSidebarItem(
                   icon: FluentIcons.drawer_arrow_download_20_regular,
-                  label: 'Flutter SDKs'.i18n,
+                  label: 'Flutter SDKs',
                   selectedIcon: FluentIcons.drawer_arrow_download_24_filled,
                   index: 5),
               const Divider(

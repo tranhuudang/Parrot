@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:parrot/src/core/core.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({super.key, required this.children, required this.title});
+  const CustomAppBar(
+      {super.key, required this.children, required this.title, this.leading});
   final List<Widget> children;
   final String title;
+  final Widget? leading;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,6 +23,10 @@ class CustomAppBar extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          if (leading != null) ...[
+            leading!,
+            16.width,
+          ],
           Text(
             title,
             style: context.theme.textTheme.titleMedium,

@@ -1,5 +1,4 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:parrot/src/core/configs/flavor.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:parrot/src/presentation/presentation.dart';
 import 'package:parrot/src/core/core.dart';
@@ -13,6 +12,7 @@ class InfoView extends StatelessWidget {
       body: Column(
         children: [
           CustomAppBar(
+            leading: const Icon(FluentIcons.info_16_regular),
             title: 'About'.i18n,
             children: const [],
           ),

@@ -11,4 +11,5 @@ class OnlineDirectory {
       'https://www.github.com/tranhuudang/parrot/tree/master/docs/configure_your_code_editor/README.md';
   static const String flutterReleaseNotes =
       'https://github.com/flutter/flutter/releases/tag/';
+  static const String parrotProMicrosoftLink = 'ms-windows-store://pdp/?productid=9MXQHNMCC15Q';
 }

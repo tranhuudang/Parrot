@@ -190,10 +190,10 @@ extension Localization on Object {
     },
     'description-donation': {
       'en_us':
-          'When 2 percent of users donate, more developers will be supported to work on UI and tools. Free and Open Source for everyone, forever.',
+          'When 2% of users donate, I will have support to work, improve the interface, and develop more tools. This app can remain free forever and open-source for everyone.',
       'vi_vi':
-          'Khi 2 phần trăm người dùng quyên góp, nhiều nhà phát triển sẽ được hỗ trợ để làm việc, cải thiện giao diện và phát triển thêm công cụ. Ứng dụng miễn phí mãi mãi và mã nguồn mở dành cho mọi người.',
-      'zh_cn': '当2%的用户捐款时，会有更多的开发人员得到支持来开发界面和工具。永远为每个人免费和开源。'
+          'Khi 2 phần trăm người dùng quyên góp, mình sẽ được hỗ trợ để làm việc, cải thiện giao diện và phát triển thêm công cụ. Ứng dụng này sẽ có thể miễn phí mãi mãi và mã nguồn mở dành cho tất cả mọi người.',
+      'zh_cn': '当 2% 的用户捐款时，我将获得支持来工作、改进界面并开发更多工具。这个应用可以永远免费，并对所有人开源。'
     },
     'or': {'en_us': 'or', 'vi_vi': 'hoặc', 'zh_cn': '或'},
     'Donate': {'en_us': 'Donate', 'vi_vi': 'Quyên góp', 'zh_cn': '捐款'},
@@ -272,7 +272,65 @@ extension Localization on Object {
       'vi_vi': 'Cấu hình trình soạn code',
       'zh_cn': '配置代码编辑器'
     },
-    "Edit": {'en_us': "Edit", 'vi_vi': 'Chỉnh sửa', 'zh_cn': '编辑'}
+    "Edit": {'en_us': "Edit", 'vi_vi': 'Chỉnh sửa', 'zh_cn': '编辑'},
+    "I need your help": {
+      'en_us': "I need your help",
+      'vi_vi': "Mình cần sự giúp đỡ của bạn",
+      'zh_cn': "我需要你的帮助"
+    },
+    "Dashboard": {
+      'en_us': "Dashboard",
+      'vi_vi': "Điều khiển",
+      'zh_cn': "仪表板"
+    },
+    "or buy Parrot Pro at": {
+      'en_us': "or buy Parrot Pro at",
+      'vi_vi': "hoặc mua Parrot Pro tại",
+      'zh_cn': "或在此购买 Parrot Pro"
+    },
+    "Cache size": {
+      'en_us': "Cache size",
+      'vi_vi': "Kích thước bộ nhớ đệm",
+      'zh_cn': "缓存大小"
+    },
+    "Available versions": {
+      'en_us': "Available versions",
+      'vi_vi': "Các phiên bản có sẵn",
+      'zh_cn': "可用版本"
+    },
+    "Channel": {'en_us': "Channel", 'vi_vi': "Kênh", 'zh_cn': "通道"},
+    "Release date": {
+      'en_us': "Release date",
+      'vi_vi': "Ngày phát hành",
+      'zh_cn': "发布日期"
+    },
+    "Fetching from server...": {
+      'en_us': "Fetching from server...",
+      'vi_vi': "Đang lấy dữ liệu từ máy chủ...",
+      'zh_cn': "正在从服务器获取数据..."
+    },
+    "Version:": {'en_us': "Version:", 'vi_vi': "Phiên bản:", 'zh_cn': "版本:"},
+    "Dart SDK version:": {
+      'en_us': "Dart SDK version:",
+      'vi_vi': "Phiên bản Dart SDK:",
+      'zh_cn': "Dart SDK 版本:"
+    },
+    "Dart SDK architecture:": {
+      'en_us': "Dart SDK architecture:",
+      'vi_vi': "Kiến trúc Dart SDK:",
+      'zh_cn': "Dart SDK 架构:"
+    },
+    "Download:": {'en_us': "Download:", 'vi_vi': "Tải xuống:", 'zh_cn': "下载:"},
+    "Download to Parrot": {
+      'en_us': "Download to Parrot",
+      'vi_vi': "Tải xuống trong Parrot",
+      'zh_cn': "下载到 Parrot"
+    },
+    "Download zip": {
+      'en_us': "Download zip",
+      'vi_vi': "Tải xuống tệp zip",
+      'zh_cn': "下载 zip 文件"
+    }
   });
 
   String get i18n => localize(this, _t);

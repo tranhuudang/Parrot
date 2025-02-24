@@ -1,4 +1,6 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:parrot/src/core/core.dart';
+import 'package:parrot/src/presentation/donation/widgets/microsoft_badge_widget.dart';
 import 'package:parrot/src/presentation/donation/widgets/paypal_donation_widget.dart';
 
 import '../presentation.dart';
@@ -18,6 +20,7 @@ class _DonationScreenState extends State<DonationScreen> {
       body: Column(
         children: [
           CustomAppBar(
+            leading: const Icon(FluentIcons.handshake_16_regular),
             title: 'Development Fund'.i18n,
             children: const [],
           ),
@@ -57,10 +60,14 @@ class _DonationScreenState extends State<DonationScreen> {
                                   child:
                                       Image.asset('assets/donation/bmc_qr.png')),
                             ),
-                            const SizedBox(height: 20),
+                            20.height,
                             DividerWithText(text: 'or'.i18n),
                             16.height,
                             const PaypalDonationWidget(),
+                            16.height,
+                            DividerWithText(text: 'or buy Parrot Pro at'.i18n),
+                            16.height,
+                            MicrosoftBadgeWidget(),
                           ],
                         ),
                       )

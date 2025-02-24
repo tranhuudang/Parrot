@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parrot/src/presentation/presentation.dart';
 import 'package:parrot/src/core/core.dart';
@@ -12,6 +13,7 @@ class SettingsView extends StatelessWidget {
       body: Column(
         children: [
           CustomAppBar(
+            leading: const Icon(FluentIcons.settings_16_regular),
             title: 'Settings'.i18n,
             children: const [],
           ),

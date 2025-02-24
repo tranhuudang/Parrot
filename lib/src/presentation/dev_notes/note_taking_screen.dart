@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:parrot/src/core/core.dart';
@@ -93,6 +94,7 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
       body: Column(
         children: [
           CustomAppBar(
+            leading: const Icon(FluentIcons.notebook_16_regular),
             title: 'Dev Notes'.i18n,
             children: [
               Opacity(opacity: .5, child: Text('Auto-saved'.i18n)),

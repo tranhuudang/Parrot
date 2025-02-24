@@ -4,4 +4,5 @@ class LocalDirectory {
   static const String sharedPreferencesFileName = 'shared_preferences.json';
   static const String devNotesFileName = 'dev_note.json';
   static const String flutterLogo = 'assets/flutter.png';
+  static const String microsoftStoreBadge = 'assets/badges/ms-en-US-dark.svg';
 }

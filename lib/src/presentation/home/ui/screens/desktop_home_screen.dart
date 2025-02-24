@@ -1,6 +1,5 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parrot/src/core/configs/flavor.dart';
 import 'package:parrot/src/core/core.dart';
 import 'package:parrot/src/presentation/home/data/notifier/main_home_notifier.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

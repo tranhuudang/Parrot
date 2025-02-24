@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:parrot/src/core/configs/flavor.dart';
 import 'package:parrot/src/core/core.dart';
 import 'package:parrot/src/core/router/route_configurations_desktop.dart';
 import 'package:parrot/src/presentation/home/data/utils/upgrader_config.dart';
