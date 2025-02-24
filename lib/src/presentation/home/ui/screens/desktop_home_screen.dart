@@ -1,17 +1,19 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_version_manager/src/core/core.dart';
+import 'package:flutter_version_manager/src/presentation/home/data/notifier/main_home_notifier.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../presentation.dart';
 import '../widgets/main_home_body.dart';
 
-class DesktopHomeScreen extends StatefulWidget {
+class DesktopHomeScreen extends ConsumerStatefulWidget {
   const DesktopHomeScreen({super.key});
 
   @override
-  State<DesktopHomeScreen> createState() => _DesktopHomeScreenState();
+  ConsumerState<DesktopHomeScreen> createState() => _DesktopHomeScreenState();
 }
 
-class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
+class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
   @override
   void initState() {
     super.initState();
@@ -42,23 +44,30 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          buildAppHeader(context),
-          const Divider(
-            height: 0,
-            thickness: .5,
-          ),
-          // Control Section
-          const Expanded(
-              child: Padding(
-            padding: EdgeInsets.only(left: 16, right: 16),
-            child: MainHomeBody(),
-          )),
-        ],
-      ),
-    );
+    return Consumer(builder: (context, ref, _) {
+      final state = ref.watch(mainHomeProvider);
+
+      return Scaffold(
+        body: Column(
+          children: [
+            buildAppHeader(context),
+            const Divider(
+              height: 0,
+              thickness: .5,
+            ),
+            // Control Section
+            Expanded(
+                child: SystemLoadingIndicator(
+              isLoading: state.isDashboardScreenLoading,
+              child: const Padding(
+                padding: EdgeInsets.only(left: 16, right: 16),
+                child: MainHomeBody(),
+              ),
+            )),
+          ],
+        ),
+      );
+    });
   }
 
   Row buildAppHeader(BuildContext context) {

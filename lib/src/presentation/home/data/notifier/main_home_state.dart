@@ -8,6 +8,8 @@ part 'main_home_state.freezed.dart';
 @freezed
 class MainHomeState with _$MainHomeState {
   const factory MainHomeState({
+    required bool isFlutterSdksScreenLoading,
+    required bool isDashboardScreenLoading,
     required String fvmVersion,
     required List<OnlineFlutterSDK> onlineFlutterVersions,
     required String selectedOnlineVersion,
@@ -18,6 +20,7 @@ class MainHomeState with _$MainHomeState {
     required bool isInstallingFvm,
     required bool isFetchingVersions,
     required bool isDownloading,
+    required int downloadButtonIndex,
     required bool isFetchingDownloaded,
     required bool isSwitching,
     required bool isGettingAvailableDevices,
@@ -30,6 +33,8 @@ class MainHomeState with _$MainHomeState {
   }) = _MainHomeState;
 
   factory MainHomeState.initial() => const MainHomeState(
+        isFlutterSdksScreenLoading: false,
+        isDashboardScreenLoading: false,
         fvmVersion: '',
         onlineFlutterVersions: [],
         selectedOnlineVersion: '',
@@ -40,6 +45,7 @@ class MainHomeState with _$MainHomeState {
         isInstallingFvm: false,
         isFetchingVersions: false,
         isDownloading: false,
+        downloadButtonIndex: -1,
         isFetchingDownloaded: false,
         isSwitching: false,
         isGettingAvailableDevices: false,

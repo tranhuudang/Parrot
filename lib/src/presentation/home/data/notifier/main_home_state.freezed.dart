@@ -16,6 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$MainHomeState {
+  bool get isFlutterSdksScreenLoading => throw _privateConstructorUsedError;
+  bool get isDashboardScreenLoading => throw _privateConstructorUsedError;
   String get fvmVersion => throw _privateConstructorUsedError;
   List<OnlineFlutterSDK> get onlineFlutterVersions =>
       throw _privateConstructorUsedError;
@@ -28,6 +30,7 @@ mixin _$MainHomeState {
   bool get isInstallingFvm => throw _privateConstructorUsedError;
   bool get isFetchingVersions => throw _privateConstructorUsedError;
   bool get isDownloading => throw _privateConstructorUsedError;
+  int get downloadButtonIndex => throw _privateConstructorUsedError;
   bool get isFetchingDownloaded => throw _privateConstructorUsedError;
   bool get isSwitching => throw _privateConstructorUsedError;
   bool get isGettingAvailableDevices => throw _privateConstructorUsedError;
@@ -52,7 +55,9 @@ abstract class $MainHomeStateCopyWith<$Res> {
       _$MainHomeStateCopyWithImpl<$Res, MainHomeState>;
   @useResult
   $Res call(
-      {String fvmVersion,
+      {bool isFlutterSdksScreenLoading,
+      bool isDashboardScreenLoading,
+      String fvmVersion,
       List<OnlineFlutterSDK> onlineFlutterVersions,
       String selectedOnlineVersion,
       List<DownloadedFlutterSDK> downloadedFlutterSDKs,
@@ -62,6 +67,7 @@ abstract class $MainHomeStateCopyWith<$Res> {
       bool isInstallingFvm,
       bool isFetchingVersions,
       bool isDownloading,
+      int downloadButtonIndex,
       bool isFetchingDownloaded,
       bool isSwitching,
       bool isGettingAvailableDevices,
@@ -88,6 +94,8 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? isFlutterSdksScreenLoading = null,
+    Object? isDashboardScreenLoading = null,
     Object? fvmVersion = null,
     Object? onlineFlutterVersions = null,
     Object? selectedOnlineVersion = null,
@@ -98,6 +106,7 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
     Object? isInstallingFvm = null,
     Object? isFetchingVersions = null,
     Object? isDownloading = null,
+    Object? downloadButtonIndex = null,
     Object? isFetchingDownloaded = null,
     Object? isSwitching = null,
     Object? isGettingAvailableDevices = null,
@@ -109,6 +118,14 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
     Object? cacheSize = null,
   }) {
     return _then(_value.copyWith(
+      isFlutterSdksScreenLoading: null == isFlutterSdksScreenLoading
+          ? _value.isFlutterSdksScreenLoading
+          : isFlutterSdksScreenLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isDashboardScreenLoading: null == isDashboardScreenLoading
+          ? _value.isDashboardScreenLoading
+          : isDashboardScreenLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       fvmVersion: null == fvmVersion
           ? _value.fvmVersion
           : fvmVersion // ignore: cast_nullable_to_non_nullable
@@ -149,6 +166,10 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
           ? _value.isDownloading
           : isDownloading // ignore: cast_nullable_to_non_nullable
               as bool,
+      downloadButtonIndex: null == downloadButtonIndex
+          ? _value.downloadButtonIndex
+          : downloadButtonIndex // ignore: cast_nullable_to_non_nullable
+              as int,
       isFetchingDownloaded: null == isFetchingDownloaded
           ? _value.isFetchingDownloaded
           : isFetchingDownloaded // ignore: cast_nullable_to_non_nullable
@@ -198,7 +219,9 @@ abstract class _$$MainHomeStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String fvmVersion,
+      {bool isFlutterSdksScreenLoading,
+      bool isDashboardScreenLoading,
+      String fvmVersion,
       List<OnlineFlutterSDK> onlineFlutterVersions,
       String selectedOnlineVersion,
       List<DownloadedFlutterSDK> downloadedFlutterSDKs,
@@ -208,6 +231,7 @@ abstract class _$$MainHomeStateImplCopyWith<$Res>
       bool isInstallingFvm,
       bool isFetchingVersions,
       bool isDownloading,
+      int downloadButtonIndex,
       bool isFetchingDownloaded,
       bool isSwitching,
       bool isGettingAvailableDevices,
@@ -232,6 +256,8 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? isFlutterSdksScreenLoading = null,
+    Object? isDashboardScreenLoading = null,
     Object? fvmVersion = null,
     Object? onlineFlutterVersions = null,
     Object? selectedOnlineVersion = null,
@@ -242,6 +268,7 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
     Object? isInstallingFvm = null,
     Object? isFetchingVersions = null,
     Object? isDownloading = null,
+    Object? downloadButtonIndex = null,
     Object? isFetchingDownloaded = null,
     Object? isSwitching = null,
     Object? isGettingAvailableDevices = null,
@@ -253,6 +280,14 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
     Object? cacheSize = null,
   }) {
     return _then(_$MainHomeStateImpl(
+      isFlutterSdksScreenLoading: null == isFlutterSdksScreenLoading
+          ? _value.isFlutterSdksScreenLoading
+          : isFlutterSdksScreenLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isDashboardScreenLoading: null == isDashboardScreenLoading
+          ? _value.isDashboardScreenLoading
+          : isDashboardScreenLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       fvmVersion: null == fvmVersion
           ? _value.fvmVersion
           : fvmVersion // ignore: cast_nullable_to_non_nullable
@@ -293,6 +328,10 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
           ? _value.isDownloading
           : isDownloading // ignore: cast_nullable_to_non_nullable
               as bool,
+      downloadButtonIndex: null == downloadButtonIndex
+          ? _value.downloadButtonIndex
+          : downloadButtonIndex // ignore: cast_nullable_to_non_nullable
+              as int,
       isFetchingDownloaded: null == isFetchingDownloaded
           ? _value.isFetchingDownloaded
           : isFetchingDownloaded // ignore: cast_nullable_to_non_nullable
@@ -337,7 +376,9 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
 
 class _$MainHomeStateImpl implements _MainHomeState {
   const _$MainHomeStateImpl(
-      {required this.fvmVersion,
+      {required this.isFlutterSdksScreenLoading,
+      required this.isDashboardScreenLoading,
+      required this.fvmVersion,
       required final List<OnlineFlutterSDK> onlineFlutterVersions,
       required this.selectedOnlineVersion,
       required final List<DownloadedFlutterSDK> downloadedFlutterSDKs,
@@ -347,6 +388,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
       required this.isInstallingFvm,
       required this.isFetchingVersions,
       required this.isDownloading,
+      required this.downloadButtonIndex,
       required this.isFetchingDownloaded,
       required this.isSwitching,
       required this.isGettingAvailableDevices,
@@ -361,6 +403,10 @@ class _$MainHomeStateImpl implements _MainHomeState {
         _commandOutput = commandOutput,
         _availablePlatforms = availablePlatforms;
 
+  @override
+  final bool isFlutterSdksScreenLoading;
+  @override
+  final bool isDashboardScreenLoading;
   @override
   final String fvmVersion;
   final List<OnlineFlutterSDK> _onlineFlutterVersions;
@@ -402,6 +448,8 @@ class _$MainHomeStateImpl implements _MainHomeState {
   @override
   final bool isDownloading;
   @override
+  final int downloadButtonIndex;
+  @override
   final bool isFetchingDownloaded;
   @override
   final bool isSwitching;
@@ -429,7 +477,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
 
   @override
   String toString() {
-    return 'MainHomeState(fvmVersion: $fvmVersion, onlineFlutterVersions: $onlineFlutterVersions, selectedOnlineVersion: $selectedOnlineVersion, downloadedFlutterSDKs: $downloadedFlutterSDKs, selectedVersion: $selectedVersion, commandOutput: $commandOutput, isCheckingFvm: $isCheckingFvm, isInstallingFvm: $isInstallingFvm, isFetchingVersions: $isFetchingVersions, isDownloading: $isDownloading, isFetchingDownloaded: $isFetchingDownloaded, isSwitching: $isSwitching, isGettingAvailableDevices: $isGettingAvailableDevices, projectPath: $projectPath, selectedPlatform: $selectedPlatform, availablePlatforms: $availablePlatforms, isRunning: $isRunning, isHotReloading: $isHotReloading, cacheSize: $cacheSize)';
+    return 'MainHomeState(isFlutterSdksScreenLoading: $isFlutterSdksScreenLoading, isDashboardScreenLoading: $isDashboardScreenLoading, fvmVersion: $fvmVersion, onlineFlutterVersions: $onlineFlutterVersions, selectedOnlineVersion: $selectedOnlineVersion, downloadedFlutterSDKs: $downloadedFlutterSDKs, selectedVersion: $selectedVersion, commandOutput: $commandOutput, isCheckingFvm: $isCheckingFvm, isInstallingFvm: $isInstallingFvm, isFetchingVersions: $isFetchingVersions, isDownloading: $isDownloading, downloadButtonIndex: $downloadButtonIndex, isFetchingDownloaded: $isFetchingDownloaded, isSwitching: $isSwitching, isGettingAvailableDevices: $isGettingAvailableDevices, projectPath: $projectPath, selectedPlatform: $selectedPlatform, availablePlatforms: $availablePlatforms, isRunning: $isRunning, isHotReloading: $isHotReloading, cacheSize: $cacheSize)';
   }
 
   @override
@@ -437,6 +485,12 @@ class _$MainHomeStateImpl implements _MainHomeState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MainHomeStateImpl &&
+            (identical(other.isFlutterSdksScreenLoading,
+                    isFlutterSdksScreenLoading) ||
+                other.isFlutterSdksScreenLoading ==
+                    isFlutterSdksScreenLoading) &&
+            (identical(other.isDashboardScreenLoading, isDashboardScreenLoading) ||
+                other.isDashboardScreenLoading == isDashboardScreenLoading) &&
             (identical(other.fvmVersion, fvmVersion) ||
                 other.fvmVersion == fvmVersion) &&
             const DeepCollectionEquality()
@@ -457,12 +511,13 @@ class _$MainHomeStateImpl implements _MainHomeState {
                 other.isFetchingVersions == isFetchingVersions) &&
             (identical(other.isDownloading, isDownloading) ||
                 other.isDownloading == isDownloading) &&
+            (identical(other.downloadButtonIndex, downloadButtonIndex) ||
+                other.downloadButtonIndex == downloadButtonIndex) &&
             (identical(other.isFetchingDownloaded, isFetchingDownloaded) ||
                 other.isFetchingDownloaded == isFetchingDownloaded) &&
             (identical(other.isSwitching, isSwitching) ||
                 other.isSwitching == isSwitching) &&
-            (identical(other.isGettingAvailableDevices,
-                    isGettingAvailableDevices) ||
+            (identical(other.isGettingAvailableDevices, isGettingAvailableDevices) ||
                 other.isGettingAvailableDevices == isGettingAvailableDevices) &&
             (identical(other.projectPath, projectPath) ||
                 other.projectPath == projectPath) &&
@@ -481,6 +536,8 @@ class _$MainHomeStateImpl implements _MainHomeState {
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
+        isFlutterSdksScreenLoading,
+        isDashboardScreenLoading,
         fvmVersion,
         const DeepCollectionEquality().hash(_onlineFlutterVersions),
         selectedOnlineVersion,
@@ -491,6 +548,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
         isInstallingFvm,
         isFetchingVersions,
         isDownloading,
+        downloadButtonIndex,
         isFetchingDownloaded,
         isSwitching,
         isGettingAvailableDevices,
@@ -513,7 +571,9 @@ class _$MainHomeStateImpl implements _MainHomeState {
 
 abstract class _MainHomeState implements MainHomeState {
   const factory _MainHomeState(
-      {required final String fvmVersion,
+      {required final bool isFlutterSdksScreenLoading,
+      required final bool isDashboardScreenLoading,
+      required final String fvmVersion,
       required final List<OnlineFlutterSDK> onlineFlutterVersions,
       required final String selectedOnlineVersion,
       required final List<DownloadedFlutterSDK> downloadedFlutterSDKs,
@@ -523,6 +583,7 @@ abstract class _MainHomeState implements MainHomeState {
       required final bool isInstallingFvm,
       required final bool isFetchingVersions,
       required final bool isDownloading,
+      required final int downloadButtonIndex,
       required final bool isFetchingDownloaded,
       required final bool isSwitching,
       required final bool isGettingAvailableDevices,
@@ -533,6 +594,10 @@ abstract class _MainHomeState implements MainHomeState {
       required final bool isHotReloading,
       required final String cacheSize}) = _$MainHomeStateImpl;
 
+  @override
+  bool get isFlutterSdksScreenLoading;
+  @override
+  bool get isDashboardScreenLoading;
   @override
   String get fvmVersion;
   @override
@@ -553,6 +618,8 @@ abstract class _MainHomeState implements MainHomeState {
   bool get isFetchingVersions;
   @override
   bool get isDownloading;
+  @override
+  int get downloadButtonIndex;
   @override
   bool get isFetchingDownloaded;
   @override

@@ -24,10 +24,12 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
 
   // Initialize the home page by checking FVM installation and fetching versions
   Future<void> initializeHome() async {
+    state = state.copyWith(isDashboardScreenLoading: true);
     await checkFvmInstallation();
     await fetchOnlineFlutterVersions();
     await fetchDownloadedFlutterVersions();
     await gettingSavedCurrentProjectPath();
+    state = state.copyWith(isDashboardScreenLoading: false);
   }
 
   // Check if FVM is installed and update the state
@@ -44,6 +46,14 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       state =
           state.copyWith(isCheckingFvm: false); // Set loading state to false
     }
+  }
+
+  // Reload the Flutter SDKs screen
+  Future<void> reloadFlutterSdksScreen() async {
+    state = state.copyWith(isFlutterSdksScreenLoading: true);
+    await fetchOnlineFlutterVersions();
+    await fetchDownloadedFlutterVersions();
+    state = state.copyWith(isFlutterSdksScreenLoading: false);
   }
 
   // Fetch online Flutter SDK versions
@@ -106,8 +116,11 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
   }
 
   // Download the selected Flutter version
-  Future<void> downloadFlutterVersionByName(String version) async {
-    state = state.copyWith(isDownloading: true); // Update loading state
+  Future<void> downloadFlutterVersionByName(String version,
+      {int downloadButtonIndex = -1}) async {
+    state = state.copyWith(
+        isDownloading: true,
+        downloadButtonIndex: downloadButtonIndex); // Update loading state
     try {
       Process process = await Process.start('fvm', ['install', version]);
       process.stdout.transform(utf8.decoder).listen((data) {
@@ -118,13 +131,11 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
             commandOutput: newList); // Update state with the new list
       });
       process.exitCode.then((exitCode) {
-        if (exitCode == 0) {
-          state = state.copyWith(
-              isDownloading: false); // Set loading state to false
-        } else {
-          state = state.copyWith(
-              isDownloading: false); // Set loading state to false
-        }
+        state = state.copyWith(
+          isDownloading: false,
+        ); // Set loading state to false
+        // Trigger a refresh of the Flutter SDKs screen
+        reloadFlutterSdksScreen();
       });
     } catch (e) {
       DebugLog.error("Error: $e");

@@ -3,8 +3,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'flutter_versions.freezed.dart';
 part 'flutter_versions.g.dart';
 
-@freezed
+// This @Freezed anotation instead of @freezed allow me to custom this class to not generating toJson method
+@Freezed(toJson: false)
 class OnlineFlutterSDK with _$OnlineFlutterSDK {
+  // Private constructor is required when using @Freezed anotation instead of @freezed
+  const OnlineFlutterSDK._();
   const factory OnlineFlutterSDK({
     required String hash,
     required String channel,
@@ -29,6 +32,20 @@ class OnlineFlutterSDK with _$OnlineFlutterSDK {
       channelName: json['channelName'] as String,
       archiveUrl: json['archiveUrl'] as String,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'hash': hash,
+      'channel': channel,
+      'version': version,
+      'release_date': releaseDate,
+      'sha256': sha256,
+      'dart_sdk_arch': dartSdkArch,
+      'dart_sdk_version': dartSdkVersion,
+      'channelName': channelName,
+      'archiveUrl': archiveUrl,
+    };
   }
 }
 

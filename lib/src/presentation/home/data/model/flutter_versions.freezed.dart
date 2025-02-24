@@ -203,7 +203,7 @@ class __$$OnlineFlutterSDKImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OnlineFlutterSDKImpl implements _OnlineFlutterSDK {
+class _$OnlineFlutterSDKImpl extends _OnlineFlutterSDK {
   const _$OnlineFlutterSDKImpl(
       {required this.hash,
       required this.channel,
@@ -213,7 +213,8 @@ class _$OnlineFlutterSDKImpl implements _OnlineFlutterSDK {
       required this.dartSdkArch,
       required this.dartSdkVersion,
       required this.channelName,
-      required this.archiveUrl});
+      required this.archiveUrl})
+      : super._();
 
   @override
   final String hash;
@@ -283,7 +284,7 @@ class _$OnlineFlutterSDKImpl implements _OnlineFlutterSDK {
           this, _$identity);
 }
 
-abstract class _OnlineFlutterSDK implements OnlineFlutterSDK {
+abstract class _OnlineFlutterSDK extends OnlineFlutterSDK {
   const factory _OnlineFlutterSDK(
       {required final String hash,
       required final String channel,
@@ -294,6 +295,7 @@ abstract class _OnlineFlutterSDK implements OnlineFlutterSDK {
       required final String? dartSdkVersion,
       required final String channelName,
       required final String archiveUrl}) = _$OnlineFlutterSDKImpl;
+  const _OnlineFlutterSDK._() : super._();
 
   @override
   String get hash;
