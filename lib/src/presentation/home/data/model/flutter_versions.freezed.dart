@@ -14,23 +14,17 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-OnlineFlutterSDK _$OnlineFlutterSDKFromJson(Map<String, dynamic> json) {
-  return _OnlineFlutterSDK.fromJson(json);
-}
-
 /// @nodoc
 mixin _$OnlineFlutterSDK {
   String get hash => throw _privateConstructorUsedError;
   String get channel => throw _privateConstructorUsedError;
   String get version => throw _privateConstructorUsedError;
+  String? get releaseDate => throw _privateConstructorUsedError;
   String get sha256 => throw _privateConstructorUsedError;
   String? get dartSdkArch => throw _privateConstructorUsedError;
   String? get dartSdkVersion => throw _privateConstructorUsedError;
   String get channelName => throw _privateConstructorUsedError;
   String get archiveUrl => throw _privateConstructorUsedError;
-
-  /// Serializes this OnlineFlutterSDK to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of OnlineFlutterSDK
   /// with the given fields replaced by the non-null parameter values.
@@ -49,6 +43,7 @@ abstract class $OnlineFlutterSDKCopyWith<$Res> {
       {String hash,
       String channel,
       String version,
+      String? releaseDate,
       String sha256,
       String? dartSdkArch,
       String? dartSdkVersion,
@@ -74,6 +69,7 @@ class _$OnlineFlutterSDKCopyWithImpl<$Res, $Val extends OnlineFlutterSDK>
     Object? hash = null,
     Object? channel = null,
     Object? version = null,
+    Object? releaseDate = freezed,
     Object? sha256 = null,
     Object? dartSdkArch = freezed,
     Object? dartSdkVersion = freezed,
@@ -93,6 +89,10 @@ class _$OnlineFlutterSDKCopyWithImpl<$Res, $Val extends OnlineFlutterSDK>
           ? _value.version
           : version // ignore: cast_nullable_to_non_nullable
               as String,
+      releaseDate: freezed == releaseDate
+          ? _value.releaseDate
+          : releaseDate // ignore: cast_nullable_to_non_nullable
+              as String?,
       sha256: null == sha256
           ? _value.sha256
           : sha256 // ignore: cast_nullable_to_non_nullable
@@ -129,6 +129,7 @@ abstract class _$$OnlineFlutterSDKImplCopyWith<$Res>
       {String hash,
       String channel,
       String version,
+      String? releaseDate,
       String sha256,
       String? dartSdkArch,
       String? dartSdkVersion,
@@ -152,6 +153,7 @@ class __$$OnlineFlutterSDKImplCopyWithImpl<$Res>
     Object? hash = null,
     Object? channel = null,
     Object? version = null,
+    Object? releaseDate = freezed,
     Object? sha256 = null,
     Object? dartSdkArch = freezed,
     Object? dartSdkVersion = freezed,
@@ -171,6 +173,10 @@ class __$$OnlineFlutterSDKImplCopyWithImpl<$Res>
           ? _value.version
           : version // ignore: cast_nullable_to_non_nullable
               as String,
+      releaseDate: freezed == releaseDate
+          ? _value.releaseDate
+          : releaseDate // ignore: cast_nullable_to_non_nullable
+              as String?,
       sha256: null == sha256
           ? _value.sha256
           : sha256 // ignore: cast_nullable_to_non_nullable
@@ -196,20 +202,18 @@ class __$$OnlineFlutterSDKImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$OnlineFlutterSDKImpl implements _OnlineFlutterSDK {
   const _$OnlineFlutterSDKImpl(
       {required this.hash,
       required this.channel,
       required this.version,
+      required this.releaseDate,
       required this.sha256,
       required this.dartSdkArch,
       required this.dartSdkVersion,
       required this.channelName,
       required this.archiveUrl});
-
-  factory _$OnlineFlutterSDKImpl.fromJson(Map<String, dynamic> json) =>
-      _$$OnlineFlutterSDKImplFromJson(json);
 
   @override
   final String hash;
@@ -217,6 +221,8 @@ class _$OnlineFlutterSDKImpl implements _OnlineFlutterSDK {
   final String channel;
   @override
   final String version;
+  @override
+  final String? releaseDate;
   @override
   final String sha256;
   @override
@@ -230,7 +236,7 @@ class _$OnlineFlutterSDKImpl implements _OnlineFlutterSDK {
 
   @override
   String toString() {
-    return 'OnlineFlutterSDK(hash: $hash, channel: $channel, version: $version, sha256: $sha256, dartSdkArch: $dartSdkArch, dartSdkVersion: $dartSdkVersion, channelName: $channelName, archiveUrl: $archiveUrl)';
+    return 'OnlineFlutterSDK(hash: $hash, channel: $channel, version: $version, releaseDate: $releaseDate, sha256: $sha256, dartSdkArch: $dartSdkArch, dartSdkVersion: $dartSdkVersion, channelName: $channelName, archiveUrl: $archiveUrl)';
   }
 
   @override
@@ -241,6 +247,8 @@ class _$OnlineFlutterSDKImpl implements _OnlineFlutterSDK {
             (identical(other.hash, hash) || other.hash == hash) &&
             (identical(other.channel, channel) || other.channel == channel) &&
             (identical(other.version, version) || other.version == version) &&
+            (identical(other.releaseDate, releaseDate) ||
+                other.releaseDate == releaseDate) &&
             (identical(other.sha256, sha256) || other.sha256 == sha256) &&
             (identical(other.dartSdkArch, dartSdkArch) ||
                 other.dartSdkArch == dartSdkArch) &&
@@ -252,10 +260,18 @@ class _$OnlineFlutterSDKImpl implements _OnlineFlutterSDK {
                 other.archiveUrl == archiveUrl));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, hash, channel, version, sha256,
-      dartSdkArch, dartSdkVersion, channelName, archiveUrl);
+  int get hashCode => Object.hash(
+      runtimeType,
+      hash,
+      channel,
+      version,
+      releaseDate,
+      sha256,
+      dartSdkArch,
+      dartSdkVersion,
+      channelName,
+      archiveUrl);
 
   /// Create a copy of OnlineFlutterSDK
   /// with the given fields replaced by the non-null parameter values.
@@ -265,13 +281,6 @@ class _$OnlineFlutterSDKImpl implements _OnlineFlutterSDK {
   _$$OnlineFlutterSDKImplCopyWith<_$OnlineFlutterSDKImpl> get copyWith =>
       __$$OnlineFlutterSDKImplCopyWithImpl<_$OnlineFlutterSDKImpl>(
           this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$OnlineFlutterSDKImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _OnlineFlutterSDK implements OnlineFlutterSDK {
@@ -279,14 +288,12 @@ abstract class _OnlineFlutterSDK implements OnlineFlutterSDK {
       {required final String hash,
       required final String channel,
       required final String version,
+      required final String? releaseDate,
       required final String sha256,
       required final String? dartSdkArch,
       required final String? dartSdkVersion,
       required final String channelName,
       required final String archiveUrl}) = _$OnlineFlutterSDKImpl;
-
-  factory _OnlineFlutterSDK.fromJson(Map<String, dynamic> json) =
-      _$OnlineFlutterSDKImpl.fromJson;
 
   @override
   String get hash;
@@ -294,6 +301,8 @@ abstract class _OnlineFlutterSDK implements OnlineFlutterSDK {
   String get channel;
   @override
   String get version;
+  @override
+  String? get releaseDate;
   @override
   String get sha256;
   @override

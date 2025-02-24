@@ -1,7 +1,7 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_version_manager/src/core/core.dart';
+import 'package:flutter_version_manager/src/presentation/home/data/model/flutter_versions.dart';
 import 'package:flutter_version_manager/src/presentation/home/data/notifier/main_home_notifier.dart';
 import 'package:flutter_version_manager/src/presentation/presentation.dart';
 
@@ -69,23 +69,73 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
           ),
           SizedBox(
             height: 56,
-            child: Row(
-              children: [
-                const SizedBox(width: 16),
-                Text(
-                  'Available versions'.i18n,
-                ),
-                const Spacer(),
-                IconButton(
-                  onPressed: () => notifier.fetchOnlineFlutterVersions(),
-                  icon: const Icon(FluentIcons.arrow_sync_16_regular),
-                ),
-                IconButton(
-                  onPressed: () => notifier.fetchOnlineFlutterVersions(),
-                  icon: const Icon(FluentIcons.filter_16_regular),
-                ),
-                8.width,
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 0),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: InkWell(
+                      onTap: () {},
+                      child: Container(
+                        padding: const EdgeInsets.only(left: 16),
+                        height: double.infinity,
+                        child: Row(
+                          children: [
+                            Text(
+                              'Available versions'.i18n,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                      child: InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: const EdgeInsets.only(left: 16),
+                      height: double.infinity,
+                      child: Row(
+                        children: [
+                          Text('Channel'.i18n),
+                        ],
+                      ),
+                    ),
+                  )),
+                  Expanded(
+                      child: InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: const EdgeInsets.only(left: 16),
+                      height: double.infinity,
+                      child: Row(
+                        children: [
+                          Text('Release date'.i18n),
+                        ],
+                      ),
+                    ),
+                  )),
+                  Expanded(
+                    flex: 3,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          onPressed: () =>
+                              notifier.fetchOnlineFlutterVersions(),
+                          icon: const Icon(FluentIcons.arrow_sync_16_regular),
+                        ),
+                        IconButton(
+                          onPressed: () =>
+                              notifier.fetchOnlineFlutterVersions(),
+                          icon: const Icon(FluentIcons.filter_16_regular),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           const Divider(
@@ -107,42 +157,79 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
                       bool isDownloaded = state.downloadedFlutterSDKs.any(
                           (element) =>
                               element.name == onlineFlutterSDK.version);
-                      return ListTile(
-                        title: Text(onlineFlutterSDK.version),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            // Icon button to open the folder that contains the downloaded Flutter SDK
-                            if (isDownloaded)
-                            IconButton(icon:
-                              const Icon(FluentIcons.folder_16_regular),
-                              onPressed: () {
-                                openDirectory(state.downloadedFlutterSDKs
-                                    .firstWhere((element) =>
-                                        element.name == onlineFlutterSDK.version)
-                                    .directory);
-                              },
-                            ),
-                            // Icon button to download the Flutter SDK
-                            if (!isDownloaded)
-                              IconButton(
-                                icon: state.isDownloading
-                                    ? const SizedBox(
-                                        height: 20,
-                                        width: 20,
-                                        child: CircularProgressIndicator())
-                                    : const Icon(
-                                        FluentIcons.arrow_download_16_regular),
-                                onPressed: state.isDownloading
-                                    ? null
-                                    : () =>
-                                        notifier.downloadFlutterVersionByName(
-                                            onlineFlutterSDK.version),
-                              ),
-                          ],
-                        ),
-                        onTap: () => notifier
-                            .selectOnlineVersion(onlineFlutterSDK.version),
+                      return InkWell(
+                        onTap: () {
+                          showInfoBottomSheet(context, onlineFlutterSDK);
+                        },
+                        child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(onlineFlutterSDK.version),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    padding: const EdgeInsets.only(left: 9),
+                                    child: Text(onlineFlutterSDK.channelName
+                                        .upperCaseFirstLetter()),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    padding: const EdgeInsets.only(left: 16),
+                                    child: Text(
+                                      onlineFlutterSDK.releaseDate
+                                              ?.split('T')
+                                              .first ??
+                                          '',
+                                      style: TextStyle(
+                                          color: context.theme.dividerColor),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      // Icon button to open the folder that contains the downloaded Flutter SDK
+                                      if (isDownloaded)
+                                        IconButton(
+                                          icon: const Icon(
+                                              FluentIcons.folder_16_regular),
+                                          onPressed: () {
+                                            openDirectory(state
+                                                .downloadedFlutterSDKs
+                                                .firstWhere((element) =>
+                                                    element.name ==
+                                                    onlineFlutterSDK.version)
+                                                .directory);
+                                          },
+                                        ),
+                                      // Icon button to download the Flutter SDK
+                                      if (!isDownloaded)
+                                        IconButton(
+                                          icon: state.isDownloading
+                                              ? const SizedBox(
+                                                  height: 20,
+                                                  width: 20,
+                                                  child:
+                                                      CircularProgressIndicator())
+                                              : const Icon(FluentIcons
+                                                  .arrow_download_16_regular),
+                                          onPressed: state.isDownloading
+                                              ? null
+                                              : () => notifier
+                                                  .downloadFlutterVersionByName(
+                                                      onlineFlutterSDK.version),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            )),
                       );
                     },
                   ),
@@ -152,6 +239,109 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+
+  void showInfoBottomSheet(
+    BuildContext context,
+    OnlineFlutterSDK onlineFlutterSDK,
+  ) {
+    showModalBottomSheet(
+      context: context,
+      constraints: const BoxConstraints(maxWidth: double.infinity),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.zero,
+      ),
+      builder: (BuildContext context) {
+        return SizedBox(
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      '${'Version:'.i18n} ${onlineFlutterSDK.version}',
+                      style: context.theme.textTheme.titleMedium,
+                    ),
+                    Text(
+                      ' (${onlineFlutterSDK.channelName})',
+                      style: context.theme.textTheme.titleMedium,
+                    ),
+                    const Spacer(),
+                    TextButton.icon(
+                      iconAlignment: IconAlignment.end,
+                      onPressed: () {
+                        openUrl(
+                            'https://github.com/flutter/flutter/releases/tag/${onlineFlutterSDK.version}');
+                      },
+                      label: Text('Release notes'.i18n),
+                      icon: const Icon(FluentIcons.open_12_regular),
+                    ),
+                  ],
+                ),
+                8.height,
+                8.height,
+                Text(
+                  'Dart SDK version: ${onlineFlutterSDK.dartSdkVersion}',
+                  style: context.theme.textTheme.labelMedium,
+                ),
+                8.height,
+                Text(
+                  'Dart SDK architecture: ${onlineFlutterSDK.dartSdkArch}',
+                  style: context.theme.textTheme.labelMedium,
+                ),
+                8.height,
+                Row(
+                  children: [
+                    Text(
+                      'Download:',
+                      style: context.theme.textTheme.labelMedium,
+                    ),
+                    8.width,
+                    FilledButton.tonalIcon(
+                      onPressed: () {
+                        openUrl(onlineFlutterSDK.archiveUrl);
+                      },
+                      label: Text('Download to Parrot'.i18n),
+                      icon: const Icon(FluentIcons.arrow_download_16_regular),
+                    ),
+                    8.width,
+                    FilledButton.tonalIcon(
+                      onPressed: () {
+                        openUrl(onlineFlutterSDK.archiveUrl);
+                      },
+                      label: Text('Download zip'.i18n),
+                      icon: const Icon(FluentIcons.cloud_arrow_down_32_regular),
+                    ),
+                  ],
+                ),
+                8.height,
+                Row(
+                  children: [
+                    ActionChip(
+                      label: const Text('Hash'),
+                      onPressed: () {
+                        copyToClipboard(context, text: onlineFlutterSDK.hash);
+                      },
+                    ),
+                    8.width,
+                    ActionChip(
+                      label: const Text('SHA256'),
+                      onPressed: () {
+                        copyToClipboard(context, text: onlineFlutterSDK.sha256);
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

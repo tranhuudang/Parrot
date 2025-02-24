@@ -1,7 +1,6 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_version_manager/src/core/core.dart';
-import 'package:flutter_version_manager/src/core/utils/path_handler.dart';
 import 'package:flutter_version_manager/src/presentation/home/data/notifier/main_home_state.dart';
 import 'package:flutter_version_manager/src/presentation/home/ui/widgets/platform_selector.dart';
 import '../../../presentation.dart';
@@ -231,6 +230,8 @@ class MainHomeBody extends ConsumerWidget {
 
   Row buildAvailableFlutterSDKreleases(
       MainHomeState state, MainHomeNotifier notifier) {
+    bool isDownloaded = state.downloadedFlutterSDKs
+        .any((element) => element.name == state.selectedOnlineVersion);
     return Row(
       children: [
         Text("${'Flutter SDK releases'.i18n} "),
@@ -240,12 +241,12 @@ class MainHomeBody extends ConsumerWidget {
               ? state.selectedOnlineVersion
               : null,
           // hint: Text("Select Flutter Version".i18n),
-          items: state.onlineFlutterVersions
-              .map((flutterSDK) => DropdownMenuItem(
-                    value: flutterSDK.version,
-                    child: Text(flutterSDK.version),
-                  ))
-              .toList(),
+          items: state.onlineFlutterVersions.map((flutterSDK) {
+            return DropdownMenuItem(
+              value: flutterSDK.version,
+              child: Text(flutterSDK.version),
+            );
+          }).toList(),
           onChanged: (value) {
             if (value != null) {
               notifier.selectOnlineVersion(value);
@@ -259,16 +260,30 @@ class MainHomeBody extends ConsumerWidget {
         ),
         const Spacer(),
         8.width,
-        ElevatedButton.icon(
-          icon: const Icon(FluentIcons.arrow_download_16_regular),
-          onPressed: state.isDownloading
-              ? null
-              : () => notifier.downloadFlutterVersion(),
-          label: state.isDownloading
-              ? const SizedBox(
-                  height: 20, width: 20, child: CircularProgressIndicator())
-              : Text("Download".i18n),
-        ),
+        !isDownloaded
+            ? ElevatedButton.icon(
+                icon: const Icon(FluentIcons.arrow_download_16_regular),
+                onPressed: state.isDownloading
+                    ? null
+                    : () => notifier.downloadFlutterVersion(),
+                label: state.isDownloading
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator())
+                    : Text("Download".i18n),
+              )
+            : IgnorePointer(
+                ignoring: true,
+                child: Opacity(
+                  opacity: .5,
+                  child: ElevatedButton.icon(
+                    icon: const Icon(FluentIcons.arrow_download_16_regular),
+                    onPressed: () {},
+                    label: Text("Download".i18n),
+                  ),
+                ),
+              ),
       ],
     );
   }

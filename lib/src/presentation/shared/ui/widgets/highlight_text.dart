@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_version_manager/src/core/core.dart';
+import 'package:flutter_version_manager/src/core/utils/clipboard.dart';
 
 class HighlightedText extends StatefulWidget {
   final String text;
@@ -56,14 +56,7 @@ class _HighlightedTextState extends State<HighlightedText> {
             padding: const EdgeInsets.symmetric(horizontal: 4),
             child: InkWell(
               onTap: () {
-                Clipboard.setData(
-                  ClipboardData(text: match.group(2) ?? ''),
-                );
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Copied to clipboard'.i18n),
-                  ),
-                );
+                copyToClipboard(context, text: match.group(2) ?? '');
               },
               child: Text(
                 match.group(2) ?? '',

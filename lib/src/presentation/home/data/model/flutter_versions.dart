@@ -9,6 +9,7 @@ class OnlineFlutterSDK with _$OnlineFlutterSDK {
     required String hash,
     required String channel,
     required String version,
+    required String? releaseDate,
     required String sha256,
     required String? dartSdkArch,
     required String? dartSdkVersion,
@@ -16,8 +17,19 @@ class OnlineFlutterSDK with _$OnlineFlutterSDK {
     required String archiveUrl,
   }) = _OnlineFlutterSDK;
 
-  factory OnlineFlutterSDK.fromJson(Map<String, dynamic> json) =>
-      _$OnlineFlutterSDKFromJson(json);
+  factory OnlineFlutterSDK.fromJson(Map<String, dynamic> json) {
+    return _OnlineFlutterSDK(
+      hash: json['hash'] as String,
+      channel: json['channel'] as String,
+      version: json['version'] as String,
+      releaseDate: json['release_date'] as String?,
+      sha256: json['sha256'] as String,
+      dartSdkArch: json['dart_sdk_arch'] as String?,
+      dartSdkVersion: json['dart_sdk_version'] as String?,
+      channelName: json['channelName'] as String,
+      archiveUrl: json['archiveUrl'] as String,
+    );
+  }
 }
 
 @freezed
