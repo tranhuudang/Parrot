@@ -276,7 +276,7 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
                       iconAlignment: IconAlignment.end,
                       onPressed: () {
                         openUrl(
-                            'https://github.com/flutter/flutter/releases/tag/${onlineFlutterSDK.version}');
+                            '${OnlineDirectory.flutterReleaseNotes}${onlineFlutterSDK.version}');
                       },
                       label: Text('Release notes'.i18n),
                       icon: const Icon(FluentIcons.open_12_regular),

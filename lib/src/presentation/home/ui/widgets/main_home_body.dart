@@ -170,8 +170,7 @@ class MainHomeBody extends ConsumerWidget {
           icon: const Icon(FluentIcons.question_circle_16_regular),
           iconAlignment: IconAlignment.end,
           onPressed: () {
-            openUrl(
-                'https://www.github.com/tranhuudang/parrot/tree/master/docs/configure_your_code_editor/README.md');
+            openUrl(OnlineDirectory.setupFVMonCodeEditorGuide);
           },
           label: Text('Configure code editor'.i18n),
         ),
@@ -300,8 +299,7 @@ class MainHomeBody extends ConsumerWidget {
             state.fvmVersion.isEmpty
                 ? FilledButton(
                     onPressed: () {
-                      openUrl(
-                          'https://www.github.com/tranhuudang/parrot/tree/master/docs/install_fvm/README.md');
+                      openUrl(OnlineDirectory.FVMInstallationGuide);
                     },
                     child: Text('Install FVM CLI'.i18n),
                   )
@@ -315,7 +313,7 @@ class MainHomeBody extends ConsumerWidget {
             8.width,
             TextButton(
               onPressed: () {
-                openUrl('https://github.com/leoafarias/fvm/releases');
+                openUrl(OnlineDirectory.whatsNewFVMCli + state.fvmVersion);
               },
               child: Text("What's new?".i18n),
             ),

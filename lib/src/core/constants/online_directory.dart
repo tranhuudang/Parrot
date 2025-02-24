@@ -3,4 +3,12 @@ class OnlineDirectory {
   static const String privacyPolicyURL =
       'https://www.privacypolicies.com/live/1327bb8a-752b-455e-b6d0-36c0cecbbacd';
   static const String paypalLink = 'https://paypal.me/DangTran565';
+  static const String whatsNewFVMCli =
+      'https://github.com/leoafarias/fvm/releases/tag/';
+  static const String FVMInstallationGuide =
+      'https://www.github.com/tranhuudang/parrot/tree/master/docs/install_fvm/README.md';
+  static const String setupFVMonCodeEditorGuide =
+      'https://www.github.com/tranhuudang/parrot/tree/master/docs/configure_your_code_editor/README.md';
+  static const String flutterReleaseNotes =
+      'https://github.com/flutter/flutter/releases/tag/';
 }
