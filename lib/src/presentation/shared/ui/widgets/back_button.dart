@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_version_manager/src/core/router/route_configurations_desktop.dart';
+import 'package:parrot/src/core/router/route_configurations_desktop.dart';
 
 class CustomBackButton extends StatelessWidget {
   final VoidCallback? onPressed;

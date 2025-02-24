@@ -8,19 +8,6 @@ class _Initializer {
     if (isMacOS) {
       await _initForMacOS();
     }
-    if (isWeb) {
-      await _initForWeb();
-    }
-  }
-
-  static Future<void> _initForWeb() async {
-    // ui
-    await Properties.initialize().then((_) {});
-
-    /// No longer use open ai but deepgram instead
-    // Future.delayed(const Duration(seconds: 10), () {
-    //   OpenAIKeySelector.init();
-    // });
   }
 
   static Future<void> _initForWindows() async {

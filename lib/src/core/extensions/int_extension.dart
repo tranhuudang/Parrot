@@ -1,4 +1,4 @@
-import 'package:flutter_version_manager/src/presentation/presentation.dart';
+import 'package:parrot/src/presentation/presentation.dart';
 
 extension IntExtension on int{
   SizedBox get width => SizedBox(width: toDouble(),);

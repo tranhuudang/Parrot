@@ -1,8 +1,9 @@
 import 'dart:async';
-import 'package:flutter_version_manager/src/core/core.dart';
-import 'package:flutter_version_manager/src/core/router/route_configurations_desktop.dart';
-import 'package:flutter_version_manager/src/presentation/home/data/utils/upgrader_config.dart';
-import 'package:flutter_version_manager/src/presentation/presentation.dart';
+import 'package:parrot/src/core/configs/flavor.dart';
+import 'package:parrot/src/core/core.dart';
+import 'package:parrot/src/core/router/route_configurations_desktop.dart';
+import 'package:parrot/src/presentation/home/data/utils/upgrader_config.dart';
+import 'package:parrot/src/presentation/presentation.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:go_router/go_router.dart';
 import 'package:upgrader/upgrader.dart';
@@ -87,8 +88,8 @@ class _DesktopNavigationFrameState extends State<DesktopNavigationFrame>
                           LocalDirectory.appLogo,
                         ),
                       )),
-                  const Text(
-                    DefaultSettings.appShortName,
+                  Text(
+                    AppFlavor.instance.appName,
                   ),
                   const Spacer(),
                   IconButton(
@@ -145,39 +146,40 @@ class _DesktopNavigationFrameState extends State<DesktopNavigationFrame>
                           ),
                         )),
                     const Spacer(),
-                    InkWell(
-                      borderRadius: BorderRadius.circular(10),
-                      onTap: () {
-                        /// go to donation screen
-                        goBranch(4);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: context.theme.colorScheme.primaryContainer,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 6),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'I need your help'.i18n,
-                                style: context.theme.textTheme.labelSmall,
-                              ),
-                              4.width,
-                              Icon(
-                                FluentIcons.heart_12_regular,
-                                color: context.theme.colorScheme.primary,
-                                size: 16,
-                              )
-                            ],
+                    if (isFreeVersion)
+                      InkWell(
+                        borderRadius: BorderRadius.circular(10),
+                        onTap: () {
+                          /// go to donation screen
+                          goBranch(4);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: context.theme.colorScheme.primaryContainer,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 6),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'I need your help'.i18n,
+                                  style: context.theme.textTheme.labelSmall,
+                                ),
+                                4.width,
+                                Icon(
+                                  FluentIcons.heart_12_regular,
+                                  color: context.theme.colorScheme.primary,
+                                  size: 16,
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
                     TextButton(
                         onPressed: () {
                           goToStoreListing();

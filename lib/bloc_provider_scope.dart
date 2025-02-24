@@ -1,4 +1,4 @@
-import 'package:flutter_version_manager/src/presentation/presentation.dart';
+import 'package:parrot/src/presentation/presentation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BlocProviderScope extends StatelessWidget {

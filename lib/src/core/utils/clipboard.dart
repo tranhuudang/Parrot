@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
-import 'package:flutter_version_manager/src/core/core.dart';
-import 'package:flutter_version_manager/src/presentation/presentation.dart';
+import 'package:parrot/src/core/core.dart';
+import 'package:parrot/src/presentation/presentation.dart';
 
 copyToClipboard(BuildContext context, {required String text}) {
   Clipboard.setData(

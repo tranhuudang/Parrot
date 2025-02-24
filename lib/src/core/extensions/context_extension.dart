@@ -1,5 +1,5 @@
-import 'package:flutter_version_manager/src/core/core.dart';
-import 'package:flutter_version_manager/src/presentation/presentation.dart';
+import 'package:parrot/src/core/core.dart';
+import 'package:parrot/src/presentation/presentation.dart';
 
 extension BuildContextExtension on BuildContext {
   ThemeData get theme => Theme.of(this);

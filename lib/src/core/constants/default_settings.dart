@@ -3,7 +3,6 @@ import '../../domain/domain.dart';
 
 class DefaultSettings {
   static String appTitleDescription = 'Flutter Version Manager for Desktop';
-  static const String appShortName = 'Parrot';
   static const Size defaultWindowsSize = Size(950, 620);
   static const Size minWindowsSize = Size(950, 620);
   static const Size maxWindowsSize = Size(5000, 10000);

@@ -3,8 +3,8 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
-import 'package:flutter_version_manager/src/core/core.dart';
-import 'package:flutter_version_manager/src/presentation/shared/ui/widgets/custom_app_bar.dart';
+import 'package:parrot/src/core/core.dart';
+import 'package:parrot/src/presentation/shared/ui/widgets/custom_app_bar.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 

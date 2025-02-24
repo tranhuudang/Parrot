@@ -1,5 +1,5 @@
-import 'package:flutter_version_manager/src/core/core.dart';
-import 'package:flutter_version_manager/src/presentation/presentation.dart';
+import 'package:parrot/src/core/core.dart';
+import 'package:parrot/src/presentation/presentation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 

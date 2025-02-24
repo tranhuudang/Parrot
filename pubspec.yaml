@@ -1,4 +1,4 @@
-name: flutter_version_manager
+name: parrot
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -88,13 +88,27 @@ flutter:
     - assets/badges/
     - assets/images/app_icon.png
     - assets/donation/
+
+# FREE VERSION    
+# msix_config:
+#   display_name: Parrot
+#   publisher_display_name: DAK Solutions
+#   identity_name: 24555Zeroboy.FlutterVersionManager
+#   publisher: CN=DA7D2C99-987C-4B69-8953-17157F6E0E1A
+#   msix_version: 2025.2.18.0
+#   trim_logo: false
+#   logo_path: C:\Users\tranh\StudioProjects\parrot\assets\images\app_icon.png
+#   store: true
+#   language: en-us, vi-vi, zh-cn
+
+# PRO VERSION    
 msix_config:
-  display_name: Flutter Version Manager
+  display_name: Parrot Pro
   publisher_display_name: DAK Solutions
-  identity_name: 24555Zeroboy.FlutterVersionManager
+  identity_name: 24555Zeroboy.ParrotPro
   publisher: CN=DA7D2C99-987C-4B69-8953-17157F6E0E1A
-  msix_version: 2025.2.18.0
+  msix_version: 2025.2.24.0
   trim_logo: false
   logo_path: C:\Users\tranh\StudioProjects\parrot\assets\images\app_icon.png
   store: true
-  language: en-us, vi-vi, zh-cn
+  language: en-us, vi-vi, zh-cn  

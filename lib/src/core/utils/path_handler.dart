@@ -1,4 +1,4 @@
-import 'package:flutter_version_manager/src/core/utils/utils.dart';
+import 'package:parrot/src/core/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:io';
 

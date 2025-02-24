@@ -1,4 +1,4 @@
-import 'package:flutter_version_manager/src/core/core.dart';
+import 'package:parrot/src/core/core.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 import '../../../presentation.dart';
@@ -56,20 +56,22 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                 thickness: .3,
               ),
               const Spacer(),
-              const Divider(
-                thickness: .3,
-                height: 0,
-              ),
-              Container(
-                padding: const EdgeInsets.only(bottom: 8, top: 8),
-                color: context.theme.scaffoldBackgroundColor,
-                child: _buildSidebarItem(
-                  icon: FluentIcons.notebook_16_regular,
-                  selectedIcon: FluentIcons.notebook_16_filled,
-                  label: 'Dev Notes'.i18n,
-                  index: 1,
+              if (isProVersion) ...[
+                const Divider(
+                  thickness: .3,
+                  height: 0,
                 ),
-              ),
+                Container(
+                  padding: const EdgeInsets.only(bottom: 8, top: 8),
+                  color: context.theme.scaffoldBackgroundColor,
+                  child: _buildSidebarItem(
+                    icon: FluentIcons.notebook_16_regular,
+                    selectedIcon: FluentIcons.notebook_16_filled,
+                    label: 'Dev Notes'.i18n,
+                    index: 1,
+                  ),
+                ),
+              ],
             ],
           )
         ],

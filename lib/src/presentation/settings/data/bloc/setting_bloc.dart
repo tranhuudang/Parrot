@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_version_manager/src/core/core.dart';
-import 'package:flutter_version_manager/src/presentation/presentation.dart';
+import 'package:parrot/src/core/core.dart';
+import 'package:parrot/src/presentation/presentation.dart';
 
 class SettingBlocParams {
   final ThemeMode themeMode;

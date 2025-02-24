@@ -1,5 +1,5 @@
-import 'package:flutter_version_manager/src/core/core.dart';
-import 'package:flutter_version_manager/src/presentation/donation/widgets/paypal_donation_widget.dart';
+import 'package:parrot/src/core/core.dart';
+import 'package:parrot/src/presentation/donation/widgets/paypal_donation_widget.dart';
 
 import '../presentation.dart';
 import '../shared/ui/widgets/divider_with_text.dart';

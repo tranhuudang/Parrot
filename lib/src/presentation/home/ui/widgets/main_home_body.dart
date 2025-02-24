@@ -1,8 +1,8 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_version_manager/src/core/core.dart';
-import 'package:flutter_version_manager/src/presentation/home/data/notifier/main_home_state.dart';
-import 'package:flutter_version_manager/src/presentation/home/ui/widgets/platform_selector.dart';
+import 'package:parrot/src/core/core.dart';
+import 'package:parrot/src/presentation/home/data/notifier/main_home_state.dart';
+import 'package:parrot/src/presentation/home/ui/widgets/platform_selector.dart';
 import '../../../presentation.dart';
 import '../../data/notifier/main_home_notifier.dart';
 import 'control_project_button.dart';

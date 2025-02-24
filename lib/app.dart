@@ -1,6 +1,6 @@
-import 'package:flutter_version_manager/src/core/core.dart';
-import 'package:flutter_version_manager/src/core/router/route_configurations_desktop.dart';
-import 'package:flutter_version_manager/src/presentation/presentation.dart';
+import 'package:parrot/src/core/core.dart';
+import 'package:parrot/src/core/router/route_configurations_desktop.dart';
+import 'package:parrot/src/presentation/presentation.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

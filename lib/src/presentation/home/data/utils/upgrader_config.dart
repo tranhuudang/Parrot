@@ -1,4 +1,4 @@
-import 'package:flutter_version_manager/src/core/core.dart';
+import 'package:parrot/src/core/core.dart';
 import 'package:upgrader/upgrader.dart';
 
 class UpgraderConfig {

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:flutter_version_manager/src/core/core.dart';
+import 'package:parrot/src/core/core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../domain/domain.dart';
 

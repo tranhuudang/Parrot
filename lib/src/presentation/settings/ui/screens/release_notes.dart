@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:flutter_version_manager/src/data/data.dart';
-import 'package:flutter_version_manager/src/presentation/presentation.dart';
-import 'package:flutter_version_manager/src/core/core.dart';
+import 'package:parrot/src/data/data.dart';
+import 'package:parrot/src/presentation/presentation.dart';
+import 'package:parrot/src/core/core.dart';
 import 'package:flutter/services.dart';
 
 class ReleaseNotesView extends StatefulWidget {

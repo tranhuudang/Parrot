@@ -1,7 +1,8 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_version_manager/src/core/core.dart';
-import 'package:flutter_version_manager/src/presentation/home/data/notifier/main_home_notifier.dart';
+import 'package:parrot/src/core/configs/flavor.dart';
+import 'package:parrot/src/core/core.dart';
+import 'package:parrot/src/presentation/home/data/notifier/main_home_notifier.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../presentation.dart';
 import '../widgets/main_home_body.dart';
@@ -92,7 +93,7 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
                           Row(
                             children: [
                               Text(
-                                DefaultSettings.appShortName,
+                                AppFlavor.instance.appName,
                                 style: context.theme.textTheme.titleMedium,
                               ),
                               Text(

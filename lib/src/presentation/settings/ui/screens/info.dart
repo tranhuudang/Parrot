@@ -1,7 +1,8 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:parrot/src/core/configs/flavor.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_version_manager/src/presentation/presentation.dart';
-import 'package:flutter_version_manager/src/core/core.dart';
+import 'package:parrot/src/presentation/presentation.dart';
+import 'package:parrot/src/core/core.dart';
 
 class InfoView extends StatelessWidget {
   const InfoView({super.key});
@@ -44,7 +45,7 @@ class InfoView extends StatelessWidget {
             ),
             8.height,
             Text(
-              "${DefaultSettings.appShortName} | ${DefaultSettings.appTitleDescription}",
+              "${AppFlavor.instance.appName} | ${DefaultSettings.appTitleDescription}",
               style: context.theme.textTheme.titleLarge?.copyWith(
                   color: context.theme.colorScheme.onSurface,
                   fontWeight: FontWeight.bold),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_version_manager/src/core/core.dart';
+import 'package:parrot/src/core/core.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({super.key, required this.children, required this.title});
