@@ -1,5 +1,15 @@
 [
   {
+    "version": "35",
+    "date": "24-02-2025",
+    "changesNote": [
+      "Add Dev Notes",
+      "Add manage Flutter SDKs screen",
+      "Improve documentation",
+      "Improve UX/UI"
+    ]
+  },
+  {
     "version": "3",
     "date": "18-02-2025",
     "changesNote": [

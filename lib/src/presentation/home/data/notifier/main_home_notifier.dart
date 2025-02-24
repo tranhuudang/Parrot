@@ -28,8 +28,8 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     await checkFvmInstallation();
     await fetchOnlineFlutterVersions();
     await fetchDownloadedFlutterVersions();
-    await gettingSavedCurrentProjectPath();
     state = state.copyWith(isDashboardScreenLoading: false);
+    await gettingSavedCurrentProjectPath();
   }
 
   // Check if FVM is installed and update the state
@@ -99,14 +99,10 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
         state = state.copyWith(
             commandOutput: newList); // Update state with the new list
       });
-      process.exitCode.then((exitCode) {
-        if (exitCode == 0) {
-          state = state.copyWith(
-              isDownloading: false); // Set loading state to false
-        } else {
-          state = state.copyWith(
-              isDownloading: false); // Set loading state to false
-        }
+      process.exitCode.then((exitCode) async {
+        await fetchDownloadedFlutterVersions();
+        state =
+            state.copyWith(isDownloading: false); // Set loading state to false
       });
     } catch (e) {
       DebugLog.error("Error: $e");
@@ -257,7 +253,13 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       state = state.copyWith(
         projectPath: currentTargetProjectPath,
       );
-      await gettingFlutterPlatform();
+      if (state.downloadedFlutterSDKs.isNotEmpty) {
+        final isSetup = state.downloadedFlutterSDKs
+            .any((element) => element.isSetup == true);
+        if (isSetup) {
+          await gettingFlutterPlatform();
+        }
+      }
     }
   }
 

@@ -83,6 +83,14 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
                             child: InkWell(
                               onTap: () {},
                               child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    right: BorderSide(
+                                      color: context.theme.dividerColor,
+                                      width: .2,
+                                    ),
+                                  ),
+                                ),
                                 padding: const EdgeInsets.only(left: 16),
                                 height: double.infinity,
                                 child: Row(
@@ -99,6 +107,14 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
                               child: InkWell(
                             onTap: () {},
                             child: Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  right: BorderSide(
+                                    color: context.theme.dividerColor,
+                                    width: .2,
+                                  ),
+                                ),
+                              ),
                               padding: const EdgeInsets.only(left: 16),
                               height: double.infinity,
                               child: Row(
@@ -112,6 +128,14 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
                               child: InkWell(
                             onTap: () {},
                             child: Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  right: BorderSide(
+                                    color: context.theme.dividerColor,
+                                    width: .2,
+                                  ),
+                                ),
+                              ),
                               padding: const EdgeInsets.only(left: 16),
                               height: double.infinity,
                               child: Row(
@@ -132,12 +156,13 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
                                   icon: const Icon(
                                       FluentIcons.arrow_sync_16_regular),
                                 ),
-                                IconButton(
-                                  onPressed: () =>
-                                      notifier.fetchOnlineFlutterVersions(),
-                                  icon:
-                                      const Icon(FluentIcons.filter_16_regular),
-                                ),
+                                // IconButton(
+                                //   onPressed: () =>
+                                //       notifier.fetchOnlineFlutterVersions(),
+                                //   icon:
+                                //       const Icon(FluentIcons.filter_16_regular),
+                                // ),
+                                16.width,
                               ],
                             ),
                           ),
@@ -149,7 +174,6 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
                     height: 0,
                     thickness: .5,
                   ),
-                  8.height,
                   Expanded(
                     child: ListView.builder(
                       // physics: const NeverScrollableScrollPhysics(),
@@ -163,9 +187,20 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
                                 element.name == onlineFlutterSDK.version);
                         return InkWell(
                           onTap: () {
-                            showInfoBottomSheet(context, onlineFlutterSDK);
+                            showInfoBottomSheet(context,
+                                notifier: notifier,
+                                downloadButtonIndex: index,
+                                onlineFlutterSDK: onlineFlutterSDK);
                           },
                           child: Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: context.theme.dividerColor,
+                                    width: .2,
+                                  ),
+                                ),
+                              ),
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 16),
                               child: Row(
@@ -199,6 +234,18 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
+                                        if (state.isDownloading &&
+                                            state.downloadButtonIndex ==
+                                                index) ...[
+                                          Text(
+                                            'Fetching from server...',
+                                            style: TextStyle(
+                                                color:
+                                                    context.theme.dividerColor,
+                                                fontStyle: FontStyle.italic),
+                                          ),
+                                          8.width,
+                                        ],
                                         // Icon button to open the folder that contains the downloaded Flutter SDK
                                         isDownloaded
                                             ? IconButton(
@@ -255,10 +302,10 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
     );
   }
 
-  void showInfoBottomSheet(
-    BuildContext context,
-    OnlineFlutterSDK onlineFlutterSDK,
-  ) {
+  void showInfoBottomSheet(BuildContext context,
+      {required MainHomeNotifier notifier,
+      required int downloadButtonIndex,
+      required OnlineFlutterSDK onlineFlutterSDK}) {
     showModalBottomSheet(
       context: context,
       constraints: const BoxConstraints(maxWidth: double.infinity),
@@ -317,7 +364,10 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
                     8.width,
                     FilledButton.tonalIcon(
                       onPressed: () {
-                        openUrl(onlineFlutterSDK.archiveUrl);
+                        notifier.downloadFlutterVersionByName(
+                            onlineFlutterSDK.version,
+                            downloadButtonIndex: downloadButtonIndex);
+                        Navigator.pop(context);
                       },
                       label: Text('Download to Parrot'.i18n),
                       icon: const Icon(FluentIcons.arrow_download_16_regular),

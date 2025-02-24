@@ -164,7 +164,7 @@ class _DesktopNavigationFrameState extends State<DesktopNavigationFrame>
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Donate'.i18n,
+                                'I need your help'.i18n,
                                 style: context.theme.textTheme.labelSmall,
                               ),
                               4.width,

@@ -53,16 +53,96 @@ class MainHomeBody extends ConsumerWidget {
     );
   }
 
-  Expanded buildConsole(BuildContext context, MainHomeState state) {
-    return Expanded(
-      child: Container(
-        width: double.infinity,
-        height: double.infinity,
-        padding: const EdgeInsets.all(8.0),
-        decoration:
-            BoxDecoration(color: context.theme.colorScheme.surfaceContainer),
-        child: ListView(reverse: true, children: state.commandOutput.toList()),
-      ),
+  Column buildFVMCLIVersion(
+      MainHomeState state, BuildContext context, MainHomeNotifier notifier) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Text('FVM CLI version:'.i18n),
+            8.width,
+            state.fvmVersion.isEmpty
+                ? FilledButton(
+                    onPressed: () {
+                      openUrl(OnlineDirectory.FVMInstallationGuide);
+                    },
+                    child: Text('Install FVM CLI'.i18n),
+                  )
+                : Text(state.fvmVersion),
+            8.width,
+            IconButton(
+              onPressed: () => notifier.checkFvmInstallation(),
+              icon: const Icon(FluentIcons.arrow_sync_16_regular),
+            ),
+            const Spacer(),
+            8.width,
+            TextButton(
+              onPressed: () {
+                openUrl(OnlineDirectory.whatsNewFVMCli + state.fvmVersion);
+              },
+              child: Text("What's new?".i18n),
+            ),
+          ],
+        ),
+        if (state.fvmVersion.isEmpty) ...[
+          Text(
+            '*You must install FVM CLI to use this app.'.i18n,
+            style:
+                context.theme.textTheme.labelSmall?.copyWith(color: Colors.red),
+          ),
+          8.height,
+        ],
+      ],
+    );
+  }
+
+  Row buildAvailableFlutterSDKreleases(
+      MainHomeState state, MainHomeNotifier notifier) {
+    bool isDownloaded = state.downloadedFlutterSDKs
+        .any((element) => element.name == state.selectedOnlineVersion);
+    return Row(
+      children: [
+        Text("${'Flutter SDK releases'.i18n} "),
+        8.width,
+        RoundedDottedDropdownButton<String>(
+          value: state.selectedOnlineVersion.isNotEmpty
+              ? state.selectedOnlineVersion
+              : null,
+          // hint: Text("Select Flutter Version".i18n),
+          items: state.onlineFlutterVersions.map((flutterSDK) {
+            return DropdownMenuItem(
+              value: flutterSDK.version,
+              child: Text(flutterSDK.version),
+            );
+          }).toList(),
+          onChanged: (value) {
+            if (value != null) {
+              notifier.selectOnlineVersion(value);
+            }
+          },
+        ),
+        8.width,
+        IconButton(
+          onPressed: () => notifier.fetchOnlineFlutterVersions(),
+          icon: const Icon(FluentIcons.arrow_sync_16_regular),
+        ),
+        const Spacer(),
+        8.width,
+        DisabledWidget(
+          isDisabled: isDownloaded,
+          child: ElevatedButton.icon(
+            icon: const Icon(FluentIcons.arrow_download_16_regular),
+            onPressed: state.isDownloading
+                ? null
+                : () => notifier.downloadFlutterVersion(),
+            label: state.isDownloading
+                ? const SizedBox(
+                    height: 20, width: 20, child: CircularProgressIndicator())
+                : Text("Download".i18n),
+          ),
+        ),
+      ],
     );
   }
 
@@ -105,79 +185,6 @@ class MainHomeBody extends ConsumerWidget {
     );
   }
 
-  Row buildProjectRunningControl(
-      MainHomeState state, MainHomeNotifier notifier) {
-    return Row(
-      children: [
-        const Icon(
-          FluentIcons.circle_16_regular,
-          size: 14,
-        ),
-        16.width,
-        Text(state.projectPath
-            .substring(state.projectPath.lastIndexOf('\\') + 1)),
-        16.width,
-        const PlatformSelector(),
-        16.width,
-        if (state.isGettingAvailableDevices) ...[
-          const SizedBox(
-              height: 20, width: 20, child: CircularProgressIndicator()),
-          16.width,
-        ],
-        ControlProjectButton(
-          backgroundColor: const Color(0xFF66BB6A),
-          enabled: !state.isRunning,
-          icon: const Icon(
-            FluentIcons.play_16_regular,
-            size: 16,
-          ),
-          onPressed: () {
-            notifier.runFlutterProject();
-          },
-        ),
-        8.width,
-        ControlProjectButton(
-          backgroundColor: const Color(0xFFF50057),
-          enabled: state.isRunning,
-          icon: const Icon(
-            FluentIcons.stop_16_regular,
-            size: 16,
-          ),
-          onPressed: () {
-            notifier.stopFlutterProject();
-          },
-        ),
-        8.width,
-        ControlProjectButton(
-          backgroundColor: Colors.orange,
-          enabled: state.isRunning,
-          icon: const Icon(
-            FluentIcons.arrow_sync_24_regular,
-            size: 16,
-          ),
-          onPressed: () {
-            notifier.hotReloadFlutterProject();
-          },
-        ),
-        8.width,
-        IconButton(
-          onPressed: () => notifier.refreshAvailableDevices(),
-          icon: const Icon(FluentIcons.arrow_sync_16_regular),
-        ),
-        const Spacer(),
-        // Button navigator to a website that guides user how to configure FVM on their code editor
-        TextButton.icon(
-          icon: const Icon(FluentIcons.question_circle_16_regular),
-          iconAlignment: IconAlignment.end,
-          onPressed: () {
-            openUrl(OnlineDirectory.setupFVMonCodeEditorGuide);
-          },
-          label: Text('Configure code editor'.i18n),
-        ),
-      ],
-    );
-  }
-
   Row buildSelectFlutterVersionToSwitch(
       MainHomeState state, MainHomeNotifier notifier) {
     return Row(
@@ -212,122 +219,114 @@ class MainHomeBody extends ConsumerWidget {
         ),
         const Spacer(),
         8.width,
-        ElevatedButton.icon(
-          icon: const Icon(FluentIcons.arrow_shuffle_16_regular),
-          onPressed: state.isSwitching
-              ? null
-              : () => notifier
-                  .switchFlutterVersion(notifier.projectPathController.text),
-          label: state.isSwitching
-              ? const SizedBox(
-                  height: 20, width: 20, child: CircularProgressIndicator())
-              : Text("Switch".i18n),
+        DisabledWidget(
+          isDisabled: state.selectedVersion.isEmpty,
+          child: ElevatedButton.icon(
+            icon: const Icon(FluentIcons.arrow_shuffle_16_regular),
+            onPressed: state.isSwitching
+                ? null
+                : () => notifier
+                    .switchFlutterVersion(notifier.projectPathController.text),
+            label: state.isSwitching
+                ? const SizedBox(
+                    height: 20, width: 20, child: CircularProgressIndicator())
+                : Text("Switch".i18n),
+          ),
         ),
       ],
     );
   }
 
-  Row buildAvailableFlutterSDKreleases(
+  Widget buildProjectRunningControl(
       MainHomeState state, MainHomeNotifier notifier) {
-    bool isDownloaded = state.downloadedFlutterSDKs
-        .any((element) => element.name == state.selectedOnlineVersion);
-    return Row(
-      children: [
-        Text("${'Flutter SDK releases'.i18n} "),
-        8.width,
-        RoundedDottedDropdownButton<String>(
-          value: state.selectedOnlineVersion.isNotEmpty
-              ? state.selectedOnlineVersion
-              : null,
-          // hint: Text("Select Flutter Version".i18n),
-          items: state.onlineFlutterVersions.map((flutterSDK) {
-            return DropdownMenuItem(
-              value: flutterSDK.version,
-              child: Text(flutterSDK.version),
-            );
-          }).toList(),
-          onChanged: (value) {
-            if (value != null) {
-              notifier.selectOnlineVersion(value);
-            }
-          },
-        ),
-        8.width,
-        IconButton(
-          onPressed: () => notifier.fetchOnlineFlutterVersions(),
-          icon: const Icon(FluentIcons.arrow_sync_16_regular),
-        ),
-        const Spacer(),
-        8.width,
-        !isDownloaded
-            ? ElevatedButton.icon(
-                icon: const Icon(FluentIcons.arrow_download_16_regular),
-                onPressed: state.isDownloading
-                    ? null
-                    : () => notifier.downloadFlutterVersion(),
-                label: state.isDownloading
-                    ? const SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator())
-                    : Text("Download".i18n),
-              )
-            : IgnorePointer(
-                ignoring: true,
-                child: Opacity(
-                  opacity: .5,
-                  child: ElevatedButton.icon(
-                    icon: const Icon(FluentIcons.arrow_download_16_regular),
-                    onPressed: () {},
-                    label: Text("Download".i18n),
-                  ),
-                ),
-              ),
-      ],
-    );
-  }
-
-  Column buildFVMCLIVersion(
-      MainHomeState state, BuildContext context, MainHomeNotifier notifier) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Text('FVM CLI version:'.i18n),
-            8.width,
-            state.fvmVersion.isEmpty
-                ? FilledButton(
-                    onPressed: () {
-                      openUrl(OnlineDirectory.FVMInstallationGuide);
-                    },
-                    child: Text('Install FVM CLI'.i18n),
-                  )
-                : Text(state.fvmVersion),
-            8.width,
+    // Check if the selected version is setup
+    final isSetup = state.downloadedFlutterSDKs.any((element) =>
+        element.isSetup == true && element.name == state.selectedVersion);
+    return DisabledWidget(
+      isDisabled: state.selectedVersion.isEmpty || !isSetup,
+      child: Row(
+        children: [
+          const Icon(
+            FluentIcons.circle_16_regular,
+            size: 14,
+          ),
+          16.width,
+          Text(state.projectPath
+              .substring(state.projectPath.lastIndexOf('\\') + 1)),
+          16.width,
+          const PlatformSelector(),
+          16.width,
+          if (state.isGettingAvailableDevices) ...[
+            const SizedBox(
+                height: 20, width: 20, child: CircularProgressIndicator()),
+            16.width,
+          ],
+          ControlProjectButton(
+            backgroundColor: const Color(0xFF66BB6A),
+            enabled: !state.isRunning && isSetup,
+            icon: const Icon(
+              FluentIcons.play_16_regular,
+              size: 16,
+            ),
+            onPressed: () {
+              notifier.runFlutterProject();
+            },
+          ),
+          8.width,
+          ControlProjectButton(
+            backgroundColor: const Color(0xFFF50057),
+            enabled: state.isRunning,
+            icon: const Icon(
+              FluentIcons.stop_16_regular,
+              size: 16,
+            ),
+            onPressed: () {
+              notifier.stopFlutterProject();
+            },
+          ),
+          8.width,
+          ControlProjectButton(
+            backgroundColor: Colors.orange,
+            enabled: state.isRunning,
+            icon: const Icon(
+              FluentIcons.arrow_sync_24_regular,
+              size: 16,
+            ),
+            onPressed: () {
+              notifier.hotReloadFlutterProject();
+            },
+          ),
+          8.width,
+          if (isSetup)
             IconButton(
-              onPressed: () => notifier.checkFvmInstallation(),
+              onPressed: () => notifier.refreshAvailableDevices(),
               icon: const Icon(FluentIcons.arrow_sync_16_regular),
             ),
-            const Spacer(),
-            8.width,
-            TextButton(
-              onPressed: () {
-                openUrl(OnlineDirectory.whatsNewFVMCli + state.fvmVersion);
-              },
-              child: Text("What's new?".i18n),
-            ),
-          ],
-        ),
-        if (state.fvmVersion.isEmpty) ...[
-          Text(
-            '*You must install FVM CLI to use this app.'.i18n,
-            style:
-                context.theme.textTheme.labelSmall?.copyWith(color: Colors.red),
+          const Spacer(),
+          // Button navigator to a website that guides user how to configure FVM on their code editor
+          TextButton.icon(
+            icon: const Icon(FluentIcons.question_circle_16_regular),
+            iconAlignment: IconAlignment.end,
+            onPressed: () {
+              openUrl(OnlineDirectory.setupFVMonCodeEditorGuide);
+            },
+            label: Text('Configure code editor'.i18n),
           ),
-          8.height,
         ],
-      ],
+      ),
+    );
+  }
+
+  Expanded buildConsole(BuildContext context, MainHomeState state) {
+    return Expanded(
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        padding: const EdgeInsets.all(8.0),
+        decoration:
+            BoxDecoration(color: context.theme.colorScheme.surfaceContainer),
+        child: ListView(reverse: true, children: state.commandOutput.toList()),
+      ),
     );
   }
 }
