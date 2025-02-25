@@ -67,7 +67,7 @@ class _DonationScreenState extends State<DonationScreen> {
                             16.height,
                             DividerWithText(text: 'or buy Parrot Pro at'.i18n),
                             16.height,
-                            MicrosoftBadgeWidget(),
+                            const MicrosoftBadgeWidget(),
                           ],
                         ),
                       )

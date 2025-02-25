@@ -1,6 +1,6 @@
-import 'package:parrot/src/core/configs/configs.dart';
-import 'package:parrot/src/core/constants/constants.dart';
-import 'package:parrot/src/core/utils/path_handler.dart';
+import 'package:parrot/src/app/configs/configs.dart';
+import 'package:parrot/src/app/constants/constants.dart';
+import 'package:parrot/src/app/utils/path_handler.dart';
 
 void goToStoreListing() async {
   if (isProVersion) {

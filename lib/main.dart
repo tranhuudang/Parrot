@@ -5,7 +5,7 @@ import 'package:parrot/src/core/core.dart';
 import 'package:parrot/src/presentation/presentation.dart';
 import 'package:windows_status_bar/windows_status_bar.dart';
 import 'app.dart';
-part 'initializer.dart';
+part 'src/app/initializer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

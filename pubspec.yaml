@@ -86,8 +86,8 @@ flutter:
     - assets/
     - assets/release_notes/release_notes.json
     - assets/badges/
-    - assets/images/app_icon.png
     - assets/donation/
+    - assets/images/
 
 # FREE VERSION    
 msix_config:
@@ -95,7 +95,7 @@ msix_config:
    publisher_display_name: DAK Solutions
    identity_name: 24555Zeroboy.FlutterVersionManager
    publisher: CN=DA7D2C99-987C-4B69-8953-17157F6E0E1A
-   msix_version: 2025.2.24.0
+   msix_version: 2025.2.25.0
    trim_logo: false
    logo_path: C:\Users\tranh\StudioProjects\parrot\assets\images\app_icon.png
    store: true
@@ -107,7 +107,7 @@ msix_config:
 #  publisher_display_name: DAK Solutions
 #  identity_name: 24555Zeroboy.ParrotPro
 #  publisher: CN=DA7D2C99-987C-4B69-8953-17157F6E0E1A
-#  msix_version: 2025.2.24.0
+#  msix_version: 2025.2.25.0
 #  trim_logo: false
 #  logo_path: C:\Users\tranh\StudioProjects\parrot\assets\images\app_icon.png
 #  store: true

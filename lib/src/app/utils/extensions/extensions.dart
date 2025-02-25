@@ -1,4 +1,4 @@
-export 'i18n.dart';
+export '../../localization/i18n.dart';
 export 'string.dart';
 export 'theme_mode.dart';
 export 'context_extension.dart';

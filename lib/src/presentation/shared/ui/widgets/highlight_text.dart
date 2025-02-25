@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parrot/src/core/core.dart';
-import 'package:parrot/src/core/utils/clipboard.dart';
+import 'package:parrot/src/app/utils/clipboard.dart';
 
 class HighlightedText extends StatefulWidget {
   final String text;

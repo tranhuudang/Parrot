@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:parrot/src/core/core.dart';
-import 'package:parrot/src/core/router/route_configurations_desktop.dart';
+import 'package:parrot/src/app/router/route_configurations_desktop.dart';
 import 'package:parrot/src/presentation/home/data/utils/upgrader_config.dart';
 import 'package:parrot/src/presentation/presentation.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
@@ -84,7 +84,7 @@ class _DesktopNavigationFrameState extends State<DesktopNavigationFrame>
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Image.asset(
-                          LocalDirectory.appLogo,
+                         isProVersion ? LocalDirectory.parrotProLogo : LocalDirectory.parrotPreviewLogo,
                         ),
                       )),
                   Text(

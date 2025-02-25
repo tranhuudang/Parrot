@@ -39,8 +39,12 @@ class InfoView extends StatelessWidget {
       children: [
         Column(
           children: [
-            const Image(
-              image: AssetImage(LocalDirectory.appLogo),
+            Image(
+              image: AssetImage(
+                isProVersion
+                    ? LocalDirectory.parrotProLogo
+                    : LocalDirectory.parrotPreviewLogo,
+              ),
               height: 90,
             ),
             8.height,
