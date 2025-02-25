@@ -26,7 +26,7 @@ Get Parrot on your preferred platform:
 2. Launch Parrot and select or install the desired Flutter SDK version.
 3. Assign a specific Flutter version to your projects and switch instantly!
 
-## 🛠Build From Source
+## Build From Source
 
 ```sh
 git clone https://github.com/tranhuudang/parrot.git
