@@ -248,78 +248,84 @@ class MainHomeBody extends ConsumerWidget {
     // Check if the selected version is setup
     final isSetup = state.downloadedFlutterSDKs.any((element) =>
         element.isSetup == true && element.name == state.selectedVersion);
-    return DisabledWidget(
-      isDisabled: state.selectedVersion.isEmpty || !isSetup,
-      child: Row(
-        children: [
-          const Icon(
-            FluentIcons.circle_16_regular,
-            size: 14,
+    final isSwitched =
+        state.currentFlutterVersionSwitchedTo == state.selectedVersion;
+    return Row(
+      children: [
+        DisabledWidget(
+          isDisabled: state.selectedVersion.isEmpty || !isSetup || !isSwitched,
+          child: Row(
+            children: [
+              const Icon(
+                FluentIcons.circle_16_regular,
+                size: 14,
+              ),
+              16.width,
+              Text(state.projectPath
+                  .substring(state.projectPath.lastIndexOf('\\') + 1)),
+              16.width,
+              const PlatformSelector(),
+              16.width,
+              if (state.isGettingAvailableDevices) ...[
+                const SizedBox(
+                    height: 20, width: 20, child: CircularProgressIndicator()),
+                16.width,
+              ],
+              ControlProjectButton(
+                backgroundColor: const Color(0xFF66BB6A),
+                enabled: !state.isRunning && isSetup && !state.isGettingAvailableDevices,
+                icon: const Icon(
+                  FluentIcons.play_16_regular,
+                  size: 16,
+                ),
+                onPressed: () {
+                  notifier.runFlutterProject();
+                },
+              ),
+              8.width,
+              ControlProjectButton(
+                backgroundColor: const Color(0xFFF50057),
+                enabled: state.isRunning,
+                icon: const Icon(
+                  FluentIcons.stop_16_regular,
+                  size: 16,
+                ),
+                onPressed: () {
+                  notifier.stopFlutterProject();
+                },
+              ),
+              8.width,
+              ControlProjectButton(
+                backgroundColor: Colors.orange,
+                enabled: state.isRunning,
+                icon: const Icon(
+                  FluentIcons.arrow_sync_24_regular,
+                  size: 16,
+                ),
+                onPressed: () {
+                  notifier.hotReloadFlutterProject();
+                },
+              ),
+              8.width,
+              if (isSetup)
+                IconButton(
+                  onPressed: () => notifier.refreshAvailableDevices(),
+                  icon: const Icon(FluentIcons.arrow_sync_16_regular),
+                ),
+            ],
           ),
-          16.width,
-          Text(state.projectPath
-              .substring(state.projectPath.lastIndexOf('\\') + 1)),
-          16.width,
-          const PlatformSelector(),
-          16.width,
-          if (state.isGettingAvailableDevices) ...[
-            const SizedBox(
-                height: 20, width: 20, child: CircularProgressIndicator()),
-            16.width,
-          ],
-          ControlProjectButton(
-            backgroundColor: const Color(0xFF66BB6A),
-            enabled: !state.isRunning && isSetup,
-            icon: const Icon(
-              FluentIcons.play_16_regular,
-              size: 16,
-            ),
-            onPressed: () {
-              notifier.runFlutterProject();
-            },
-          ),
-          8.width,
-          ControlProjectButton(
-            backgroundColor: const Color(0xFFF50057),
-            enabled: state.isRunning,
-            icon: const Icon(
-              FluentIcons.stop_16_regular,
-              size: 16,
-            ),
-            onPressed: () {
-              notifier.stopFlutterProject();
-            },
-          ),
-          8.width,
-          ControlProjectButton(
-            backgroundColor: Colors.orange,
-            enabled: state.isRunning,
-            icon: const Icon(
-              FluentIcons.arrow_sync_24_regular,
-              size: 16,
-            ),
-            onPressed: () {
-              notifier.hotReloadFlutterProject();
-            },
-          ),
-          8.width,
-          if (isSetup)
-            IconButton(
-              onPressed: () => notifier.refreshAvailableDevices(),
-              icon: const Icon(FluentIcons.arrow_sync_16_regular),
-            ),
-          const Spacer(),
-          // Button navigator to a website that guides user how to configure FVM on their code editor
-          TextButton.icon(
-            icon: const Icon(FluentIcons.question_circle_16_regular),
-            iconAlignment: IconAlignment.end,
-            onPressed: () {
-              openUrl(OnlineDirectory.setupFVMonCodeEditorGuide);
-            },
-            label: Text('Configure code editor'.i18n),
-          ),
-        ],
-      ),
+        ),
+        const Spacer(),
+        // Button navigator to a website that guides user how to configure FVM on their code editor
+        TextButton.icon(
+          icon: const Icon(FluentIcons.question_circle_16_regular),
+          iconAlignment: IconAlignment.end,
+          onPressed: () {
+            openUrl(OnlineDirectory.setupFVMonCodeEditorGuide);
+          },
+          label: Text('Configure code editor'.i18n),
+        ),
+      ],
     );
   }
 

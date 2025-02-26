@@ -1,5 +1,12 @@
 [
   {
+    "version": "45",
+    "date": "26-02-2025",
+    "changesNote": [
+      "Improve application reliability"
+    ]
+  },
+  {
     "version": "35",
     "date": "24-02-2025",
     "changesNote": [

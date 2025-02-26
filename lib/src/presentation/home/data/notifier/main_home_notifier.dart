@@ -25,41 +25,43 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
 
   // Initialize the home page by checking FVM installation and fetching versions
   Future<void> initializeHome() async {
-    state = state.copyWith(isDashboardScreenLoading: true);
     await checkFvmInstallation();
     await fetchOnlineFlutterVersions();
     await fetchDownloadedFlutterVersions();
-    state = state.copyWith(isDashboardScreenLoading: false);
     await gettingSavedCurrentProjectPath();
   }
 
   // Check if FVM is installed and update the state
   Future<void> checkFvmInstallation() async {
-    state = state.copyWith(isCheckingFvm: true); // Update loading state
+    state = state.copyWith(
+        isCheckingFvm: true,
+        isDashboardScreenLoading: true); // Update loading state
     try {
       ProcessResult result = await Process.run('fvm', ['--version']);
       state = state.copyWith(
-        fvmVersion: result.stdout.toString().trim(),
-        isCheckingFvm: false, // Set loading state to false
-      );
+          fvmVersion: result.stdout.toString().trim(),
+          isCheckingFvm: false, // Set loading state to false
+          isDashboardScreenLoading: false);
     } catch (e) {
       DebugLog.error(e.toString());
-      state =
-          state.copyWith(isCheckingFvm: false); // Set loading state to false
+      state = state.copyWith(
+          isCheckingFvm: false,
+          isDashboardScreenLoading: false); // Set loading state to false
     }
   }
 
   // Reload the Flutter SDKs screen
   Future<void> reloadFlutterSdksScreen() async {
-    state = state.copyWith(isFlutterSdksScreenLoading: true);
     await fetchOnlineFlutterVersions();
     await fetchDownloadedFlutterVersions();
-    state = state.copyWith(isFlutterSdksScreenLoading: false);
   }
 
   // Fetch online Flutter SDK versions
   Future<void> fetchOnlineFlutterVersions() async {
-    state = state.copyWith(isFetchingVersions: true); // Update loading state
+    state = state.copyWith(
+        isFetchingVersions: true,
+        isDashboardScreenLoading: true,
+        isFlutterSdksScreenLoading: true); // Update loading state
     try {
       ProcessResult result = await Process.run('fvm', ['api', 'releases']);
       if (result.exitCode == 0) {
@@ -72,17 +74,20 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
         // List<String> versions =
         //     releases.versions.map((release) => release.version).toList();
         state = state.copyWith(
-          onlineFlutterVersions: onlineFlutterSDKVersions.versions,
-          selectedOnlineVersion: onlineFlutterSDKVersions.versions.isNotEmpty
-              ? onlineFlutterSDKVersions.versions.first.version
-              : '',
-          isFetchingVersions: false, // Set loading state to false
-        );
+            onlineFlutterVersions: onlineFlutterSDKVersions.versions,
+            selectedOnlineVersion: onlineFlutterSDKVersions.versions.isNotEmpty
+                ? onlineFlutterSDKVersions.versions.first.version
+                : '',
+            isFetchingVersions: false, // Set loading state to false
+            isDashboardScreenLoading: false,
+            isFlutterSdksScreenLoading: false);
       }
     } catch (e) {
       DebugLog.error("Error fetching Flutter versions: $e");
       state = state.copyWith(
-          isFetchingVersions: false); // Set loading state to false
+          isFetchingVersions: false,
+          isDashboardScreenLoading: false,
+          isFlutterSdksScreenLoading: false); // Set loading state to false
     }
   }
 
@@ -143,7 +148,10 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
 
   // Fetch the downloaded Flutter versions
   Future<void> fetchDownloadedFlutterVersions() async {
-    state = state.copyWith(isFetchingDownloaded: true); // Update loading state
+    state = state.copyWith(
+        isFetchingDownloaded: true,
+        isDashboardScreenLoading: true,
+        isFlutterSdksScreenLoading: true); // Update loading state
     try {
       ProcessResult result = await Process.run('fvm', ['api', 'list']);
       String jsonString = result.stdout.toString();
@@ -160,21 +168,26 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       DebugLog.info(versions.toString());
 
       state = state.copyWith(
-        cacheSize: cacheSize,
-        downloadedFlutterSDKs: downloadedFlutterSDKs,
-        isFetchingDownloaded: false, // Set loading state to false
-      );
+          cacheSize: cacheSize,
+          downloadedFlutterSDKs: downloadedFlutterSDKs,
+          isFetchingDownloaded: false, // Set loading state to false
+          isDashboardScreenLoading: false,
+          isFlutterSdksScreenLoading: false);
     } catch (e) {
       DebugLog.error("Error fetching Flutter versions: $e");
       state = state.copyWith(
-          isFetchingDownloaded: false); // Set loading state to false
+          isFetchingDownloaded: false,
+          isDashboardScreenLoading: false,
+          isFlutterSdksScreenLoading: false); // Set loading state to false
     }
   }
 
   // Switch the Flutter version for the project
   Future<void> switchFlutterVersion(String projectPath) async {
     if (state.selectedVersion.isEmpty) return;
-    state = state.copyWith(isSwitching: true); // Update loading state
+    state = state.copyWith(
+        isSwitching: true,
+        currentFlutterVersionSwitchedTo: ''); // Update loading state
     try {
       Process process = await Process.start(
           'cmd', ['/c', 'echo y | fvm use ${state.selectedVersion}'],
@@ -187,9 +200,19 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
             commandOutput: newList); // Update state with the new list
       });
       process.exitCode.then((exitCode) {
-        state =
-            state.copyWith(isSwitching: false); // Set loading state to false
+        state = state.copyWith(
+            isSwitching: false,
+            currentFlutterVersionSwitchedTo:
+                state.selectedVersion); // Set loading state to false
       });
+      // Fetching available devices after switching successfully
+      if (state.downloadedFlutterSDKs.isNotEmpty) {
+        final isSetup = state.downloadedFlutterSDKs
+            .any((element) => element.isSetup == true);
+        if (isSetup) {
+          await gettingFlutterPlatform();
+        }
+      }
     } catch (e) {
       DebugLog.error("Error: $e");
       state = state.copyWith(isSwitching: false); // Set loading state to false
@@ -254,13 +277,13 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       state = state.copyWith(
         projectPath: currentTargetProjectPath,
       );
-      if (state.downloadedFlutterSDKs.isNotEmpty) {
-        final isSetup = state.downloadedFlutterSDKs
-            .any((element) => element.isSetup == true);
-        if (isSetup) {
-          await gettingFlutterPlatform();
-        }
-      }
+      // if (state.downloadedFlutterSDKs.isNotEmpty) {
+      //   final isSetup = state.downloadedFlutterSDKs
+      //       .any((element) => element.isSetup == true);
+      //   if (isSetup) {
+      //     await gettingFlutterPlatform();
+      //   }
+      // }
     }
   }
 

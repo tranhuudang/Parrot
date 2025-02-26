@@ -33,6 +33,8 @@ mixin _$MainHomeState {
   int get downloadButtonIndex => throw _privateConstructorUsedError;
   bool get isFetchingDownloaded => throw _privateConstructorUsedError;
   bool get isSwitching => throw _privateConstructorUsedError;
+  String get currentFlutterVersionSwitchedTo =>
+      throw _privateConstructorUsedError;
   bool get isGettingAvailableDevices => throw _privateConstructorUsedError;
   String get projectPath => throw _privateConstructorUsedError;
   String get selectedPlatform => throw _privateConstructorUsedError;
@@ -70,6 +72,7 @@ abstract class $MainHomeStateCopyWith<$Res> {
       int downloadButtonIndex,
       bool isFetchingDownloaded,
       bool isSwitching,
+      String currentFlutterVersionSwitchedTo,
       bool isGettingAvailableDevices,
       String projectPath,
       String selectedPlatform,
@@ -109,6 +112,7 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
     Object? downloadButtonIndex = null,
     Object? isFetchingDownloaded = null,
     Object? isSwitching = null,
+    Object? currentFlutterVersionSwitchedTo = null,
     Object? isGettingAvailableDevices = null,
     Object? projectPath = null,
     Object? selectedPlatform = null,
@@ -178,6 +182,10 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
           ? _value.isSwitching
           : isSwitching // ignore: cast_nullable_to_non_nullable
               as bool,
+      currentFlutterVersionSwitchedTo: null == currentFlutterVersionSwitchedTo
+          ? _value.currentFlutterVersionSwitchedTo
+          : currentFlutterVersionSwitchedTo // ignore: cast_nullable_to_non_nullable
+              as String,
       isGettingAvailableDevices: null == isGettingAvailableDevices
           ? _value.isGettingAvailableDevices
           : isGettingAvailableDevices // ignore: cast_nullable_to_non_nullable
@@ -234,6 +242,7 @@ abstract class _$$MainHomeStateImplCopyWith<$Res>
       int downloadButtonIndex,
       bool isFetchingDownloaded,
       bool isSwitching,
+      String currentFlutterVersionSwitchedTo,
       bool isGettingAvailableDevices,
       String projectPath,
       String selectedPlatform,
@@ -271,6 +280,7 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
     Object? downloadButtonIndex = null,
     Object? isFetchingDownloaded = null,
     Object? isSwitching = null,
+    Object? currentFlutterVersionSwitchedTo = null,
     Object? isGettingAvailableDevices = null,
     Object? projectPath = null,
     Object? selectedPlatform = null,
@@ -340,6 +350,10 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
           ? _value.isSwitching
           : isSwitching // ignore: cast_nullable_to_non_nullable
               as bool,
+      currentFlutterVersionSwitchedTo: null == currentFlutterVersionSwitchedTo
+          ? _value.currentFlutterVersionSwitchedTo
+          : currentFlutterVersionSwitchedTo // ignore: cast_nullable_to_non_nullable
+              as String,
       isGettingAvailableDevices: null == isGettingAvailableDevices
           ? _value.isGettingAvailableDevices
           : isGettingAvailableDevices // ignore: cast_nullable_to_non_nullable
@@ -391,6 +405,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
       required this.downloadButtonIndex,
       required this.isFetchingDownloaded,
       required this.isSwitching,
+      required this.currentFlutterVersionSwitchedTo,
       required this.isGettingAvailableDevices,
       required this.projectPath,
       required this.selectedPlatform,
@@ -454,6 +469,8 @@ class _$MainHomeStateImpl implements _MainHomeState {
   @override
   final bool isSwitching;
   @override
+  final String currentFlutterVersionSwitchedTo;
+  @override
   final bool isGettingAvailableDevices;
   @override
   final String projectPath;
@@ -477,7 +494,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
 
   @override
   String toString() {
-    return 'MainHomeState(isFlutterSdksScreenLoading: $isFlutterSdksScreenLoading, isDashboardScreenLoading: $isDashboardScreenLoading, fvmVersion: $fvmVersion, onlineFlutterVersions: $onlineFlutterVersions, selectedOnlineVersion: $selectedOnlineVersion, downloadedFlutterSDKs: $downloadedFlutterSDKs, selectedVersion: $selectedVersion, commandOutput: $commandOutput, isCheckingFvm: $isCheckingFvm, isInstallingFvm: $isInstallingFvm, isFetchingVersions: $isFetchingVersions, isDownloading: $isDownloading, downloadButtonIndex: $downloadButtonIndex, isFetchingDownloaded: $isFetchingDownloaded, isSwitching: $isSwitching, isGettingAvailableDevices: $isGettingAvailableDevices, projectPath: $projectPath, selectedPlatform: $selectedPlatform, availablePlatforms: $availablePlatforms, isRunning: $isRunning, isHotReloading: $isHotReloading, cacheSize: $cacheSize)';
+    return 'MainHomeState(isFlutterSdksScreenLoading: $isFlutterSdksScreenLoading, isDashboardScreenLoading: $isDashboardScreenLoading, fvmVersion: $fvmVersion, onlineFlutterVersions: $onlineFlutterVersions, selectedOnlineVersion: $selectedOnlineVersion, downloadedFlutterSDKs: $downloadedFlutterSDKs, selectedVersion: $selectedVersion, commandOutput: $commandOutput, isCheckingFvm: $isCheckingFvm, isInstallingFvm: $isInstallingFvm, isFetchingVersions: $isFetchingVersions, isDownloading: $isDownloading, downloadButtonIndex: $downloadButtonIndex, isFetchingDownloaded: $isFetchingDownloaded, isSwitching: $isSwitching, currentFlutterVersionSwitchedTo: $currentFlutterVersionSwitchedTo, isGettingAvailableDevices: $isGettingAvailableDevices, projectPath: $projectPath, selectedPlatform: $selectedPlatform, availablePlatforms: $availablePlatforms, isRunning: $isRunning, isHotReloading: $isHotReloading, cacheSize: $cacheSize)';
   }
 
   @override
@@ -485,8 +502,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MainHomeStateImpl &&
-            (identical(other.isFlutterSdksScreenLoading,
-                    isFlutterSdksScreenLoading) ||
+            (identical(other.isFlutterSdksScreenLoading, isFlutterSdksScreenLoading) ||
                 other.isFlutterSdksScreenLoading ==
                     isFlutterSdksScreenLoading) &&
             (identical(other.isDashboardScreenLoading, isDashboardScreenLoading) ||
@@ -517,6 +533,9 @@ class _$MainHomeStateImpl implements _MainHomeState {
                 other.isFetchingDownloaded == isFetchingDownloaded) &&
             (identical(other.isSwitching, isSwitching) ||
                 other.isSwitching == isSwitching) &&
+            (identical(other.currentFlutterVersionSwitchedTo, currentFlutterVersionSwitchedTo) ||
+                other.currentFlutterVersionSwitchedTo ==
+                    currentFlutterVersionSwitchedTo) &&
             (identical(other.isGettingAvailableDevices, isGettingAvailableDevices) ||
                 other.isGettingAvailableDevices == isGettingAvailableDevices) &&
             (identical(other.projectPath, projectPath) ||
@@ -551,6 +570,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
         downloadButtonIndex,
         isFetchingDownloaded,
         isSwitching,
+        currentFlutterVersionSwitchedTo,
         isGettingAvailableDevices,
         projectPath,
         selectedPlatform,
@@ -586,6 +606,7 @@ abstract class _MainHomeState implements MainHomeState {
       required final int downloadButtonIndex,
       required final bool isFetchingDownloaded,
       required final bool isSwitching,
+      required final String currentFlutterVersionSwitchedTo,
       required final bool isGettingAvailableDevices,
       required final String projectPath,
       required final String selectedPlatform,
@@ -624,6 +645,8 @@ abstract class _MainHomeState implements MainHomeState {
   bool get isFetchingDownloaded;
   @override
   bool get isSwitching;
+  @override
+  String get currentFlutterVersionSwitchedTo;
   @override
   bool get isGettingAvailableDevices;
   @override
