@@ -1,6 +1,6 @@
 {
-    "name": "flutter_version_manager",
-    "short_name": "flutter_version_manager",
+    "name": "parrot",
+    "short_name": "parrot",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
