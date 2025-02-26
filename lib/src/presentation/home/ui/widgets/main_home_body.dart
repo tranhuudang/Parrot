@@ -70,7 +70,12 @@ class MainHomeBody extends ConsumerWidget {
                     },
                     child: Text('Install FVM CLI'.i18n),
                   )
-                : Text(state.fvmVersion),
+                // Cut off the version if it's too long
+                : Text(
+                    state.fvmVersion.length > 20
+                        ? state.fvmVersion.substring(0, 20)
+                        : state.fvmVersion,
+                  ),
             8.width,
             IconButton(
               onPressed: () => notifier.checkFvmInstallation(),

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+    <channel>
+        <title>Parrot</title>
+        <item>
+            <title>Version 1.0.0</title>
+            <description>-Tăng cường độ ổn định và tính nhất quán</description>
+            <pubDate>Mon, 27 Jun 2024 12:00:00 +0000</pubDate>
+            <enclosure url="ms-windows-store://pdp/?productid=9NQN1PJ0FDR1"
+                sparkle:version="1.0.0" sparkle:os="windows" />
+        </item>
+    </channel>
+</rss>
