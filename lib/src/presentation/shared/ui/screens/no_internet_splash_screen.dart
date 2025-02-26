@@ -1,4 +1,4 @@
-import 'package:parrot/src/core/core.dart';
+import 'package:parrot/src/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

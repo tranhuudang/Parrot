@@ -1,5 +1,6 @@
 import 'dart:async';
-import 'package:parrot/src/core/core.dart';
+import 'package:dak_solutions_common/dak_solutions_common.dart';
+import 'package:parrot/src/app/app.dart';
 import 'package:parrot/src/app/router/route_configurations_desktop.dart';
 import 'package:parrot/src/presentation/home/data/utils/upgrader_config.dart';
 import 'package:parrot/src/presentation/presentation.dart';
@@ -9,6 +10,7 @@ import 'package:upgrader/upgrader.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:windows_status_bar/windows_status_bar_widget.dart';
 
+import '../../../../app/utils/utils.dart';
 import '../widgets/sidebar_widget.dart';
 
 class DesktopNavigationFrame extends StatefulWidget {

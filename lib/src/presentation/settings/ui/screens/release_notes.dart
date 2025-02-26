@@ -1,8 +1,9 @@
 import 'dart:convert';
 
+import 'package:dak_solutions_common/dak_solutions_common.dart';
+import 'package:parrot/src/app/app.dart';
 import 'package:parrot/src/data/data.dart';
 import 'package:parrot/src/presentation/presentation.dart';
-import 'package:parrot/src/core/core.dart';
 import 'package:flutter/services.dart';
 
 class ReleaseNotesView extends StatefulWidget {

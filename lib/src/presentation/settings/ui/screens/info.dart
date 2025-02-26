@@ -1,7 +1,8 @@
+import 'package:dak_solutions_common/dak_solutions_common.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:parrot/src/app/app.dart';
 import 'package:parrot/src/presentation/presentation.dart';
-import 'package:parrot/src/core/core.dart';
 
 class InfoView extends StatelessWidget {
   const InfoView({super.key});

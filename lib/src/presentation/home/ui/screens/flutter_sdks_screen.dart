@@ -1,6 +1,7 @@
+import 'package:dak_solutions_common/dak_solutions_common.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parrot/src/core/core.dart';
+import 'package:parrot/src/app/app.dart';
 import 'package:parrot/src/presentation/home/data/model/flutter_versions.dart';
 import 'package:parrot/src/presentation/home/data/notifier/main_home_notifier.dart';
 import 'package:parrot/src/presentation/presentation.dart';

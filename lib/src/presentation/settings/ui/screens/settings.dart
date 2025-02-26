@@ -1,8 +1,9 @@
 import 'dart:async';
+import 'package:dak_solutions_common/dak_solutions_common.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:parrot/src/app/app.dart';
 import 'package:parrot/src/presentation/presentation.dart';
-import 'package:parrot/src/core/core.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});

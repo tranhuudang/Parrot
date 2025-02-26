@@ -1,4 +1,4 @@
-import 'package:parrot/src/core/core.dart';
+import 'package:dak_solutions_common/dak_solutions_common.dart';
 import 'package:parrot/src/presentation/presentation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_builder/responsive_builder.dart';

@@ -1,4 +1,5 @@
-import 'package:parrot/src/core/core.dart';
+import 'package:dak_solutions_common/dak_solutions_common.dart';
+import 'package:parrot/src/app/app.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 import '../../../presentation.dart';

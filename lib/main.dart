@@ -1,3 +1,4 @@
+import 'package:dak_solutions_common/dak_solutions_common.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parrot/bloc_provider_scope.dart';
 import 'package:window_manager/window_manager.dart';

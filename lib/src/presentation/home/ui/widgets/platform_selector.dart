@@ -1,5 +1,6 @@
+import 'package:dak_solutions_common/dak_solutions_common.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parrot/src/core/core.dart';
+import 'package:parrot/src/app/app.dart';
 
 import '../../../presentation.dart';
 import '../../data/notifier/main_home_notifier.dart';
