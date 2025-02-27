@@ -6,7 +6,8 @@ This guide will help you set up Flutter Version Management (FVM) in Visual Studi
 
 1. Open VS Code settings (`settings.json`):
    - **Windows:** Go to `File` → `Preferences` → `Settings`, then click the icon in the top right corner as shown below:
-   <img src="https://raw.githubusercontent.com/tranhuudang/Parrot/refs/heads/master/docs/configure_your_code_editor/settings_vscode.png" height="400">
+     
+   <img src="https://raw.githubusercontent.com/tranhuudang/Parrot/refs/heads/master/docs/configure_your_code_editor/settings_vscode.png">
 
 2. Add the following configuration:
    ```json
