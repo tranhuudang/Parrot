@@ -96,6 +96,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     } catch (e) {
       DebugLog.error('Error checking Dart Installation: ${e.toString()}');
       state = state.copyWith(
+          isDartInstalled: false,
           isCheckingDartInstallation: false,
           isDashboardScreenLoading: false); // Set loading state to false
       return false;

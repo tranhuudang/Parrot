@@ -39,7 +39,7 @@ class MainHomeState with _$MainHomeState {
   factory MainHomeState.initial() => const MainHomeState(
         isFlutterSdksScreenLoading: false,
         isDashboardScreenLoading: false,
-        isDartInstalled: false,
+        isDartInstalled: true,
         onlineFlutterVersions: [],
         selectedOnlineVersion: '',
         downloadedFlutterSDKs: [],

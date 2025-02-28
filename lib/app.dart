@@ -75,7 +75,10 @@ class _AppState extends State<App> {
           supportedLocales: const [
             Locale('en', 'US'),
             Locale('vi', 'VI'),
-            Locale('zh', 'CN')
+            Locale('zh', 'CN'),
+            Locale('ja', 'JP'),
+            Locale('de', 'DE'),
+
           ],
           locale: state.params.language.toLocale(),
           themeMode: state.params.themeMode,
