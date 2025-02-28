@@ -21,84 +21,67 @@ class MainHomeBody extends ConsumerWidget {
       children: [
         4.height,
         // FVM CLI version
-        buildFVMCLIVersion(state, context, notifier),
+        if (!state.isDartInstalled)
+          buildDartInstalation(state, context, notifier),
+        if (state.isDartInstalled)
+          DisabledWidget(
+              isDisabled: !state.isDartInstalled,
+              child:
+                  buildTargetFlutterProjectSelection(state, notifier, context)),
 
         Expanded(
-            child: IgnorePointer(
-          ignoring: state.fvmVersion.isEmpty ? true : false,
-          child: Opacity(
-            opacity: state.fvmVersion.isEmpty ? .5 : 1,
-            child: Column(
-              children: [
-                buildAvailableFlutterSDKreleases(state, notifier),
-                buildTargetFlutterProjectSelection(state, notifier, context),
-                if (state.projectPath.isNotEmpty) ...[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: Column(
-                      children: [
-                        buildSelectFlutterVersionToSwitch(state, notifier),
-                        8.height,
-                        buildProjectRunningControl(state, notifier),
-                      ],
-                    ),
-                  )
-                ],
-                8.height,
-                buildConsole(context, state),
+            child: DisabledWidget(
+          isDisabled: !state.isDartInstalled,
+          child: Column(
+            children: [
+              buildAvailableFlutterSDKreleases(state, notifier),
+              if (state.projectPath.isNotEmpty) ...[
+                Padding(
+                  padding: const EdgeInsets.only(left: 8, top: 8),
+                  child: Column(
+                    children: [
+                      buildSelectFlutterVersionToSwitch(state, notifier),
+                      8.height,
+                      buildProjectRunningControl(state, notifier),
+                    ],
+                  ),
+                )
               ],
-            ),
+              8.height,
+              buildConsole(context, state),
+            ],
           ),
         )),
       ],
     );
   }
 
-  Column buildFVMCLIVersion(
+  Widget buildDartInstalation(
       MainHomeState state, BuildContext context, MainHomeNotifier notifier) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Text('FVM CLI version:'.i18n),
-            8.width,
-            state.fvmVersion.isEmpty
-                ? FilledButton(
-                    onPressed: () {
-                      openUrl(OnlineDirectory.FVMInstallationGuide);
-                    },
-                    child: Text('Install FVM CLI'.i18n),
-                  )
-                // Cut off the version if it's too long
-                : Text(
-                    state.fvmVersion.length > 20
-                        ? state.fvmVersion.substring(0, 20)
-                        : state.fvmVersion,
-                  ),
+            FilledButton(
+              onPressed: () => openUrl(OnlineDirectory.installFlutterUrl),
+              child: Text('Install Flutter'.i18n),
+            )
+            // Cut off the version if it's too long
+            ,
             8.width,
             IconButton(
-              onPressed: () => notifier.checkFvmInstallation(),
+              onPressed: () => notifier.checkDartInstallation(),
               icon: const Icon(FluentIcons.arrow_sync_16_regular),
-            ),
-            const Spacer(),
-            8.width,
-            TextButton(
-              onPressed: () {
-                openUrl(OnlineDirectory.whatsNewFVMCli + state.fvmVersion);
-              },
-              child: Text("What's new?".i18n),
             ),
           ],
         ),
-        if (state.fvmVersion.isEmpty) ...[
-          Text(
-            '*You must install FVM CLI to use this app.'.i18n,
-            style:
-                context.theme.textTheme.labelSmall?.copyWith(color: Colors.red),
-          ),
-          8.height,
-        ],
+        Text(
+          '*You must have Flutter installed to use this app.'.i18n,
+          style:
+              context.theme.textTheme.labelSmall?.copyWith(color: Colors.red),
+        ),
+        8.height,
       ],
     );
   }
@@ -273,7 +256,9 @@ class MainHomeBody extends ConsumerWidget {
               ],
               ControlProjectButton(
                 backgroundColor: const Color(0xFF66BB6A),
-                enabled: !state.isRunning && isSetup && !state.isGettingAvailableDevices,
+                enabled: !state.isRunning &&
+                    isSetup &&
+                    !state.isGettingAvailableDevices,
                 icon: const Icon(
                   FluentIcons.play_16_regular,
                   size: 16,

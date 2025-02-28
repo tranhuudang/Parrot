@@ -5,11 +5,12 @@ class OnlineDirectory {
   static const String paypalLink = 'https://paypal.me/DangTran565';
   static const String whatsNewFVMCli =
       'https://github.com/leoafarias/fvm/releases/tag/';
-  static const String FVMInstallationGuide =
-      'https://www.github.com/tranhuudang/parrot/tree/master/docs/install_fvm/README.md';
+  static const String installFlutterUrl =
+      'https://docs.flutter.dev/get-started/install';
   static const String setupFVMonCodeEditorGuide =
       'https://www.github.com/tranhuudang/parrot/tree/master/docs/configure_your_code_editor/README.md';
   static const String flutterReleaseNotes =
       'https://github.com/flutter/flutter/releases/tag/';
-  static const String parrotProMicrosoftLink = 'ms-windows-store://pdp/?productid=9MXQHNMCC15Q';
+  static const String parrotProMicrosoftLink =
+      'ms-windows-store://pdp/?productid=9MXQHNMCC15Q';
 }

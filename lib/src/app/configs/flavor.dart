@@ -2,6 +2,7 @@ enum Flavor { free, pro }
 
 bool get isFreeVersion => AppFlavor.instance.flavor == Flavor.free;
 bool get isProVersion => AppFlavor.instance.flavor == Flavor.pro;
+String get appName => AppFlavor.instance.appName;
 
 class AppFlavor {
   final String appName;

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:parrot/src/core/core.dart';
 import 'package:parrot/src/presentation/home/data/model/downloaded_flutter_sdks.dart';
+import 'package:parrot/src/presentation/home/data/model/error.dart';
 import 'package:parrot/src/presentation/home/data/model/flutter_versions.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -10,13 +12,13 @@ class MainHomeState with _$MainHomeState {
   const factory MainHomeState({
     required bool isFlutterSdksScreenLoading,
     required bool isDashboardScreenLoading,
-    required String fvmVersion,
+    required bool isDartInstalled,
     required List<OnlineFlutterSDK> onlineFlutterVersions,
     required String selectedOnlineVersion,
     required List<DownloadedFlutterSDK> downloadedFlutterSDKs,
     required String selectedVersion,
     required List<Widget> commandOutput,
-    required bool isCheckingFvm,
+    required bool isCheckingDartInstallation,
     required bool isInstallingFvm,
     required bool isFetchingVersions,
     required bool isDownloading,
@@ -31,18 +33,19 @@ class MainHomeState with _$MainHomeState {
     required bool isRunning,
     required bool isHotReloading,
     required String cacheSize,
+    required MainHomeStateError? error,
   }) = _MainHomeState;
 
   factory MainHomeState.initial() => const MainHomeState(
         isFlutterSdksScreenLoading: false,
         isDashboardScreenLoading: false,
-        fvmVersion: '',
+        isDartInstalled: false,
         onlineFlutterVersions: [],
         selectedOnlineVersion: '',
         downloadedFlutterSDKs: [],
         selectedVersion: '',
         commandOutput: [],
-        isCheckingFvm: false,
+        isCheckingDartInstallation: false,
         isInstallingFvm: false,
         isFetchingVersions: false,
         isDownloading: false,
@@ -57,5 +60,6 @@ class MainHomeState with _$MainHomeState {
         selectedPlatform: '',
         availablePlatforms: [],
         cacheSize: '',
+        error: null,
       );
 }

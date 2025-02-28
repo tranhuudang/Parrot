@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$MainHomeState {
   bool get isFlutterSdksScreenLoading => throw _privateConstructorUsedError;
   bool get isDashboardScreenLoading => throw _privateConstructorUsedError;
-  String get fvmVersion => throw _privateConstructorUsedError;
+  bool get isDartInstalled => throw _privateConstructorUsedError;
   List<OnlineFlutterSDK> get onlineFlutterVersions =>
       throw _privateConstructorUsedError;
   String get selectedOnlineVersion => throw _privateConstructorUsedError;
@@ -26,7 +26,7 @@ mixin _$MainHomeState {
       throw _privateConstructorUsedError;
   String get selectedVersion => throw _privateConstructorUsedError;
   List<Widget> get commandOutput => throw _privateConstructorUsedError;
-  bool get isCheckingFvm => throw _privateConstructorUsedError;
+  bool get isCheckingDartInstallation => throw _privateConstructorUsedError;
   bool get isInstallingFvm => throw _privateConstructorUsedError;
   bool get isFetchingVersions => throw _privateConstructorUsedError;
   bool get isDownloading => throw _privateConstructorUsedError;
@@ -42,6 +42,7 @@ mixin _$MainHomeState {
   bool get isRunning => throw _privateConstructorUsedError;
   bool get isHotReloading => throw _privateConstructorUsedError;
   String get cacheSize => throw _privateConstructorUsedError;
+  MainHomeStateError? get error => throw _privateConstructorUsedError;
 
   /// Create a copy of MainHomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -59,13 +60,13 @@ abstract class $MainHomeStateCopyWith<$Res> {
   $Res call(
       {bool isFlutterSdksScreenLoading,
       bool isDashboardScreenLoading,
-      String fvmVersion,
+      bool isDartInstalled,
       List<OnlineFlutterSDK> onlineFlutterVersions,
       String selectedOnlineVersion,
       List<DownloadedFlutterSDK> downloadedFlutterSDKs,
       String selectedVersion,
       List<Widget> commandOutput,
-      bool isCheckingFvm,
+      bool isCheckingDartInstallation,
       bool isInstallingFvm,
       bool isFetchingVersions,
       bool isDownloading,
@@ -79,7 +80,10 @@ abstract class $MainHomeStateCopyWith<$Res> {
       List<String> availablePlatforms,
       bool isRunning,
       bool isHotReloading,
-      String cacheSize});
+      String cacheSize,
+      MainHomeStateError? error});
+
+  $MainHomeStateErrorCopyWith<$Res>? get error;
 }
 
 /// @nodoc
@@ -99,13 +103,13 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
   $Res call({
     Object? isFlutterSdksScreenLoading = null,
     Object? isDashboardScreenLoading = null,
-    Object? fvmVersion = null,
+    Object? isDartInstalled = null,
     Object? onlineFlutterVersions = null,
     Object? selectedOnlineVersion = null,
     Object? downloadedFlutterSDKs = null,
     Object? selectedVersion = null,
     Object? commandOutput = null,
-    Object? isCheckingFvm = null,
+    Object? isCheckingDartInstallation = null,
     Object? isInstallingFvm = null,
     Object? isFetchingVersions = null,
     Object? isDownloading = null,
@@ -120,6 +124,7 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
     Object? isRunning = null,
     Object? isHotReloading = null,
     Object? cacheSize = null,
+    Object? error = freezed,
   }) {
     return _then(_value.copyWith(
       isFlutterSdksScreenLoading: null == isFlutterSdksScreenLoading
@@ -130,10 +135,10 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
           ? _value.isDashboardScreenLoading
           : isDashboardScreenLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      fvmVersion: null == fvmVersion
-          ? _value.fvmVersion
-          : fvmVersion // ignore: cast_nullable_to_non_nullable
-              as String,
+      isDartInstalled: null == isDartInstalled
+          ? _value.isDartInstalled
+          : isDartInstalled // ignore: cast_nullable_to_non_nullable
+              as bool,
       onlineFlutterVersions: null == onlineFlutterVersions
           ? _value.onlineFlutterVersions
           : onlineFlutterVersions // ignore: cast_nullable_to_non_nullable
@@ -154,9 +159,9 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
           ? _value.commandOutput
           : commandOutput // ignore: cast_nullable_to_non_nullable
               as List<Widget>,
-      isCheckingFvm: null == isCheckingFvm
-          ? _value.isCheckingFvm
-          : isCheckingFvm // ignore: cast_nullable_to_non_nullable
+      isCheckingDartInstallation: null == isCheckingDartInstallation
+          ? _value.isCheckingDartInstallation
+          : isCheckingDartInstallation // ignore: cast_nullable_to_non_nullable
               as bool,
       isInstallingFvm: null == isInstallingFvm
           ? _value.isInstallingFvm
@@ -214,7 +219,25 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
           ? _value.cacheSize
           : cacheSize // ignore: cast_nullable_to_non_nullable
               as String,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as MainHomeStateError?,
     ) as $Val);
+  }
+
+  /// Create a copy of MainHomeState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MainHomeStateErrorCopyWith<$Res>? get error {
+    if (_value.error == null) {
+      return null;
+    }
+
+    return $MainHomeStateErrorCopyWith<$Res>(_value.error!, (value) {
+      return _then(_value.copyWith(error: value) as $Val);
+    });
   }
 }
 
@@ -229,13 +252,13 @@ abstract class _$$MainHomeStateImplCopyWith<$Res>
   $Res call(
       {bool isFlutterSdksScreenLoading,
       bool isDashboardScreenLoading,
-      String fvmVersion,
+      bool isDartInstalled,
       List<OnlineFlutterSDK> onlineFlutterVersions,
       String selectedOnlineVersion,
       List<DownloadedFlutterSDK> downloadedFlutterSDKs,
       String selectedVersion,
       List<Widget> commandOutput,
-      bool isCheckingFvm,
+      bool isCheckingDartInstallation,
       bool isInstallingFvm,
       bool isFetchingVersions,
       bool isDownloading,
@@ -249,7 +272,11 @@ abstract class _$$MainHomeStateImplCopyWith<$Res>
       List<String> availablePlatforms,
       bool isRunning,
       bool isHotReloading,
-      String cacheSize});
+      String cacheSize,
+      MainHomeStateError? error});
+
+  @override
+  $MainHomeStateErrorCopyWith<$Res>? get error;
 }
 
 /// @nodoc
@@ -267,13 +294,13 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
   $Res call({
     Object? isFlutterSdksScreenLoading = null,
     Object? isDashboardScreenLoading = null,
-    Object? fvmVersion = null,
+    Object? isDartInstalled = null,
     Object? onlineFlutterVersions = null,
     Object? selectedOnlineVersion = null,
     Object? downloadedFlutterSDKs = null,
     Object? selectedVersion = null,
     Object? commandOutput = null,
-    Object? isCheckingFvm = null,
+    Object? isCheckingDartInstallation = null,
     Object? isInstallingFvm = null,
     Object? isFetchingVersions = null,
     Object? isDownloading = null,
@@ -288,6 +315,7 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
     Object? isRunning = null,
     Object? isHotReloading = null,
     Object? cacheSize = null,
+    Object? error = freezed,
   }) {
     return _then(_$MainHomeStateImpl(
       isFlutterSdksScreenLoading: null == isFlutterSdksScreenLoading
@@ -298,10 +326,10 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
           ? _value.isDashboardScreenLoading
           : isDashboardScreenLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      fvmVersion: null == fvmVersion
-          ? _value.fvmVersion
-          : fvmVersion // ignore: cast_nullable_to_non_nullable
-              as String,
+      isDartInstalled: null == isDartInstalled
+          ? _value.isDartInstalled
+          : isDartInstalled // ignore: cast_nullable_to_non_nullable
+              as bool,
       onlineFlutterVersions: null == onlineFlutterVersions
           ? _value._onlineFlutterVersions
           : onlineFlutterVersions // ignore: cast_nullable_to_non_nullable
@@ -322,9 +350,9 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
           ? _value._commandOutput
           : commandOutput // ignore: cast_nullable_to_non_nullable
               as List<Widget>,
-      isCheckingFvm: null == isCheckingFvm
-          ? _value.isCheckingFvm
-          : isCheckingFvm // ignore: cast_nullable_to_non_nullable
+      isCheckingDartInstallation: null == isCheckingDartInstallation
+          ? _value.isCheckingDartInstallation
+          : isCheckingDartInstallation // ignore: cast_nullable_to_non_nullable
               as bool,
       isInstallingFvm: null == isInstallingFvm
           ? _value.isInstallingFvm
@@ -382,6 +410,10 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
           ? _value.cacheSize
           : cacheSize // ignore: cast_nullable_to_non_nullable
               as String,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as MainHomeStateError?,
     ));
   }
 }
@@ -392,13 +424,13 @@ class _$MainHomeStateImpl implements _MainHomeState {
   const _$MainHomeStateImpl(
       {required this.isFlutterSdksScreenLoading,
       required this.isDashboardScreenLoading,
-      required this.fvmVersion,
+      required this.isDartInstalled,
       required final List<OnlineFlutterSDK> onlineFlutterVersions,
       required this.selectedOnlineVersion,
       required final List<DownloadedFlutterSDK> downloadedFlutterSDKs,
       required this.selectedVersion,
       required final List<Widget> commandOutput,
-      required this.isCheckingFvm,
+      required this.isCheckingDartInstallation,
       required this.isInstallingFvm,
       required this.isFetchingVersions,
       required this.isDownloading,
@@ -412,7 +444,8 @@ class _$MainHomeStateImpl implements _MainHomeState {
       required final List<String> availablePlatforms,
       required this.isRunning,
       required this.isHotReloading,
-      required this.cacheSize})
+      required this.cacheSize,
+      required this.error})
       : _onlineFlutterVersions = onlineFlutterVersions,
         _downloadedFlutterSDKs = downloadedFlutterSDKs,
         _commandOutput = commandOutput,
@@ -423,7 +456,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
   @override
   final bool isDashboardScreenLoading;
   @override
-  final String fvmVersion;
+  final bool isDartInstalled;
   final List<OnlineFlutterSDK> _onlineFlutterVersions;
   @override
   List<OnlineFlutterSDK> get onlineFlutterVersions {
@@ -455,7 +488,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
   }
 
   @override
-  final bool isCheckingFvm;
+  final bool isCheckingDartInstallation;
   @override
   final bool isInstallingFvm;
   @override
@@ -491,10 +524,12 @@ class _$MainHomeStateImpl implements _MainHomeState {
   final bool isHotReloading;
   @override
   final String cacheSize;
+  @override
+  final MainHomeStateError? error;
 
   @override
   String toString() {
-    return 'MainHomeState(isFlutterSdksScreenLoading: $isFlutterSdksScreenLoading, isDashboardScreenLoading: $isDashboardScreenLoading, fvmVersion: $fvmVersion, onlineFlutterVersions: $onlineFlutterVersions, selectedOnlineVersion: $selectedOnlineVersion, downloadedFlutterSDKs: $downloadedFlutterSDKs, selectedVersion: $selectedVersion, commandOutput: $commandOutput, isCheckingFvm: $isCheckingFvm, isInstallingFvm: $isInstallingFvm, isFetchingVersions: $isFetchingVersions, isDownloading: $isDownloading, downloadButtonIndex: $downloadButtonIndex, isFetchingDownloaded: $isFetchingDownloaded, isSwitching: $isSwitching, currentFlutterVersionSwitchedTo: $currentFlutterVersionSwitchedTo, isGettingAvailableDevices: $isGettingAvailableDevices, projectPath: $projectPath, selectedPlatform: $selectedPlatform, availablePlatforms: $availablePlatforms, isRunning: $isRunning, isHotReloading: $isHotReloading, cacheSize: $cacheSize)';
+    return 'MainHomeState(isFlutterSdksScreenLoading: $isFlutterSdksScreenLoading, isDashboardScreenLoading: $isDashboardScreenLoading, isDartInstalled: $isDartInstalled, onlineFlutterVersions: $onlineFlutterVersions, selectedOnlineVersion: $selectedOnlineVersion, downloadedFlutterSDKs: $downloadedFlutterSDKs, selectedVersion: $selectedVersion, commandOutput: $commandOutput, isCheckingDartInstallation: $isCheckingDartInstallation, isInstallingFvm: $isInstallingFvm, isFetchingVersions: $isFetchingVersions, isDownloading: $isDownloading, downloadButtonIndex: $downloadButtonIndex, isFetchingDownloaded: $isFetchingDownloaded, isSwitching: $isSwitching, currentFlutterVersionSwitchedTo: $currentFlutterVersionSwitchedTo, isGettingAvailableDevices: $isGettingAvailableDevices, projectPath: $projectPath, selectedPlatform: $selectedPlatform, availablePlatforms: $availablePlatforms, isRunning: $isRunning, isHotReloading: $isHotReloading, cacheSize: $cacheSize, error: $error)';
   }
 
   @override
@@ -507,8 +542,8 @@ class _$MainHomeStateImpl implements _MainHomeState {
                     isFlutterSdksScreenLoading) &&
             (identical(other.isDashboardScreenLoading, isDashboardScreenLoading) ||
                 other.isDashboardScreenLoading == isDashboardScreenLoading) &&
-            (identical(other.fvmVersion, fvmVersion) ||
-                other.fvmVersion == fvmVersion) &&
+            (identical(other.isDartInstalled, isDartInstalled) ||
+                other.isDartInstalled == isDartInstalled) &&
             const DeepCollectionEquality()
                 .equals(other._onlineFlutterVersions, _onlineFlutterVersions) &&
             (identical(other.selectedOnlineVersion, selectedOnlineVersion) ||
@@ -519,8 +554,9 @@ class _$MainHomeStateImpl implements _MainHomeState {
                 other.selectedVersion == selectedVersion) &&
             const DeepCollectionEquality()
                 .equals(other._commandOutput, _commandOutput) &&
-            (identical(other.isCheckingFvm, isCheckingFvm) ||
-                other.isCheckingFvm == isCheckingFvm) &&
+            (identical(other.isCheckingDartInstallation, isCheckingDartInstallation) ||
+                other.isCheckingDartInstallation ==
+                    isCheckingDartInstallation) &&
             (identical(other.isInstallingFvm, isInstallingFvm) ||
                 other.isInstallingFvm == isInstallingFvm) &&
             (identical(other.isFetchingVersions, isFetchingVersions) ||
@@ -548,8 +584,8 @@ class _$MainHomeStateImpl implements _MainHomeState {
                 other.isRunning == isRunning) &&
             (identical(other.isHotReloading, isHotReloading) ||
                 other.isHotReloading == isHotReloading) &&
-            (identical(other.cacheSize, cacheSize) ||
-                other.cacheSize == cacheSize));
+            (identical(other.cacheSize, cacheSize) || other.cacheSize == cacheSize) &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
@@ -557,13 +593,13 @@ class _$MainHomeStateImpl implements _MainHomeState {
         runtimeType,
         isFlutterSdksScreenLoading,
         isDashboardScreenLoading,
-        fvmVersion,
+        isDartInstalled,
         const DeepCollectionEquality().hash(_onlineFlutterVersions),
         selectedOnlineVersion,
         const DeepCollectionEquality().hash(_downloadedFlutterSDKs),
         selectedVersion,
         const DeepCollectionEquality().hash(_commandOutput),
-        isCheckingFvm,
+        isCheckingDartInstallation,
         isInstallingFvm,
         isFetchingVersions,
         isDownloading,
@@ -577,7 +613,8 @@ class _$MainHomeStateImpl implements _MainHomeState {
         const DeepCollectionEquality().hash(_availablePlatforms),
         isRunning,
         isHotReloading,
-        cacheSize
+        cacheSize,
+        error
       ]);
 
   /// Create a copy of MainHomeState
@@ -593,13 +630,13 @@ abstract class _MainHomeState implements MainHomeState {
   const factory _MainHomeState(
       {required final bool isFlutterSdksScreenLoading,
       required final bool isDashboardScreenLoading,
-      required final String fvmVersion,
+      required final bool isDartInstalled,
       required final List<OnlineFlutterSDK> onlineFlutterVersions,
       required final String selectedOnlineVersion,
       required final List<DownloadedFlutterSDK> downloadedFlutterSDKs,
       required final String selectedVersion,
       required final List<Widget> commandOutput,
-      required final bool isCheckingFvm,
+      required final bool isCheckingDartInstallation,
       required final bool isInstallingFvm,
       required final bool isFetchingVersions,
       required final bool isDownloading,
@@ -613,14 +650,15 @@ abstract class _MainHomeState implements MainHomeState {
       required final List<String> availablePlatforms,
       required final bool isRunning,
       required final bool isHotReloading,
-      required final String cacheSize}) = _$MainHomeStateImpl;
+      required final String cacheSize,
+      required final MainHomeStateError? error}) = _$MainHomeStateImpl;
 
   @override
   bool get isFlutterSdksScreenLoading;
   @override
   bool get isDashboardScreenLoading;
   @override
-  String get fvmVersion;
+  bool get isDartInstalled;
   @override
   List<OnlineFlutterSDK> get onlineFlutterVersions;
   @override
@@ -632,7 +670,7 @@ abstract class _MainHomeState implements MainHomeState {
   @override
   List<Widget> get commandOutput;
   @override
-  bool get isCheckingFvm;
+  bool get isCheckingDartInstallation;
   @override
   bool get isInstallingFvm;
   @override
@@ -661,6 +699,8 @@ abstract class _MainHomeState implements MainHomeState {
   bool get isHotReloading;
   @override
   String get cacheSize;
+  @override
+  MainHomeStateError? get error;
 
   /// Create a copy of MainHomeState
   /// with the given fields replaced by the non-null parameter values.
