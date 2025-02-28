@@ -197,11 +197,6 @@ extension Localization on Object {
     },
     'or': {'en_us': 'or', 'vi_vi': 'hoặc', 'zh_cn': '或'},
     'Donate': {'en_us': 'Donate', 'vi_vi': 'Quyên góp', 'zh_cn': '捐款'},
-    "*You must install FVM CLI to use this app.": {
-      "en_us": "*You must install FVM CLI to use this app.",
-      "vi_vi": "*Bạn phải cài đặt FVM CLI để sử dụng ứng dụng này.",
-      "zh_cn": "*您必须安装 FVM CLI 才能使用此应用。"
-    },
     "Download": {"en_us": "Download", "vi_vi": "Tải xuống", "zh_cn": "下载"},
     "Select Flutter Version": {
       "en_us": "Select Flutter Version",
@@ -218,11 +213,6 @@ extension Localization on Object {
       "en_us": "Select new Flutter version to switch:",
       "vi_vi": "Chọn phiên bản Flutter mới để chuyển:",
       "zh_cn": "选择要切换的新 Flutter 版本："
-    },
-    "Select Project Path": {
-      "en_us": "Select Project Path",
-      "vi_vi": "Chọn đường dẫn dự án",
-      "zh_cn": "选择项目路径"
     },
     "Selected Flutter Project Path": {
       "en_us": "Selected Flutter Project Path",
@@ -257,16 +247,6 @@ extension Localization on Object {
       "vi_vi": "Quản lý phiên bản Flutter cho máy tính",
       "zh_cn": "桌面版 Flutter 版本管理器"
     },
-    "FVM CLI version:": {
-      "en_us": "FVM CLI version:",
-      "vi_vi": "Phiên bản FVM CLI:",
-      "zh_cn": "FVM CLI 版本："
-    },
-    "Install FVM CLI": {
-      "en_us": "Install FVM CLI",
-      "vi_vi": "Cài đặt FVM CLI",
-      "zh_cn": "安装 FVM CLI"
-    },
     "Configure code editor": {
       'en_us': "Configure code editor",
       'vi_vi': 'Cấu hình trình soạn code',
@@ -278,11 +258,7 @@ extension Localization on Object {
       'vi_vi': "Mình cần sự giúp đỡ của bạn",
       'zh_cn': "我需要你的帮助"
     },
-    "Dashboard": {
-      'en_us': "Dashboard",
-      'vi_vi': "Điều khiển",
-      'zh_cn': "仪表板"
-    },
+    "Dashboard": {'en_us': "Dashboard", 'vi_vi': "Điều khiển", 'zh_cn': "仪表板"},
     "or buy Parrot Pro at": {
       'en_us': "or buy Parrot Pro at",
       'vi_vi': "hoặc mua Parrot Pro tại",
@@ -330,6 +306,21 @@ extension Localization on Object {
       'en_us': "Download zip",
       'vi_vi': "Tải xuống tệp zip",
       'zh_cn': "下载 zip 文件"
+    },
+    "Install Flutter": {
+      "en_us": "Install Flutter",
+      "vi_vi": "Cài đặt Flutter",
+      "zh_cn": "安装 Flutter"
+    },
+    "*You must have Flutter installed to use this app.": {
+      "en_us": "*You must have Flutter installed to use this app.",
+      "vi_vi": "*Bạn phải cài đặt Flutter để sử dụng ứng dụng này.",
+      "zh_cn": "*您必须安装 Flutter 才能使用此应用。"
+    },
+    "Select Project": {
+      "en_us": "Select Project",
+      "vi_vi": "Chọn dự án",
+      "zh_cn": "选择项目"
     }
   });
 

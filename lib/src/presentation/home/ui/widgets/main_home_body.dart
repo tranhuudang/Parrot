@@ -20,25 +20,22 @@ class MainHomeBody extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         4.height,
-        // FVM CLI version
-        if (!state.isDartInstalled)
+        buildTargetFlutterProjectSelection(state, notifier, context),
+        // Check if dart is installed
+        if (!state.isDartInstalled && state.projectPath.isNotEmpty)
           buildDartInstalation(state, context, notifier),
-        if (state.isDartInstalled)
-          DisabledWidget(
-              isDisabled: !state.isDartInstalled,
-              child:
-                  buildTargetFlutterProjectSelection(state, notifier, context)),
 
-        Expanded(
-            child: DisabledWidget(
-          isDisabled: !state.isDartInstalled,
+        DisabledWidget(
+          isDisabled: !state.isDartInstalled || state.projectPath.isEmpty,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               buildAvailableFlutterSDKreleases(state, notifier),
               if (state.projectPath.isNotEmpty) ...[
                 Padding(
                   padding: const EdgeInsets.only(left: 8, top: 8),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       buildSelectFlutterVersionToSwitch(state, notifier),
                       8.height,
@@ -47,11 +44,11 @@ class MainHomeBody extends ConsumerWidget {
                   ),
                 )
               ],
-              8.height,
-              buildConsole(context, state),
             ],
           ),
-        )),
+        ),
+        8.height,
+        buildConsole(context, state)
       ],
     );
   }
@@ -138,6 +135,7 @@ class MainHomeBody extends ConsumerWidget {
   Widget buildTargetFlutterProjectSelection(
       MainHomeState state, MainHomeNotifier notifier, BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -159,6 +157,18 @@ class MainHomeBody extends ConsumerWidget {
               ),
             ),
             16.width,
+            DisabledWidget(
+              isDisabled: state.projectPath.isEmpty,
+              child: IconButton(
+                  onPressed: () => notifier.deleteCurrentProjectPath(),
+                  icon: Icon(
+                    state.projectPath.isNotEmpty
+                        ? FluentIcons.delete_12_regular
+                        : FluentIcons.delete_off_20_regular,
+                    size: 21,
+                    color: context.theme.colorScheme.primary,
+                  )),
+            ),
             ElevatedButton.icon(
               icon: state.projectPath.isNotEmpty
                   ? const Icon(FluentIcons.edit_16_regular)
@@ -166,7 +176,7 @@ class MainHomeBody extends ConsumerWidget {
               onPressed: () => notifier.selectProjectPath(),
               label: state.projectPath.isNotEmpty
                   ? Text('Edit'.i18n)
-                  : Text('Select Project Path'.i18n),
+                  : Text('Select Project'.i18n),
             ),
           ],
         ),

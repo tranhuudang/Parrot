@@ -72,7 +72,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     }
   }
 
-  // Check if FVM is installed and update the state
+  // Check if Dart is installed
   Future<bool> checkDartInstallation() async {
     state = state.copyWith(
         isDashboardScreenLoading: true,
@@ -328,6 +328,16 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       await reInitialize();
       await gettingFlutterPlatform();
     }
+  }
+
+  // Delete the current project path
+  Future<void> deleteCurrentProjectPath() async {
+    projectPathController.clear();
+    Properties.instance.saveSettings(
+        Properties.instance.settings.copyWith(currentTargetProjectPath: ''));
+    state = state.copyWith(projectPath: '');
+    await reInitialize();
+    // await gettingFlutterPlatform();
   }
 
   Future<void> gettingSavedCurrentProjectPath() async {
