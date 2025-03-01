@@ -1,7 +1,5 @@
 <div align="center">
 <img src="https://raw.githubusercontent.com/tranhuudang/Parrot/refs/heads/master/assets/images/parrot-pro.png" alt="Parrot Logo" width="250"/>
-<br/>
-  <br>
   <h1>Parrot - Flutter Version Manager</h1>
 </div>
 
