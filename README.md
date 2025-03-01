@@ -1,4 +1,9 @@
-<h1 align="center">Parrot - Flutter Version Manager</h1>
+<div align="center">
+<img src="https://raw.githubusercontent.com/tranhuudang/Parrot/refs/heads/master/assets/images/parrot-pro.png" alt="Parrot Logo" width="250"/>
+<br/>
+  <br>
+  <h1>Parrot - Flutter Version Manager</h1>
+</div>
 
 [![Awesome Flutter](https://img.shields.io/badge/awesome-flutter-8A00CB?style=for-the-badge&color=8A00CB&labelColor=630092)](https://github.com/Solido/awesome-flutter)
 [![MIT License](https://img.shields.io/github/license/tranhuudang/parrot?style=for-the-badge&color=FF2E00&labelColor=CB2500)](https://opensource.org/licenses/mit-license.php)
