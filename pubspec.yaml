@@ -100,7 +100,7 @@ flutter:
 #    publisher: CN=DA7D2C99-987C-4B69-8953-17157F6E0E1A
 #    msix_version: 2025.3.3.0
 #    trim_logo: false
-#    logo_path: C:\Users\tranh\StudioProjects\parrot\assets\images\app_icon.png
+#    logo_path: C:\Users\tranh\StudioProjects\parrot\assets\images\parrot-preview.png
 #    store: true
 #    language: en-us, vi-vi, zh-cn
 
@@ -112,6 +112,6 @@ msix_config:
  publisher: CN=DA7D2C99-987C-4B69-8953-17157F6E0E1A
  msix_version: 2025.3.3.0
  trim_logo: false
- logo_path: C:\Users\tranh\StudioProjects\parrot\assets\images\app_icon.png
+ logo_path: C:\Users\tranh\StudioProjects\parrot\assets\images\parrot-pro.png
  store: true
  language: en-us, vi-vi, zh-cn
