@@ -327,7 +327,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
           .copyWith(currentTargetProjectPath: selectedDirectory));
       state = state.copyWith(projectPath: selectedDirectory);
       await reInitialize();
-      await gettingFlutterPlatform();
+      // await gettingFlutterPlatform();
     }
   }
 

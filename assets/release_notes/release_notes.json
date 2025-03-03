@@ -1,5 +1,14 @@
 [
   {
+    "version": "58",
+    "date": "03-03-2025",
+    "changesNote": [
+      "Remove the dependency on Chocolatey",
+      "Support Japanese and German language",
+      "Improve the performance of the application"
+    ]
+  },
+  {
     "version": "45",
     "date": "26-02-2025",
     "changesNote": [
