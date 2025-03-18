@@ -76,19 +76,19 @@ class InfoView extends StatelessWidget {
                   FontAwesomeIcons.linkedin,
                   size: 20,
                 ),
-                url: 'https://www.linkedin.com/in/dang-tran-huu/'),
+                url: OnlineDirectoryBase.linkedinUrl),
             _buildIconButton(
                 icon: const Icon(
                   FontAwesomeIcons.github,
                   size: 20,
                 ),
-                url: 'https://github.com/tranhuudang'),
+                url: OnlineDirectoryBase.githubURL),
             _buildIconButton(
                 icon: const Icon(
                   FluentIcons.mail_20_regular,
                   size: 24,
                 ),
-                url: 'mailto:dt148f148@gmail.com'),
+                url: OnlineDirectoryBase.email),
           ],
         ),
         8.height,
