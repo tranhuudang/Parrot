@@ -1,4 +1,4 @@
-import 'package:dak_solutions_common/dak_solutions_common.dart';
+import 'package:marina_labs_common/marina_labs_common.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parrot/bloc_provider_scope.dart';
 import 'package:window_manager/window_manager.dart';
@@ -10,7 +10,7 @@ part 'src/app/initializer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  AppFlavor.init(flavor: Flavor.pro);
+  AppFlavor.init(flavor: Flavor.free);
   await _Initializer.start();
   runApp(
     const BlocProviderScope(

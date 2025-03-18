@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dak_solutions_common/dak_solutions_common.dart';
+import 'package:marina_labs_common/marina_labs_common.dart';
 import 'package:parrot/src/app/app.dart';
 import 'package:parrot/src/data/data.dart';
 import 'package:parrot/src/presentation/presentation.dart';
