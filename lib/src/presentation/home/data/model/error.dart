@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:parrot/src/core/core.dart';
 part 'error.freezed.dart';
 
 @freezed

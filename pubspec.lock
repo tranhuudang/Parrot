@@ -912,7 +912,7 @@ packages:
       path: "C:\\Users\\tranh\\StudioProjects\\new\\dak_solutions_common"
       relative: false
     source: path
-    version: "0.0.41"
+    version: "0.0.42"
   markdown:
     dependency: transitive
     description:
