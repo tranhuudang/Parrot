@@ -5,6 +5,8 @@ import 'package:marina_labs_common/marina_labs_common.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parrot/src/core/constants/storages.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/core.dart';
 import '../model/downloaded_flutter_sdks.dart';
@@ -42,8 +44,8 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
   Future<void> reInitialize() async {
     final isDartInstalled = await checkDartInstallation();
     if (isDartInstalled) {
-      bool fvmIsNotActivated = await checkFvmInstallation();
-      if (fvmIsNotActivated) {
+      // bool fvmIsNotActivated = await checkFvmInstallation();
+      if (true) {
         await installFvm();
       }
       await fetchOnlineFlutterVersions();
@@ -110,29 +112,68 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
   }
 
   // Fetch online Flutter SDK versions
-  Future<void> fetchOnlineFlutterVersions() async {
+  Future<void> fetchOnlineFlutterVersions({bool forceRefresh = false}) async {
     state = state.copyWith(
         isFetchingVersions: true,
         isDashboardScreenLoading: true,
-        isFlutterSdksScreenLoading: true); // Update loading state
+        isFlutterSdksScreenLoading: true);
+
     try {
+      // Check cache if not forcing refresh
+      if (!forceRefresh) {
+        final prefs = await SharedPreferences.getInstance();
+        final cachedData = prefs.getString(StorageKeys.flutterVersionsCache);
+        final lastFetch = prefs.getInt(StorageKeys.lastFetchTimestamp);
+
+        // Use cache if it exists and is less than a week old
+        if (cachedData != null && lastFetch != null) {
+          final lastFetchDate = DateTime.fromMillisecondsSinceEpoch(lastFetch);
+          final isWithinWeek =
+              DateTime.now().difference(lastFetchDate).inDays < 7;
+
+          if (isWithinWeek) {
+            List<dynamic> jsonData = json.decode(cachedData);
+            OnlineFlutterSDKVersions onlineFlutterSDKVersions =
+                OnlineFlutterSDKVersions.fromJson(jsonData);
+            state = state.copyWith(
+                onlineFlutterVersions: onlineFlutterSDKVersions.versions,
+                selectedOnlineVersion:
+                    onlineFlutterSDKVersions.versions.isNotEmpty
+                        ? onlineFlutterSDKVersions.versions.first.version
+                        : '',
+                isFetchingVersions: false,
+                isDashboardScreenLoading: false,
+                isFlutterSdksScreenLoading: false);
+            DebugLog.info('Using cached data');
+            return;
+          }
+        }
+      }
+
+      // Fetch new data
       ProcessResult result = await Process.run('fvm', ['api', 'releases'],
           runInShell: true, workingDirectory: projectPathController.text);
       if (result.exitCode == 0) {
         String jsonString = result.stdout.toString();
         jsonString = jsonString.substring(
             jsonString.indexOf("["), jsonString.lastIndexOf("]") + 1);
+
+        // Cache the new data
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString(StorageKeys.flutterVersionsCache, jsonString);
+        await prefs.setInt(StorageKeys.lastFetchTimestamp,
+            DateTime.now().millisecondsSinceEpoch);
+
         List<dynamic> jsonData = json.decode(jsonString);
         OnlineFlutterSDKVersions onlineFlutterSDKVersions =
             OnlineFlutterSDKVersions.fromJson(jsonData);
-        // List<String> versions =
-        //     releases.versions.map((release) => release.version).toList();
+
         state = state.copyWith(
             onlineFlutterVersions: onlineFlutterSDKVersions.versions,
             selectedOnlineVersion: onlineFlutterSDKVersions.versions.isNotEmpty
                 ? onlineFlutterSDKVersions.versions.first.version
                 : '',
-            isFetchingVersions: false, // Set loading state to false
+            isFetchingVersions: false,
             isDashboardScreenLoading: false,
             isFlutterSdksScreenLoading: false);
       }
@@ -141,7 +182,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       state = state.copyWith(
           isFetchingVersions: false,
           isDashboardScreenLoading: false,
-          isFlutterSdksScreenLoading: false); // Set loading state to false
+          isFlutterSdksScreenLoading: false);
     }
   }
 

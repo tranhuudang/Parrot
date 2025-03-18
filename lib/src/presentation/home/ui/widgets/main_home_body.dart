@@ -110,7 +110,8 @@ class MainHomeBody extends ConsumerWidget {
         ),
         8.width,
         IconButton(
-          onPressed: () => notifier.fetchOnlineFlutterVersions(),
+          onPressed: () =>
+              notifier.fetchOnlineFlutterVersions(forceRefresh: true),
           icon: const Icon(FluentIcons.arrow_sync_16_regular),
         ),
         const Spacer(),
