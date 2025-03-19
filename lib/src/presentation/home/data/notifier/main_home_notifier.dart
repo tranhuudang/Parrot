@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:fvm/fvm.dart';
 import 'package:marina_labs_common/marina_labs_common.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -119,54 +120,32 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
         isFlutterSdksScreenLoading: true);
 
     try {
-      // Check cache if not forcing refresh
-      if (!forceRefresh) {
-        final prefs = await SharedPreferences.getInstance();
-        final cachedData = prefs.getString(StorageKeys.flutterVersionsCache);
-        final lastFetch = prefs.getInt(StorageKeys.lastFetchTimestamp);
-
-        // Use cache if it exists and is less than a week old
-        if (cachedData != null && lastFetch != null) {
-          final lastFetchDate = DateTime.fromMillisecondsSinceEpoch(lastFetch);
-          final isWithinWeek =
-              DateTime.now().difference(lastFetchDate).inDays < 7;
-
-          if (isWithinWeek) {
-            List<dynamic> jsonData = json.decode(cachedData);
-            OnlineFlutterSDKVersions onlineFlutterSDKVersions =
-                OnlineFlutterSDKVersions.fromJson(jsonData);
-            state = state.copyWith(
-                onlineFlutterVersions: onlineFlutterSDKVersions.versions,
-                selectedOnlineVersion:
-                    onlineFlutterSDKVersions.versions.isNotEmpty
-                        ? onlineFlutterSDKVersions.versions.first.version
-                        : '',
-                isFetchingVersions: false,
-                isDashboardScreenLoading: false,
-                isFlutterSdksScreenLoading: false);
-            DebugLog.info('Using cached data');
-            return;
-          }
-        }
-      }
-
       // Fetch new data
-      ProcessResult result = await Process.run('fvm', ['api', 'releases'],
-          runInShell: true, workingDirectory: projectPathController.text);
-      if (result.exitCode == 0) {
-        String jsonString = result.stdout.toString();
-        jsonString = jsonString.substring(
-            jsonString.indexOf("["), jsonString.lastIndexOf("]") + 1);
-
-        // Cache the new data
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString(StorageKeys.flutterVersionsCache, jsonString);
-        await prefs.setInt(StorageKeys.lastFetchTimestamp,
-            DateTime.now().millisecondsSinceEpoch);
-
-        List<dynamic> jsonData = json.decode(jsonString);
+      DebugLog.info('Fetching new data...');
+      APIService.fromContext.getReleases().then((value) {
+        final prefs = SharedPreferences.getInstance();
+        final jsonData = json.encode(value.toJson());
+        prefs.then((prefs) {
+          prefs.setString(StorageKeys.flutterVersionsCache, jsonData);
+          prefs.setInt(StorageKeys.lastFetchTimestamp,
+              DateTime.now().millisecondsSinceEpoch);
+        });
+        final versions =
+            value.versions.map((FlutterSdkRelease flutterSdkRelease) {
+          return OnlineFlutterSDK(
+            hash: flutterSdkRelease.hash,
+            channel: flutterSdkRelease.channel.name,
+            version: flutterSdkRelease.version,
+            releaseDate: flutterSdkRelease.releaseDate.toIso8601String(),
+            sha256: flutterSdkRelease.sha256,
+            dartSdkArch: flutterSdkRelease.dartSdkArch,
+            dartSdkVersion: flutterSdkRelease.dartSdkVersion,
+            channelName: flutterSdkRelease.channelName,
+            archiveUrl: flutterSdkRelease.archiveUrl,
+          );
+        }).toList();
         OnlineFlutterSDKVersions onlineFlutterSDKVersions =
-            OnlineFlutterSDKVersions.fromJson(jsonData);
+            OnlineFlutterSDKVersions(versions: versions);
 
         state = state.copyWith(
             onlineFlutterVersions: onlineFlutterSDKVersions.versions,
@@ -176,7 +155,8 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
             isFetchingVersions: false,
             isDashboardScreenLoading: false,
             isFlutterSdksScreenLoading: false);
-      }
+      });
+      //}
     } catch (e) {
       DebugLog.error("Error fetching Flutter versions: $e");
       state = state.copyWith(

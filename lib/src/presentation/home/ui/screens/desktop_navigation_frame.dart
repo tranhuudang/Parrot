@@ -106,7 +106,7 @@ class _DesktopNavigationFrameState extends ConsumerState<DesktopNavigationFrame>
                           ),
                         )),
                     Text(
-                      '${AppFlavor.instance.appName} | ${AppConfigs.appTitleDescription}',
+                      AppFlavor.instance.appName,
                     ),
                     const Spacer(),
                     IconButton(

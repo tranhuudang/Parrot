@@ -621,10 +621,9 @@ packages:
   fvm:
     dependency: "direct main"
     description:
-      name: fvm
-      sha256: af4db6c33102ee7d5b59c3ad8ddeb9e985bbbcfe2eba412d85692a381ee3c371
-      url: "https://pub.dev"
-    source: hosted
+      path: "C:\\Users\\tranh\\StudioProjects\\fvm"
+      relative: false
+    source: path
     version: "3.2.1"
   get_it:
     dependency: transitive
