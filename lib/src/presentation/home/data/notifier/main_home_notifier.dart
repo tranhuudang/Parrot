@@ -230,27 +230,48 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
         isDashboardScreenLoading: true,
         isFlutterSdksScreenLoading: true); // Update loading state
     try {
-      ProcessResult result = await Process.run('fvm', ['api', 'list'],
-          runInShell: true, workingDirectory: projectPathController.text);
-      String jsonString = result.stdout.toString();
-      // jsonString = jsonString.substring(
-      //     jsonString.indexOf("["), jsonString.lastIndexOf("]") + 1);
-      final data = json.decode(jsonString);
-      final cacheSize = DownloadedFlutterSDKs.fromJson(data).size;
-      DebugLog.info("Cache size: $cacheSize");
-      List<DownloadedFlutterSDK> downloadedFlutterSDKs =
-          DownloadedFlutterSDKs.fromJson(data).sdks;
-      // Showing if the downloadedFlutterSDKs is not empty
-      List<String> versions =
-          downloadedFlutterSDKs.map((sdk) => sdk.name).toList();
-      DebugLog.info(versions.toString());
+      // ProcessResult result = await Process.run('fvm', ['api', 'list'],
+      //     runInShell: true, workingDirectory: projectPathController.text);
+      // String jsonString = result.stdout.toString();
+      // // jsonString = jsonString.substring(
+      // //     jsonString.indexOf("["), jsonString.lastIndexOf("]") + 1);
+      // final data = json.decode(jsonString);
+      // final cacheSize = DownloadedFlutterSDKs.fromJson(data).size;
+      // DebugLog.info("Cache size: $cacheSize");
+      // List<DownloadedFlutterSDK> downloadedFlutterSDKs =
+      //     DownloadedFlutterSDKs.fromJson(data).sdks;
+      // // Showing if the downloadedFlutterSDKs is not empty
+      // List<String> versions =
+      //     downloadedFlutterSDKs.map((sdk) => sdk.name).toList();
+      // DebugLog.info(versions.toString());
 
-      state = state.copyWith(
-          cacheSize: cacheSize,
-          downloadedFlutterSDKs: downloadedFlutterSDKs,
-          isFetchingDownloaded: false, // Set loading state to false
-          isDashboardScreenLoading: false,
-          isFlutterSdksScreenLoading: false);
+      /// Get cached versions
+      APIService.fromContext.getCachedVersions().then((value) {
+        final cacheSize = value.size;
+        final downloadedFlutterSDKs = value.versions.map((cachedVersion) {
+          return DownloadedFlutterSDK(
+            name: cachedVersion.name,
+            directory: cachedVersion.directory,
+            releaseFromChannel: cachedVersion.releaseFromChannel,
+            type: cachedVersion.type.name,
+            binPath: cachedVersion.binPath,
+            hasOldBinPath: cachedVersion.hasOldBinPath,
+            dartBinPath: cachedVersion.dartBinPath,
+            dartExec: cachedVersion.dartExec,
+            flutterExec: cachedVersion.flutterExec,
+            flutterSdkVersion: cachedVersion.flutterSdkVersion,
+            dartSdkVersion: cachedVersion.dartSdkVersion,
+            isSetup: cachedVersion.isSetup,
+          );
+        }).toList();
+
+        state = state.copyWith(
+            cacheSize: cacheSize,
+            downloadedFlutterSDKs: downloadedFlutterSDKs,
+            isFetchingDownloaded: false, // Set loading state to false
+            isDashboardScreenLoading: false,
+            isFlutterSdksScreenLoading: false);
+      });
     } catch (e) {
       DebugLog.error("Error fetching Flutter versions: $e");
       state = state.copyWith(
