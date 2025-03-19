@@ -6,6 +6,7 @@ class RoutePath {
   static const String desktopUserSettings = '/user-desktop-settings';
   static const String infos = '/infos';
   static const String flutterSDKs = '/flutter-sdks';
+  static const String troubleshooting = '/troubleshooting';
     static const String noteTaking = '/noteTaking';
 
   // Shared nested paths on platforms

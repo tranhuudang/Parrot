@@ -5,6 +5,7 @@ import 'package:parrot/src/presentation/donation/donation_screen.dart';
 import 'package:parrot/src/presentation/home/ui/screens/flutter_sdks_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:i18n_extension/i18n_extension.dart';
+import 'package:parrot/src/presentation/troubleshooting/screens/troubleshooting_guide_screen.dart';
 import '../../presentation/home/ui/screens/desktop_home_screen.dart';
 import '../../presentation/presentation.dart';
 
@@ -14,8 +15,10 @@ final _shellNavigatorSettingKey =
     GlobalKey<NavigatorState>(debugLabel: 'Setting');
 final _shellNavigatorDonationKey =
     GlobalKey<NavigatorState>(debugLabel: 'donation');
-    final _shellFlutterSDKsKey =
+final _shellFlutterSDKsKey =
     GlobalKey<NavigatorState>(debugLabel: 'FlutterSDKs');
+final _shellTroubleshootingKey =
+    GlobalKey<NavigatorState>(debugLabel: 'Troubleshooting');
 final _shellNavigatorInfoKey = GlobalKey<NavigatorState>(debugLabel: 'Info');
 final _shellNavigatorDashboardKey =
     GlobalKey<NavigatorState>(debugLabel: 'Dashboard');
@@ -68,7 +71,8 @@ GoRouter routerConfigDesktop = GoRouter(
               name: RouteName.noteTaking,
               path: RoutePath.noteTaking,
               pageBuilder: (context, state) {
-                return NoTransitionPage(child: I18n(child: const NoteEditorScreen()));
+                return NoTransitionPage(
+                    child: I18n(child: const NoteEditorScreen()));
               },
               routes: const [],
             ),
@@ -127,7 +131,23 @@ GoRouter routerConfigDesktop = GoRouter(
               name: RouteName.flutterSDKs,
               path: RoutePath.flutterSDKs,
               pageBuilder: (context, state) {
-                return NoTransitionPage(child: I18n(child: const FlutterSDKReleasesScreen()));
+                return NoTransitionPage(
+                    child: I18n(child: const FlutterSDKReleasesScreen()));
+              },
+            ),
+          ],
+        ),
+        // 6 Troubleshooting
+        StatefulShellBranch(
+          navigatorKey: _shellTroubleshootingKey,
+          routes: [
+            // top route inside branch
+            GoRoute(
+              name: RouteName.troubleshooting,
+              path: RoutePath.troubleshooting,
+              pageBuilder: (context, state) {
+                return NoTransitionPage(
+                    child: I18n(child: const TroubleshootingGuideScreen()));
               },
             ),
           ],

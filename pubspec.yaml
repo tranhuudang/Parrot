@@ -72,6 +72,7 @@ dependencies:
   cached_network_svg_image: ^1.2.0
   flutter_quill: ^10.8.5
   fvm: ^3.2.1
+  flutter_markdown: ^0.7.6+2
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -91,6 +92,7 @@ flutter:
     - assets/
     - assets/release_notes/release_notes.json
     - assets/images/
+    - docs/troubleshooting/
 
 # FREE VERSION    
 msix_config:

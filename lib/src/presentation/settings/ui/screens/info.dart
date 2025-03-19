@@ -93,7 +93,7 @@ class InfoView extends StatelessWidget {
         ),
         8.height,
         Text(
-          "© ${DateTime.now().year} ${Strings.company}. ${"All rights reserved.".i18n}",
+          "© ${DateTime.now().year} ${StringConstantsBase.company}. ${"All rights reserved.".i18n}",
           style: context.theme.textTheme.bodyMedium
               ?.copyWith(color: context.theme.colorScheme.onSurfaceVariant),
         ),

@@ -13,4 +13,10 @@ class OnlineDirectory {
       'https://github.com/flutter/flutter/releases/tag/';
   static const String parrotProMicrosoftLink =
       'ms-windows-store://pdp/?productid=9MXQHNMCC15Q';
+  static const String configureFvm =
+      'https://www.github.com/tranhuudang/parrot/tree/master/docs/troubleshooting/configure-fvm.md';
+  static const String noFlutterSdks =
+      'https://www.github.com/tranhuudang/parrot/tree/master/docs/troubleshooting/no-flutter-sdk.md';
+  static const String projectNotRunning =
+      'https://www.github.com/tranhuudang/parrot/tree/master/docs/troubleshooting/project-not-running.md';
 }
