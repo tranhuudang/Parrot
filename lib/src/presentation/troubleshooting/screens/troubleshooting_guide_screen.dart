@@ -58,9 +58,9 @@ class TroubleshootingGuideScreen extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
-        title: Text(title),
+        title: Text(title.i18n),
         subtitle: Text(
-          description,
+          description.i18n,
           style: context.theme.textTheme.bodySmall,
         ),
         trailing: const Icon(FluentIcons.chevron_right_16_regular),

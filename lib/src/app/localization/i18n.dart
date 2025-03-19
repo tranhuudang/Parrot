@@ -567,6 +567,68 @@ extension Localization on Object {
       "zh_cn": "选择项目",
       "ja_jp": "プロジェクトを選択",
       "de_de": "Projekt auswählen"
+    },
+    "Common Issues & Solutions": {
+      "en_us": "Common Issues & Solutions",
+      "vi_vi": "Các vấn đề thường gặp & Giải pháp",
+      "zh_cn": "常见问题与解决方案",
+      "ja_jp": "一般的な問題と解決策",
+      "de_de": "Häufige Probleme & Lösungen"
+    },
+    "How to Configure FVM in Your Code Editor?": {
+      "en_us": "How to Configure FVM in Your Code Editor?",
+      "vi_vi": "Cách cấu hình FVM trong trình chỉnh sửa mã?",
+      "zh_cn": "如何在代码编辑器中配置 FVM？",
+      "ja_jp": "コードエディターで FVM を設定する方法は？",
+      "de_de": "Wie konfiguriert man FVM in Ihrem Code-Editor?"
+    },
+    "Troubleshoot when Flutter SDK versions are not showing up": {
+      "en_us": "Troubleshoot when Flutter SDK versions are not showing up",
+      "vi_vi": "Khắc phục khi phiên bản Flutter SDK không hiển thị",
+      "zh_cn": "解决 Flutter SDK 版本未显示的问题",
+      "ja_jp": "Flutter SDK バージョンが表示されない場合のトラブルシューティング",
+      "de_de": "Fehlersuche, wenn Flutter SDK-Versionen nicht angezeigt werden"
+    },
+    "Parrot Not Displaying Flutter SDKs": {
+      "en_us": "Parrot Not Displaying Flutter SDKs",
+      "vi_vi": "Parrot không hiển thị các phiên bản Flutter SDK",
+      "zh_cn": "Parrot 未显示 Flutter SDK 版本",
+      "ja_jp": "Parrot が Flutter SDK を表示しない",
+      "de_de": "Parrot zeigt keine Flutter SDKs an"
+    },
+    "Project Not Running After Version Change": {
+      "en_us": "Project Not Running After Version Change",
+      "vi_vi": "Dự án không chạy sau khi thay đổi phiên bản",
+      "zh_cn": "版本更改后项目无法运行",
+      "ja_jp": "バージョン変更後にプロジェクトが実行されない",
+      "de_de": "Projekt läuft nicht nach Versionsänderung"
+    },
+    "Learn how to set up FVM integration in VS Code and Android Studio": {
+      "en_us":
+          "Learn how to set up FVM integration in VS Code and Android Studio",
+      "vi_vi":
+          "Tìm hiểu cách thiết lập tích hợp FVM trong VS Code và Android Studio",
+      "zh_cn": "了解如何在 VS Code 和 Android Studio 中设置 FVM 集成",
+      "ja_jp": "VS Code と Android Studio で FVM の統合を設定する方法を学ぶ",
+      "de_de":
+          "Erfahren Sie, wie Sie die FVM-Integration in VS Code und Android Studio einrichten"
+    },
+    "Fix issues when project fails to run after switching Flutter versions": {
+      "en_us":
+          "Fix issues when project fails to run after switching Flutter versions",
+      "vi_vi":
+          "Khắc phục lỗi khi dự án không chạy sau khi đổi phiên bản Flutter",
+      "zh_cn": "修复切换 Flutter 版本后项目无法运行的问题",
+      "ja_jp": "Flutter バージョンを切り替えた後にプロジェクトが実行されない問題を修正する",
+      "de_de":
+          "Beheben Sie Probleme, wenn das Projekt nach einem Wechsel der Flutter-Version nicht ausgeführt wird"
+    },
+    "Troubleshooting": {
+      "en_us": "Troubleshooting",
+      "vi_vi": "Khắc phục sự cố",
+      "zh_cn": "故障排除",
+      "ja_jp": "トラブルシューティング",
+      "de_de": "Fehlersuche"
     }
   });
 

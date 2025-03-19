@@ -76,10 +76,10 @@ class _DesktopNavigationFrameState extends ConsumerState<DesktopNavigationFrame>
   Widget build(BuildContext context) {
     final state = ref.watch(mainHomeProvider);
 
-    if (isJustOpened && state.isDashboardScreenLoading) {
+    if (isJustOpened || (state.isDashboardScreenLoading && isJustOpened)) {
       Future.delayed(const Duration(seconds: 3), () {
         isJustOpened = false;
-        //setState(() {});
+        setState(() {});
       });
       return const OpenAppLoading();
     } else {
@@ -106,7 +106,7 @@ class _DesktopNavigationFrameState extends ConsumerState<DesktopNavigationFrame>
                           ),
                         )),
                     Text(
-                      AppFlavor.instance.appName,
+                      '${AppFlavor.instance.appName} | ${AppConfigs.appTitleDescription}',
                     ),
                     const Spacer(),
                     IconButton(

@@ -16,7 +16,6 @@ class DesktopHomeScreen extends ConsumerStatefulWidget {
 }
 
 class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
- 
   @override
   void initState() {
     super.initState();
@@ -105,7 +104,7 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
                               Opacity(
                                 opacity: .5,
                                 child: Text(
-                                  DefaultSettings.appTitleDescription.i18n,
+                                  AppConfigs.appTitleDescription.i18n,
                                   style: context.theme.textTheme.titleMedium,
                                 ),
                               ),

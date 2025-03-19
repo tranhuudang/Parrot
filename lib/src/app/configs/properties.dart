@@ -20,7 +20,7 @@ class Properties {
     settings = newSettings;
   }
 
-  Settings settings = DefaultSettings.settings;
+  Settings settings = AppConfigs.settings;
 
   Future<void> _saveSettings(Settings newSetting) async {
     var prefs = SharedPreferencesAsync();

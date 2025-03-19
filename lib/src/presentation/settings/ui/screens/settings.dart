@@ -71,7 +71,7 @@ class SettingsView extends StatelessWidget {
                                   .i18n,
                           action: () {
                             Properties.instance
-                                .saveSettings(DefaultSettings.settings);
+                                .saveSettings(AppConfigs.settings);
                             context.showSnackBar(
                                 content: 'Default settings are restored.'.i18n);
                           });

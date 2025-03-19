@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../domain/domain.dart';
 
-class DefaultSettings {
-   static String appName = 'Parrot';
+class AppConfigs {
+  static String appName = 'Parrot';
   static String appTitleDescription = 'Flutter Version Manager for Desktop';
   static const Size defaultWindowsSize = Size(970, 620);
   static const Size minWindowsSize = Size(970, 620);
@@ -19,4 +19,5 @@ class DefaultSettings {
     enableAdaptiveTheme: true,
     currentTargetProjectPath: '',
   );
+  static int get appVersion => 66;
 }

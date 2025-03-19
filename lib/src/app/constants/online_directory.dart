@@ -16,7 +16,7 @@ class OnlineDirectory {
   static const String configureFvm =
       'https://www.github.com/tranhuudang/parrot/tree/master/docs/troubleshooting/configure-fvm.md';
   static const String noFlutterSdks =
-      'https://www.github.com/tranhuudang/parrot/tree/master/docs/troubleshooting/no-flutter-sdk.md';
+      'https://www.github.com/tranhuudang/parrot/tree/master/docs/troubleshooting/no-flutter-sdks.md';
   static const String projectNotRunning =
       'https://www.github.com/tranhuudang/parrot/tree/master/docs/troubleshooting/project-not-running.md';
 }

@@ -33,7 +33,7 @@ class _SidebarWidgetState extends State<SidebarWidget> {
   Widget build(BuildContext context) {
     selectedItemIndex = widget.selectedIndex;
     return Container(
-      width: 170,
+      width: 180,
       color: context.theme.scaffoldBackgroundColor,
       child: Stack(
         children: [

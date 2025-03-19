@@ -78,13 +78,12 @@ class _AppState extends State<App> {
             Locale('zh', 'CN'),
             Locale('ja', 'JP'),
             Locale('de', 'DE'),
-
           ],
           locale: state.params.language.toLocale(),
           themeMode: state.params.themeMode,
           theme: lightTheme(colorScheme: lightColorScheme),
           darkTheme: darkTheme(colorScheme: darkColorScheme),
-          title: DefaultSettings.appTitleDescription,
+          title: AppConfigs.appTitleDescription,
           debugShowCheckedModeBanner: false,
           routerConfig: routerConfigDesktop,
         );

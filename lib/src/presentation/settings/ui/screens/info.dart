@@ -50,7 +50,7 @@ class InfoView extends StatelessWidget {
             ),
             8.height,
             Text(
-              "${AppFlavor.instance.appName} | ${DefaultSettings.appTitleDescription}",
+              "${AppFlavor.instance.appName} | ${AppConfigs.appTitleDescription}",
               style: context.theme.textTheme.titleLarge?.copyWith(
                   color: context.theme.colorScheme.onSurface,
                   fontWeight: FontWeight.bold),
@@ -59,7 +59,7 @@ class InfoView extends StatelessWidget {
         ),
         8.height,
         TextButton(
-          child: Text('${DateTime.now().year}.$appVersion'),
+          child: Text('${DateTime.now().year}.${AppConfigs.appVersion}'),
           onPressed: () {
             Navigator.push(
                 context,

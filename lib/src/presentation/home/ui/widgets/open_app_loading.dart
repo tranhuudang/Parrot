@@ -27,7 +27,7 @@ class OpenAppLoading extends StatelessWidget {
                 ),
               ),
               Text(
-                DefaultSettings.appName,
+                AppConfigs.appName,
               ),
               const Spacer(),
             ],

@@ -1,5 +1,13 @@
 [
   {
+    "version": "66",
+    "date": "18-03-2025",
+    "changesNote": [
+      "Add troubleshooting guide",
+      "Improve user experience"
+    ]
+  },
+  {
     "version": "58",
     "date": "03-03-2025",
     "changesNote": [
