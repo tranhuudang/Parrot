@@ -36,7 +36,7 @@ mixin _$MainHomeState {
   String get currentFlutterVersionSwitchedTo =>
       throw _privateConstructorUsedError;
   bool get isGettingAvailableDevices => throw _privateConstructorUsedError;
-  String get projectPath => throw _privateConstructorUsedError;
+  Project? get currentProject => throw _privateConstructorUsedError;
   String get selectedPlatform => throw _privateConstructorUsedError;
   List<String> get availablePlatforms => throw _privateConstructorUsedError;
   bool get isRunning => throw _privateConstructorUsedError;
@@ -75,7 +75,7 @@ abstract class $MainHomeStateCopyWith<$Res> {
       bool isSwitching,
       String currentFlutterVersionSwitchedTo,
       bool isGettingAvailableDevices,
-      String projectPath,
+      Project? currentProject,
       String selectedPlatform,
       List<String> availablePlatforms,
       bool isRunning,
@@ -118,7 +118,7 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
     Object? isSwitching = null,
     Object? currentFlutterVersionSwitchedTo = null,
     Object? isGettingAvailableDevices = null,
-    Object? projectPath = null,
+    Object? currentProject = freezed,
     Object? selectedPlatform = null,
     Object? availablePlatforms = null,
     Object? isRunning = null,
@@ -195,10 +195,10 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
           ? _value.isGettingAvailableDevices
           : isGettingAvailableDevices // ignore: cast_nullable_to_non_nullable
               as bool,
-      projectPath: null == projectPath
-          ? _value.projectPath
-          : projectPath // ignore: cast_nullable_to_non_nullable
-              as String,
+      currentProject: freezed == currentProject
+          ? _value.currentProject
+          : currentProject // ignore: cast_nullable_to_non_nullable
+              as Project?,
       selectedPlatform: null == selectedPlatform
           ? _value.selectedPlatform
           : selectedPlatform // ignore: cast_nullable_to_non_nullable
@@ -267,7 +267,7 @@ abstract class _$$MainHomeStateImplCopyWith<$Res>
       bool isSwitching,
       String currentFlutterVersionSwitchedTo,
       bool isGettingAvailableDevices,
-      String projectPath,
+      Project? currentProject,
       String selectedPlatform,
       List<String> availablePlatforms,
       bool isRunning,
@@ -309,7 +309,7 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
     Object? isSwitching = null,
     Object? currentFlutterVersionSwitchedTo = null,
     Object? isGettingAvailableDevices = null,
-    Object? projectPath = null,
+    Object? currentProject = freezed,
     Object? selectedPlatform = null,
     Object? availablePlatforms = null,
     Object? isRunning = null,
@@ -386,10 +386,10 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
           ? _value.isGettingAvailableDevices
           : isGettingAvailableDevices // ignore: cast_nullable_to_non_nullable
               as bool,
-      projectPath: null == projectPath
-          ? _value.projectPath
-          : projectPath // ignore: cast_nullable_to_non_nullable
-              as String,
+      currentProject: freezed == currentProject
+          ? _value.currentProject
+          : currentProject // ignore: cast_nullable_to_non_nullable
+              as Project?,
       selectedPlatform: null == selectedPlatform
           ? _value.selectedPlatform
           : selectedPlatform // ignore: cast_nullable_to_non_nullable
@@ -439,7 +439,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
       required this.isSwitching,
       required this.currentFlutterVersionSwitchedTo,
       required this.isGettingAvailableDevices,
-      required this.projectPath,
+      required this.currentProject,
       required this.selectedPlatform,
       required final List<String> availablePlatforms,
       required this.isRunning,
@@ -506,7 +506,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
   @override
   final bool isGettingAvailableDevices;
   @override
-  final String projectPath;
+  final Project? currentProject;
   @override
   final String selectedPlatform;
   final List<String> _availablePlatforms;
@@ -529,7 +529,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
 
   @override
   String toString() {
-    return 'MainHomeState(isFlutterSdksScreenLoading: $isFlutterSdksScreenLoading, isDashboardScreenLoading: $isDashboardScreenLoading, isDartInstalled: $isDartInstalled, onlineFlutterVersions: $onlineFlutterVersions, selectedOnlineVersion: $selectedOnlineVersion, downloadedFlutterSDKs: $downloadedFlutterSDKs, selectedVersion: $selectedVersion, commandOutput: $commandOutput, isCheckingDartInstallation: $isCheckingDartInstallation, isInstallingFvm: $isInstallingFvm, isFetchingVersions: $isFetchingVersions, isDownloading: $isDownloading, downloadButtonIndex: $downloadButtonIndex, isFetchingDownloaded: $isFetchingDownloaded, isSwitching: $isSwitching, currentFlutterVersionSwitchedTo: $currentFlutterVersionSwitchedTo, isGettingAvailableDevices: $isGettingAvailableDevices, projectPath: $projectPath, selectedPlatform: $selectedPlatform, availablePlatforms: $availablePlatforms, isRunning: $isRunning, isHotReloading: $isHotReloading, cacheSize: $cacheSize, error: $error)';
+    return 'MainHomeState(isFlutterSdksScreenLoading: $isFlutterSdksScreenLoading, isDashboardScreenLoading: $isDashboardScreenLoading, isDartInstalled: $isDartInstalled, onlineFlutterVersions: $onlineFlutterVersions, selectedOnlineVersion: $selectedOnlineVersion, downloadedFlutterSDKs: $downloadedFlutterSDKs, selectedVersion: $selectedVersion, commandOutput: $commandOutput, isCheckingDartInstallation: $isCheckingDartInstallation, isInstallingFvm: $isInstallingFvm, isFetchingVersions: $isFetchingVersions, isDownloading: $isDownloading, downloadButtonIndex: $downloadButtonIndex, isFetchingDownloaded: $isFetchingDownloaded, isSwitching: $isSwitching, currentFlutterVersionSwitchedTo: $currentFlutterVersionSwitchedTo, isGettingAvailableDevices: $isGettingAvailableDevices, currentProject: $currentProject, selectedPlatform: $selectedPlatform, availablePlatforms: $availablePlatforms, isRunning: $isRunning, isHotReloading: $isHotReloading, cacheSize: $cacheSize, error: $error)';
   }
 
   @override
@@ -574,8 +574,8 @@ class _$MainHomeStateImpl implements _MainHomeState {
                     currentFlutterVersionSwitchedTo) &&
             (identical(other.isGettingAvailableDevices, isGettingAvailableDevices) ||
                 other.isGettingAvailableDevices == isGettingAvailableDevices) &&
-            (identical(other.projectPath, projectPath) ||
-                other.projectPath == projectPath) &&
+            (identical(other.currentProject, currentProject) ||
+                other.currentProject == currentProject) &&
             (identical(other.selectedPlatform, selectedPlatform) ||
                 other.selectedPlatform == selectedPlatform) &&
             const DeepCollectionEquality()
@@ -608,7 +608,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
         isSwitching,
         currentFlutterVersionSwitchedTo,
         isGettingAvailableDevices,
-        projectPath,
+        currentProject,
         selectedPlatform,
         const DeepCollectionEquality().hash(_availablePlatforms),
         isRunning,
@@ -645,7 +645,7 @@ abstract class _MainHomeState implements MainHomeState {
       required final bool isSwitching,
       required final String currentFlutterVersionSwitchedTo,
       required final bool isGettingAvailableDevices,
-      required final String projectPath,
+      required final Project? currentProject,
       required final String selectedPlatform,
       required final List<String> availablePlatforms,
       required final bool isRunning,
@@ -688,7 +688,7 @@ abstract class _MainHomeState implements MainHomeState {
   @override
   bool get isGettingAvailableDevices;
   @override
-  String get projectPath;
+  Project? get currentProject;
   @override
   String get selectedPlatform;
   @override

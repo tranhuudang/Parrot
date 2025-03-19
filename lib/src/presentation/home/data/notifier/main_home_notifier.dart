@@ -24,8 +24,6 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     initializeHome();
   }
 
-  final TextEditingController projectPathController = TextEditingController();
-
   // Initialize the home page by checking FVM installation and fetching versions
   Future<void> initializeHome() async {
     await gettingSavedCurrentProjectPath();
@@ -60,7 +58,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
         state.copyWith(isDashboardScreenLoading: true); // Update loading state
     try {
       ProcessResult result = await Process.run('fvm', ['--version'],
-          runInShell: true, workingDirectory: projectPathController.text);
+          runInShell: true, workingDirectory: state.currentProject!.path);
       state = state.copyWith(isDashboardScreenLoading: false);
       if (result.exitCode == 0) {
         return true; // FVM is installed
@@ -82,7 +80,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
         isCheckingDartInstallation: true); // Update loading state
     try {
       ProcessResult result = await Process.run('dart', ['--version'],
-          runInShell: true, workingDirectory: projectPathController.text);
+          runInShell: true, workingDirectory: state.currentProject!.path);
       if (result.exitCode == 0) {
         state = state.copyWith(
             isDartInstalled: true,
@@ -173,7 +171,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     try {
       Process process = await Process.start(
           'fvm', ['install', state.selectedOnlineVersion],
-          runInShell: true, workingDirectory: projectPathController.text);
+          runInShell: true, workingDirectory: state.currentProject!.path);
       process.stdout.transform(utf8.decoder).listen((data) {
         List<Widget> newList =
             List.from(state.commandOutput); // Make a copy of the list
@@ -201,7 +199,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
         downloadButtonIndex: downloadButtonIndex); // Update loading state
     try {
       Process process = await Process.start('fvm', ['install', version],
-          runInShell: true, workingDirectory: projectPathController.text);
+          runInShell: true, workingDirectory: state.currentProject!.path);
       process.stdout.transform(utf8.decoder).listen((data) {
         List<Widget> newList =
             List.from(state.commandOutput); // Make a copy of the list
@@ -248,7 +246,8 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       /// Get cached versions
       APIService.fromContext.getCachedVersions().then((value) {
         final cacheSize = value.size;
-        final downloadedFlutterSDKs = value.versions.map((cachedVersion) {
+        final downloadedFlutterSDKs =
+            value.versions.map((CacheFlutterVersion cachedVersion) {
           return DownloadedFlutterSDK(
             name: cachedVersion.name,
             directory: cachedVersion.directory,
@@ -282,7 +281,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
   }
 
   // Switch the Flutter version for the project
-  Future<void> switchFlutterVersion(String projectPath) async {
+  Future<void> switchFlutterVersion() async {
     if (state.selectedVersion.isEmpty) return;
     state = state.copyWith(
         isSwitching: true,
@@ -290,7 +289,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     try {
       Process process = await Process.start(
           'cmd', ['/c', 'echo y | fvm use ${state.selectedVersion}'],
-          workingDirectory: projectPath, runInShell: true);
+          workingDirectory: state.currentProject!.path, runInShell: true);
       process.stdout.transform(utf8.decoder).listen((data) {
         List<Widget> newList =
             List.from(state.commandOutput); // Make a copy of the list
@@ -327,7 +326,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       ProcessResult result = await Process.run(
         'dart',
         ['pub', 'global', 'activate', 'fvm'],
-        workingDirectory: projectPathController.text,
+        workingDirectory: state.currentProject!.path,
         runInShell: true,
       );
       if (result.exitCode == 0) {
@@ -363,41 +362,56 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
   Future<void> selectProjectPath() async {
     String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
     if (selectedDirectory != null) {
-      projectPathController.text = selectedDirectory;
-      // Save the current project path to shared preferences
-      Properties.instance.saveSettings(Properties.instance.settings
-          .copyWith(currentTargetProjectPath: selectedDirectory));
-      state = state.copyWith(projectPath: selectedDirectory);
+      final currentProject = Project.loadFromPath(selectedDirectory);
+      // Add debug logging before saving
+      DebugLog.info("About to save project path: ${currentProject.path}");
+      DebugLog.info(
+          "Current settings before save: ${Properties.instance.settings.currentTargetProjectPath}");
+
+      // Save the current project path
+      await Properties.instance.saveSettings(Properties.instance.settings
+          .copyWith(currentTargetProjectPath: currentProject.path));
+
+      // Verify the save worked
+      DebugLog.info(
+          "Settings after save: ${Properties.instance.settings.currentTargetProjectPath}");
+
+      state = state.copyWith(currentProject: currentProject);
       await reInitialize();
       // await gettingFlutterPlatform();
+
+      // final project = APIService.fromContext
+      //     .getProject(Directory(selectedDirectory))
+      //     .project;
+     
     }
   }
 
   // Delete the current project path
   Future<void> deleteCurrentProjectPath() async {
-    projectPathController.clear();
     Properties.instance.saveSettings(
         Properties.instance.settings.copyWith(currentTargetProjectPath: ''));
-    state = state.copyWith(projectPath: '');
+    state = state.copyWith(currentProject: null);
     await reInitialize();
     // await gettingFlutterPlatform();
   }
 
   Future<void> gettingSavedCurrentProjectPath() async {
+    // Add debug logging
+    DebugLog.info("Getting saved project path");
+    DebugLog.info(
+        "Current settings: ${Properties.instance.settings.toString()}");
+
     final currentTargetProjectPath =
         Properties.instance.settings.currentTargetProjectPath;
+    DebugLog.info("Retrieved project path: $currentTargetProjectPath");
+
     if (currentTargetProjectPath.isNotEmpty) {
-      projectPathController.text = currentTargetProjectPath;
-      state = state.copyWith(
-        projectPath: currentTargetProjectPath,
-      );
-      // if (state.downloadedFlutterSDKs.isNotEmpty) {
-      //   final isSetup = state.downloadedFlutterSDKs
-      //       .any((element) => element.isSetup == true);
-      //   if (isSetup) {
-      //     await gettingFlutterPlatform();
-      //   }
-      // }
+      final currentProject = Project.loadFromPath(currentTargetProjectPath);
+      DebugLog.info("Loaded project from path: ${currentProject.path}");
+      state = state.copyWith(currentProject: currentProject);
+    } else {
+      DebugLog.info("No saved project path found");
     }
   }
 
@@ -424,13 +438,13 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
   Process? flutterProcess;
 
   Future<void> runFlutterProject() async {
-    if (state.projectPath.isEmpty) return;
+    if (state.currentProject != null) return;
     state = state.copyWith(isRunning: true);
     try {
       flutterProcess = await Process.start(
           'fvm', ['flutter', 'run', '-d', state.selectedPlatform],
-          workingDirectory: state.projectPath, runInShell: true);
-      DebugLog.info('Run project in :${state.projectPath}');
+          workingDirectory: state.currentProject!.path, runInShell: true);
+      DebugLog.info('Run project in :${state.currentProject!.path}');
       flutterProcess!.stdout.transform(utf8.decoder).listen((data) {
         List<Widget> newList = List.from(state.commandOutput);
         newList.insert(0, Text(data));
@@ -494,7 +508,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       // Run the flutter devices command
       DebugLog.info('Getting available devices...');
       ProcessResult result = await Process.run('fvm', ['flutter', 'devices'],
-          workingDirectory: state.projectPath, runInShell: true);
+          workingDirectory: state.currentProject!.path, runInShell: true);
       if (result.exitCode == 0) {
         String output = result.stdout.toString();
         List<String> platforms = [];

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fvm/fvm.dart';
 import 'package:parrot/src/presentation/home/data/model/downloaded_flutter_sdks.dart';
 import 'package:parrot/src/presentation/home/data/model/error.dart';
 import 'package:parrot/src/presentation/home/data/model/flutter_versions.dart';
@@ -26,7 +27,7 @@ class MainHomeState with _$MainHomeState {
     required bool isSwitching,
     required String currentFlutterVersionSwitchedTo,
     required bool isGettingAvailableDevices,
-    required String projectPath,
+    required Project? currentProject,
     required String selectedPlatform,
     required List<String> availablePlatforms,
     required bool isRunning,
@@ -53,7 +54,7 @@ class MainHomeState with _$MainHomeState {
         isSwitching: false,
         currentFlutterVersionSwitchedTo: '',
         isGettingAvailableDevices: false,
-        projectPath: '',
+        currentProject: null,
         isRunning: false,
         isHotReloading: false,
         selectedPlatform: '',

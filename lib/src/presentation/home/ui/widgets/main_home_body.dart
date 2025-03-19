@@ -22,16 +22,16 @@ class MainHomeBody extends ConsumerWidget {
         4.height,
         buildTargetFlutterProjectSelection(state, notifier, context),
         // Check if dart is installed
-        if (!state.isDartInstalled && state.projectPath.isNotEmpty)
+        if (!state.isDartInstalled && state.currentProject != null)
           buildDartInstalation(state, context, notifier),
 
         DisabledWidget(
-          isDisabled: !state.isDartInstalled || state.projectPath.isEmpty,
+          isDisabled: !state.isDartInstalled || state.currentProject == null,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               buildAvailableFlutterSDKreleases(state, notifier),
-              if (state.projectPath.isNotEmpty) ...[
+              if (state.currentProject != null) ...[
                 Padding(
                   padding: const EdgeInsets.only(left: 8, top: 8),
                   child: Column(
@@ -144,26 +144,22 @@ class MainHomeBody extends ConsumerWidget {
             Text('Target Flutter Project:'.i18n),
             8.width,
             Expanded(
-              child: TextFormField(
-                enabled: false,
-                controller: notifier.projectPathController,
-                readOnly: true,
-                style: TextStyle(
-                    color: context.theme.colorScheme.primary,
-                    overflow: TextOverflow.ellipsis),
-                decoration: InputDecoration(
-                  hintText: 'Selected Flutter Project Path'.i18n,
-                  border: InputBorder.none,
-                ),
-              ),
+              child: state.currentProject != null
+                  ? Text(state.currentProject!.path)
+                  : Text(
+                      'Selected Flutter Project Path'.i18n,
+                      style: TextStyle(
+                          color: context.theme.colorScheme.onSurface
+                              .withValues(alpha: .5)),
+                    ),
             ),
             16.width,
             DisabledWidget(
-              isDisabled: state.projectPath.isEmpty,
+              isDisabled: state.currentProject == null,
               child: IconButton(
                   onPressed: () => notifier.deleteCurrentProjectPath(),
                   icon: Icon(
-                    state.projectPath.isNotEmpty
+                    state.currentProject == null
                         ? FluentIcons.delete_12_regular
                         : FluentIcons.delete_off_20_regular,
                     size: 21,
@@ -171,11 +167,11 @@ class MainHomeBody extends ConsumerWidget {
                   )),
             ),
             ElevatedButton.icon(
-              icon: state.projectPath.isNotEmpty
+              icon: state.currentProject == null
                   ? const Icon(FluentIcons.edit_16_regular)
                   : const Icon(FluentIcons.folder_16_regular),
               onPressed: () => notifier.selectProjectPath(),
-              label: state.projectPath.isNotEmpty
+              label: state.currentProject != null
                   ? Text('Edit'.i18n)
                   : Text('Select Project'.i18n),
             ),
@@ -225,8 +221,7 @@ class MainHomeBody extends ConsumerWidget {
             icon: const Icon(FluentIcons.arrow_shuffle_16_regular),
             onPressed: state.isSwitching
                 ? null
-                : () => notifier
-                    .switchFlutterVersion(notifier.projectPathController.text),
+                : () => notifier.switchFlutterVersion(),
             label: state.isSwitching
                 ? const SizedBox(
                     height: 20, width: 20, child: CircularProgressIndicator())
@@ -255,8 +250,9 @@ class MainHomeBody extends ConsumerWidget {
                 size: 14,
               ),
               16.width,
-              Text(state.projectPath
-                  .substring(state.projectPath.lastIndexOf('\\') + 1)),
+              Text(state.currentProject != null
+                  ? state.currentProject!.name
+                  : ''),
               16.width,
               const PlatformSelector(),
               16.width,
