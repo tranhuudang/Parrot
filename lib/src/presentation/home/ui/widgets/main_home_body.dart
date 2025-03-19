@@ -2,6 +2,7 @@ import 'package:marina_labs_common/marina_labs_common.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parrot/src/app/app.dart';
+import 'package:parrot/src/presentation/home/data/model/flutter_versions.dart';
 import 'package:parrot/src/presentation/home/data/notifier/main_home_state.dart';
 import 'package:parrot/src/presentation/home/ui/widgets/platform_selector.dart';
 import '../../../presentation.dart';
@@ -91,14 +92,12 @@ class MainHomeBody extends ConsumerWidget {
       children: [
         Text("${'Flutter SDK releases'.i18n} "),
         8.width,
-        RoundedDottedDropdownButton<String>(
-          value: state.selectedOnlineVersion.isNotEmpty
-              ? state.selectedOnlineVersion
-              : null,
+        RoundedDottedDropdownButton<OnlineFlutterSDK>(
+          value: state.selectedOnlineVersion,
           // hint: Text("Select Flutter Version".i18n),
           items: state.onlineFlutterVersions.map((flutterSDK) {
-            return DropdownMenuItem(
-              value: flutterSDK.version,
+            return DropdownMenuItem<OnlineFlutterSDK>(
+              value: flutterSDK,
               child: Text(flutterSDK.version),
             );
           }).toList(),
@@ -194,7 +193,7 @@ class MainHomeBody extends ConsumerWidget {
         8.width,
         RoundedDottedDropdownButton<String>(
           value:
-              state.selectedVersion.isNotEmpty ? state.selectedVersion : null,
+              state.selectedVersion.isNotEmpty ? state.selectedVersion : state.currentProject?.pinnedVersion!.name,
           hint: Text("Select Flutter Version".i18n),
           items: state.downloadedFlutterSDKs
               .map((flutterSDK) => DropdownMenuItem(

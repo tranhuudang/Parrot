@@ -21,7 +21,8 @@ mixin _$MainHomeState {
   bool get isDartInstalled => throw _privateConstructorUsedError;
   List<OnlineFlutterSDK> get onlineFlutterVersions =>
       throw _privateConstructorUsedError;
-  String get selectedOnlineVersion => throw _privateConstructorUsedError;
+  OnlineFlutterSDK? get selectedOnlineVersion =>
+      throw _privateConstructorUsedError;
   List<DownloadedFlutterSDK> get downloadedFlutterSDKs =>
       throw _privateConstructorUsedError;
   String get selectedVersion => throw _privateConstructorUsedError;
@@ -62,7 +63,7 @@ abstract class $MainHomeStateCopyWith<$Res> {
       bool isDashboardScreenLoading,
       bool isDartInstalled,
       List<OnlineFlutterSDK> onlineFlutterVersions,
-      String selectedOnlineVersion,
+      OnlineFlutterSDK? selectedOnlineVersion,
       List<DownloadedFlutterSDK> downloadedFlutterSDKs,
       String selectedVersion,
       List<Widget> commandOutput,
@@ -83,6 +84,7 @@ abstract class $MainHomeStateCopyWith<$Res> {
       String cacheSize,
       MainHomeStateError? error});
 
+  $OnlineFlutterSDKCopyWith<$Res>? get selectedOnlineVersion;
   $MainHomeStateErrorCopyWith<$Res>? get error;
 }
 
@@ -105,7 +107,7 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
     Object? isDashboardScreenLoading = null,
     Object? isDartInstalled = null,
     Object? onlineFlutterVersions = null,
-    Object? selectedOnlineVersion = null,
+    Object? selectedOnlineVersion = freezed,
     Object? downloadedFlutterSDKs = null,
     Object? selectedVersion = null,
     Object? commandOutput = null,
@@ -143,10 +145,10 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
           ? _value.onlineFlutterVersions
           : onlineFlutterVersions // ignore: cast_nullable_to_non_nullable
               as List<OnlineFlutterSDK>,
-      selectedOnlineVersion: null == selectedOnlineVersion
+      selectedOnlineVersion: freezed == selectedOnlineVersion
           ? _value.selectedOnlineVersion
           : selectedOnlineVersion // ignore: cast_nullable_to_non_nullable
-              as String,
+              as OnlineFlutterSDK?,
       downloadedFlutterSDKs: null == downloadedFlutterSDKs
           ? _value.downloadedFlutterSDKs
           : downloadedFlutterSDKs // ignore: cast_nullable_to_non_nullable
@@ -230,6 +232,21 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
+  $OnlineFlutterSDKCopyWith<$Res>? get selectedOnlineVersion {
+    if (_value.selectedOnlineVersion == null) {
+      return null;
+    }
+
+    return $OnlineFlutterSDKCopyWith<$Res>(_value.selectedOnlineVersion!,
+        (value) {
+      return _then(_value.copyWith(selectedOnlineVersion: value) as $Val);
+    });
+  }
+
+  /// Create a copy of MainHomeState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
   $MainHomeStateErrorCopyWith<$Res>? get error {
     if (_value.error == null) {
       return null;
@@ -254,7 +271,7 @@ abstract class _$$MainHomeStateImplCopyWith<$Res>
       bool isDashboardScreenLoading,
       bool isDartInstalled,
       List<OnlineFlutterSDK> onlineFlutterVersions,
-      String selectedOnlineVersion,
+      OnlineFlutterSDK? selectedOnlineVersion,
       List<DownloadedFlutterSDK> downloadedFlutterSDKs,
       String selectedVersion,
       List<Widget> commandOutput,
@@ -276,6 +293,8 @@ abstract class _$$MainHomeStateImplCopyWith<$Res>
       MainHomeStateError? error});
 
   @override
+  $OnlineFlutterSDKCopyWith<$Res>? get selectedOnlineVersion;
+  @override
   $MainHomeStateErrorCopyWith<$Res>? get error;
 }
 
@@ -296,7 +315,7 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
     Object? isDashboardScreenLoading = null,
     Object? isDartInstalled = null,
     Object? onlineFlutterVersions = null,
-    Object? selectedOnlineVersion = null,
+    Object? selectedOnlineVersion = freezed,
     Object? downloadedFlutterSDKs = null,
     Object? selectedVersion = null,
     Object? commandOutput = null,
@@ -334,10 +353,10 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
           ? _value._onlineFlutterVersions
           : onlineFlutterVersions // ignore: cast_nullable_to_non_nullable
               as List<OnlineFlutterSDK>,
-      selectedOnlineVersion: null == selectedOnlineVersion
+      selectedOnlineVersion: freezed == selectedOnlineVersion
           ? _value.selectedOnlineVersion
           : selectedOnlineVersion // ignore: cast_nullable_to_non_nullable
-              as String,
+              as OnlineFlutterSDK?,
       downloadedFlutterSDKs: null == downloadedFlutterSDKs
           ? _value._downloadedFlutterSDKs
           : downloadedFlutterSDKs // ignore: cast_nullable_to_non_nullable
@@ -467,7 +486,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
   }
 
   @override
-  final String selectedOnlineVersion;
+  final OnlineFlutterSDK? selectedOnlineVersion;
   final List<DownloadedFlutterSDK> _downloadedFlutterSDKs;
   @override
   List<DownloadedFlutterSDK> get downloadedFlutterSDKs {
@@ -632,7 +651,7 @@ abstract class _MainHomeState implements MainHomeState {
       required final bool isDashboardScreenLoading,
       required final bool isDartInstalled,
       required final List<OnlineFlutterSDK> onlineFlutterVersions,
-      required final String selectedOnlineVersion,
+      required final OnlineFlutterSDK? selectedOnlineVersion,
       required final List<DownloadedFlutterSDK> downloadedFlutterSDKs,
       required final String selectedVersion,
       required final List<Widget> commandOutput,
@@ -662,7 +681,7 @@ abstract class _MainHomeState implements MainHomeState {
   @override
   List<OnlineFlutterSDK> get onlineFlutterVersions;
   @override
-  String get selectedOnlineVersion;
+  OnlineFlutterSDK? get selectedOnlineVersion;
   @override
   List<DownloadedFlutterSDK> get downloadedFlutterSDKs;
   @override

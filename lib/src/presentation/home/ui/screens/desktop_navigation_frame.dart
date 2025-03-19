@@ -76,7 +76,7 @@ class _DesktopNavigationFrameState extends ConsumerState<DesktopNavigationFrame>
   Widget build(BuildContext context) {
     final state = ref.watch(mainHomeProvider);
 
-    if (isJustOpened || (state.isDashboardScreenLoading && isJustOpened)) {
+    if (isJustOpened) {
       Future.delayed(const Duration(seconds: 3), () {
         isJustOpened = false;
         setState(() {});

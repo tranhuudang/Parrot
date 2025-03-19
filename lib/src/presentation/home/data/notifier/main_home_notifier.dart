@@ -28,15 +28,15 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
   Future<void> initializeHome() async {
     await gettingSavedCurrentProjectPath();
 
-    final isDartInstalled = await checkDartInstallation();
-    if (isDartInstalled) {
-      bool fvmIsNotActivated = await checkFvmInstallation();
-      if (fvmIsNotActivated) {
-        await installFvm();
-      }
-      await fetchOnlineFlutterVersions();
-      await fetchDownloadedFlutterVersions();
-    }
+    //final isDartInstalled = await checkDartInstallation();
+    // if (isDartInstalled) {
+    //   bool fvmIsNotActivated = await checkFvmInstallation();
+    //   if (fvmIsNotActivated) {
+    //     await installFvm();
+    //   }
+    await fetchOnlineFlutterVersions();
+    await fetchDownloadedFlutterVersions();
+    //}
   }
 
   /// Reinitialize the after changing the project path
@@ -53,25 +53,25 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
   }
 
   /// Check if FVM is installed and update the state
-  Future<bool> checkFvmInstallation() async {
-    state =
-        state.copyWith(isDashboardScreenLoading: true); // Update loading state
-    try {
-      ProcessResult result = await Process.run('fvm', ['--version'],
-          runInShell: true, workingDirectory: state.currentProject!.path);
-      state = state.copyWith(isDashboardScreenLoading: false);
-      if (result.exitCode == 0) {
-        return true; // FVM is installed
-      } else {
-        return false;
-      }
-    } catch (e) {
-      DebugLog.error(e.toString());
-      state = state.copyWith(
-          isDashboardScreenLoading: false); // Set loading state to false
-      return false;
-    }
-  }
+  // Future<bool> checkFvmInstallation() async {
+  //   state =
+  //       state.copyWith(isDashboardScreenLoading: true); // Update loading state
+  //   try {
+  //     ProcessResult result = await Process.run('fvm', ['--version'],
+  //         runInShell: true, workingDirectory: state.currentProject!.path);
+  //     state = state.copyWith(isDashboardScreenLoading: false);
+  //     if (result.exitCode == 0) {
+  //       return true; // FVM is installed
+  //     } else {
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     DebugLog.error(e.toString());
+  //     state = state.copyWith(
+  //         isDashboardScreenLoading: false); // Set loading state to false
+  //     return false;
+  //   }
+  // }
 
   // Check if Dart is installed
   Future<bool> checkDartInstallation() async {
@@ -120,7 +120,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     try {
       // Fetch new data
       DebugLog.info('Fetching new data...');
-      APIService.fromContext.getReleases().then((value) {
+      await APIService.fromContext.getReleases().then((value) {
         final prefs = SharedPreferences.getInstance();
         final jsonData = json.encode(value.toJson());
         prefs.then((prefs) {
@@ -147,9 +147,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
 
         state = state.copyWith(
             onlineFlutterVersions: onlineFlutterSDKVersions.versions,
-            selectedOnlineVersion: onlineFlutterSDKVersions.versions.isNotEmpty
-                ? onlineFlutterSDKVersions.versions.first.version
-                : '',
+            selectedOnlineVersion: onlineFlutterSDKVersions.versions.first,
             isFetchingVersions: false,
             isDashboardScreenLoading: false,
             isFlutterSdksScreenLoading: false);
@@ -166,24 +164,35 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
 
   // Download the selected Flutter version
   Future<void> downloadFlutterVersion() async {
-    if (state.selectedOnlineVersion.isEmpty) return;
+    if (state.selectedOnlineVersion == null) return;
     state = state.copyWith(isDownloading: true); // Update loading state
     try {
-      Process process = await Process.start(
-          'fvm', ['install', state.selectedOnlineVersion],
-          runInShell: true, workingDirectory: state.currentProject!.path);
-      process.stdout.transform(utf8.decoder).listen((data) {
-        List<Widget> newList =
-            List.from(state.commandOutput); // Make a copy of the list
-        newList.insert(0, Text(data)); // Modify the list
-        state = state.copyWith(
-            commandOutput: newList); // Update state with the new list
-      });
-      process.exitCode.then((exitCode) async {
-        await fetchDownloadedFlutterVersions();
-        state =
-            state.copyWith(isDownloading: false); // Set loading state to false
-      });
+      final version = FlutterVersion.release(
+          state.selectedOnlineVersion!.version,
+          releaseFromChannel: state.selectedOnlineVersion!.channelName);
+      await FlutterService.fromContext.install(version, useGitCache: true);
+
+      state = state.copyWith(isDownloading: false);
+      // Trigger a refresh of the Flutter SDKs screen
+      await fetchDownloadedFlutterVersions();
+
+      /// OLD WAY
+
+      // Process process = await Process.start(
+      //     'fvm', ['install', state.selectedOnlineVersion],
+      //     runInShell: true, workingDirectory: state.currentProject!.path);
+      // process.stdout.transform(utf8.decoder).listen((data) {
+      //   List<Widget> newList =
+      //       List.from(state.commandOutput); // Make a copy of the list
+      //   newList.insert(0, Text(data)); // Modify the list
+      //   state = state.copyWith(
+      //       commandOutput: newList); // Update state with the new list
+      // });
+      // process.exitCode.then((exitCode) async {
+      //   await fetchDownloadedFlutterVersions();
+      //   state =
+      //       state.copyWith(isDownloading: false); // Set loading state to false
+      // });
     } catch (e) {
       DebugLog.error("Error: $e");
       state =
@@ -244,7 +253,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       // DebugLog.info(versions.toString());
 
       /// Get cached versions
-      APIService.fromContext.getCachedVersions().then((value) {
+      await APIService.fromContext.getCachedVersions().then((value) {
         final cacheSize = value.size;
         final downloadedFlutterSDKs =
             value.versions.map((CacheFlutterVersion cachedVersion) {
@@ -344,13 +353,10 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
   }
 
   // Select the online Flutter version
-  void selectOnlineVersion(String version) {
-    if (state.onlineFlutterVersions
-        .map((flutterSDK) => flutterSDK.version)
-        .toList()
-        .contains(version)) {
-      state = state.copyWith(selectedOnlineVersion: version);
-    }
+  void selectOnlineVersion(OnlineFlutterSDK version) {
+    state = state.copyWith(
+      selectedOnlineVersion: version,
+    );
   }
 
   // Select the downloaded Flutter version
@@ -379,11 +385,6 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       state = state.copyWith(currentProject: currentProject);
       await reInitialize();
       // await gettingFlutterPlatform();
-
-      // final project = APIService.fromContext
-      //     .getProject(Directory(selectedDirectory))
-      //     .project;
-     
     }
   }
 
@@ -410,6 +411,31 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       final currentProject = Project.loadFromPath(currentTargetProjectPath);
       DebugLog.info("Loaded project from path: ${currentProject.path}");
       state = state.copyWith(currentProject: currentProject);
+
+      // ---------------------
+      DebugLog.error("Project Name: ${currentProject.name}");
+      DebugLog.error("Pinned Version: ${currentProject.pinnedVersion}");
+
+      DebugLog.error("Project Path: ${currentProject.path}");
+      DebugLog.error("Config Path: ${currentProject.configPath}");
+      DebugLog.error("Local FVM Path: ${currentProject.localFvmPath}");
+      DebugLog.error("Is Flutter: ${currentProject.isFlutter.toString()}");
+      DebugLog.error(
+          "SDK Constraint: ${currentProject.sdkConstraint.toString()}");
+      DebugLog.error("Pubspec Path: ${currentProject.pubspecPath}");
+      DebugLog.error("Has Config: ${currentProject.hasConfig.toString()}");
+      DebugLog.error(
+          "Local Version Symlink Path: ${currentProject.localVersionSymlinkPath}");
+      DebugLog.error(
+          "Local Versions Cache Path: ${currentProject.localVersionsCachePath}");
+      DebugLog.error(
+          "Local FVM Path: ${currentProject.localFvmPath}"); // Duplicate, but keeping as requested
+      DebugLog.error(
+          "Dart Tool Version: ${currentProject.dartToolVersion ?? ''}");
+      DebugLog.error(
+          "Update Git Ignore: ${currentProject.config!.updateGitIgnore.toString()}");
+      DebugLog.error(
+          "Update VS Code Settings: ${currentProject.config!.updateVscodeSettings.toString()}");
     } else {
       DebugLog.info("No saved project path found");
     }
