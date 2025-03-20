@@ -1,4 +1,4 @@
-export 'default_settings.dart';
+export 'app_configs.dart';
 export 'local_directory.dart';
 export 'online_directory.dart';
 export 'in_app_strings.dart';

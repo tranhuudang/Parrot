@@ -19,5 +19,5 @@ class AppConfigs {
     enableAdaptiveTheme: true,
     currentTargetProjectPath: '',
   );
-  static int get appVersion => 66;
+  static int get appVersion => 74;
 }
