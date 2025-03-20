@@ -10,7 +10,7 @@ import '../../presentation/home/ui/screens/desktop_home_screen.dart';
 import '../../presentation/presentation.dart';
 
 // private navigators key shell
-final _rootNavigatorKey = GlobalKey<NavigatorState>();
+final rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorSettingKey =
     GlobalKey<NavigatorState>(debugLabel: 'Setting');
 final _shellNavigatorDonationKey =
@@ -36,9 +36,10 @@ void goBranch(int index) {
 }
 
 GoRouter routerConfigDesktop = GoRouter(
+
   initialLocation:
       RoutePath.dashboard, //Properties.instance.settings.selectedTab,
-  navigatorKey: _rootNavigatorKey,
+  navigatorKey: rootNavigatorKey,
   routes: [
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {

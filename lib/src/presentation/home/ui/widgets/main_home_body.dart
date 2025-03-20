@@ -1,7 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:marina_labs_common/marina_labs_common.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parrot/src/app/app.dart';
+import 'package:parrot/src/presentation/home/data/model/downloaded_flutter_sdks.dart';
 import 'package:parrot/src/presentation/home/data/model/flutter_versions.dart';
 import 'package:parrot/src/presentation/home/data/notifier/main_home_state.dart';
 import 'package:parrot/src/presentation/home/ui/widgets/platform_selector.dart';
@@ -182,6 +184,10 @@ class MainHomeBody extends ConsumerWidget {
 
   Row buildSelectFlutterVersionToSwitch(
       MainHomeState state, MainHomeNotifier notifier) {
+    // Currently Pinned version is buggy, so we are using the selected version to switch to
+    DebugLog.error('Pinned version: ${state.currentProject?.config!.flutter ?? 'null'}');
+    final DownloadedFlutterSDK? pinnedVersion = state.downloadedFlutterSDKs.firstWhereOrNull(
+        (element) => element.name == state.currentProject?.pinnedVersion?.name);
     return Row(
       children: [
         const Icon(
@@ -192,11 +198,12 @@ class MainHomeBody extends ConsumerWidget {
         Text("Select new Flutter version to switch:".i18n),
         8.width,
         RoundedDottedDropdownButton<String>(
-          value:
-              state.selectedVersion.isNotEmpty ? state.selectedVersion : state.currentProject?.pinnedVersion!.name,
+          value: state.selectedVersionToSwitchTo != null
+              ? state.selectedVersionToSwitchTo!.name
+              : pinnedVersion?.name,
           hint: Text("Select Flutter Version".i18n),
           items: state.downloadedFlutterSDKs
-              .map((flutterSDK) => DropdownMenuItem(
+              .map((DownloadedFlutterSDK flutterSDK) => DropdownMenuItem(
                     value: flutterSDK.name,
                     child: Text(flutterSDK.name),
                   ))
@@ -215,7 +222,7 @@ class MainHomeBody extends ConsumerWidget {
         const Spacer(),
         8.width,
         DisabledWidget(
-          isDisabled: state.selectedVersion.isEmpty,
+          isDisabled: state.selectedVersionToSwitchTo == null,
           child: ElevatedButton.icon(
             icon: const Icon(FluentIcons.arrow_shuffle_16_regular),
             onPressed: state.isSwitching
@@ -235,13 +242,15 @@ class MainHomeBody extends ConsumerWidget {
       MainHomeState state, MainHomeNotifier notifier) {
     // Check if the selected version is setup
     final isSetup = state.downloadedFlutterSDKs.any((element) =>
-        element.isSetup == true && element.name == state.selectedVersion);
-    final isSwitched =
-        state.currentFlutterVersionSwitchedTo == state.selectedVersion;
+        element.isSetup == true && element == state.selectedVersionToSwitchTo);
+    final isSwitched = state.currentFlutterVersionSwitchedTo ==
+        state.selectedVersionToSwitchTo;
     return Row(
       children: [
         DisabledWidget(
-          isDisabled: state.selectedVersion.isEmpty || !isSetup || !isSwitched,
+          isDisabled: state.selectedVersionToSwitchTo == null ||
+              !isSetup ||
+              !isSwitched,
           child: Row(
             children: [
               const Icon(

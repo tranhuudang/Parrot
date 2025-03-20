@@ -282,8 +282,7 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
                                                     ? null
                                                     : () {
                                                         notifier.downloadFlutterVersionByName(
-                                                            onlineFlutterSDK
-                                                                .version,
+                                                            onlineFlutterSDK,
                                                             downloadButtonIndex:
                                                                 index);
                                                       },
@@ -368,8 +367,7 @@ class FlutterSDKReleasesScreen extends ConsumerWidget {
                     8.width,
                     FilledButton.tonalIcon(
                       onPressed: () {
-                        notifier.downloadFlutterVersionByName(
-                            onlineFlutterSDK.version,
+                        notifier.downloadFlutterVersionByName(onlineFlutterSDK,
                             downloadButtonIndex: downloadButtonIndex);
                         Navigator.pop(context);
                       },

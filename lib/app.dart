@@ -67,6 +67,7 @@ class _AppState extends State<App> {
     return FlutterSizer(
       builder: (context, orientation, screenType) {
         return MaterialApp.router(
+          
           localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,

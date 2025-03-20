@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:fvm/fvm.dart';
 import 'package:marina_labs_common/marina_labs_common.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parrot/src/app/router/route_configurations_desktop.dart';
 import 'package:parrot/src/core/constants/storages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -175,24 +177,6 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       state = state.copyWith(isDownloading: false);
       // Trigger a refresh of the Flutter SDKs screen
       await fetchDownloadedFlutterVersions();
-
-      /// OLD WAY
-
-      // Process process = await Process.start(
-      //     'fvm', ['install', state.selectedOnlineVersion],
-      //     runInShell: true, workingDirectory: state.currentProject!.path);
-      // process.stdout.transform(utf8.decoder).listen((data) {
-      //   List<Widget> newList =
-      //       List.from(state.commandOutput); // Make a copy of the list
-      //   newList.insert(0, Text(data)); // Modify the list
-      //   state = state.copyWith(
-      //       commandOutput: newList); // Update state with the new list
-      // });
-      // process.exitCode.then((exitCode) async {
-      //   await fetchDownloadedFlutterVersions();
-      //   state =
-      //       state.copyWith(isDownloading: false); // Set loading state to false
-      // });
     } catch (e) {
       DebugLog.error("Error: $e");
       state =
@@ -201,28 +185,20 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
   }
 
   // Download the selected Flutter version
-  Future<void> downloadFlutterVersionByName(String version,
+  Future<void> downloadFlutterVersionByName(OnlineFlutterSDK targetVersion,
       {int downloadButtonIndex = -1}) async {
     state = state.copyWith(
         isDownloading: true,
         downloadButtonIndex: downloadButtonIndex); // Update loading state
     try {
-      Process process = await Process.start('fvm', ['install', version],
-          runInShell: true, workingDirectory: state.currentProject!.path);
-      process.stdout.transform(utf8.decoder).listen((data) {
-        List<Widget> newList =
-            List.from(state.commandOutput); // Make a copy of the list
-        newList.insert(0, Text(data)); // Modify the list
-        state = state.copyWith(
-            commandOutput: newList); // Update state with the new list
-      });
-      process.exitCode.then((exitCode) {
-        state = state.copyWith(
-          isDownloading: false,
-        ); // Set loading state to false
-        // Trigger a refresh of the Flutter SDKs screen
-        reloadFlutterSdksScreen();
-      });
+      final version = FlutterVersion.release(targetVersion.version,
+          releaseFromChannel: targetVersion.channelName);
+      await FlutterService.fromContext.install(version, useGitCache: true);
+      state = state.copyWith(
+        isDownloading: false,
+      ); // Set loading state to false
+      // Trigger a refresh of the Flutter SDKs screen
+      reloadFlutterSdksScreen();
     } catch (e) {
       DebugLog.error("Error: $e");
       state =
@@ -237,21 +213,6 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
         isDashboardScreenLoading: true,
         isFlutterSdksScreenLoading: true); // Update loading state
     try {
-      // ProcessResult result = await Process.run('fvm', ['api', 'list'],
-      //     runInShell: true, workingDirectory: projectPathController.text);
-      // String jsonString = result.stdout.toString();
-      // // jsonString = jsonString.substring(
-      // //     jsonString.indexOf("["), jsonString.lastIndexOf("]") + 1);
-      // final data = json.decode(jsonString);
-      // final cacheSize = DownloadedFlutterSDKs.fromJson(data).size;
-      // DebugLog.info("Cache size: $cacheSize");
-      // List<DownloadedFlutterSDK> downloadedFlutterSDKs =
-      //     DownloadedFlutterSDKs.fromJson(data).sdks;
-      // // Showing if the downloadedFlutterSDKs is not empty
-      // List<String> versions =
-      //     downloadedFlutterSDKs.map((sdk) => sdk.name).toList();
-      // DebugLog.info(versions.toString());
-
       /// Get cached versions
       await APIService.fromContext.getCachedVersions().then((value) {
         final cacheSize = value.size;
@@ -291,13 +252,13 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
 
   // Switch the Flutter version for the project
   Future<void> switchFlutterVersion() async {
-    if (state.selectedVersion.isEmpty) return;
+    if (state.selectedVersionToSwitchTo == null) return;
     state = state.copyWith(
         isSwitching: true,
-        currentFlutterVersionSwitchedTo: ''); // Update loading state
+        currentFlutterVersionSwitchedTo: null); // Update loading state
     try {
       Process process = await Process.start(
-          'cmd', ['/c', 'echo y | fvm use ${state.selectedVersion}'],
+          'cmd', ['/c', 'echo y | fvm use ${state.selectedVersionToSwitchTo!.name}'],
           workingDirectory: state.currentProject!.path, runInShell: true);
       process.stdout.transform(utf8.decoder).listen((data) {
         List<Widget> newList =
@@ -310,7 +271,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
         state = state.copyWith(
             isSwitching: false,
             currentFlutterVersionSwitchedTo:
-                state.selectedVersion); // Set loading state to false
+                state.selectedVersionToSwitchTo); // Set loading state to false
       });
       // Fetching available devices after switching successfully
       if (state.downloadedFlutterSDKs.isNotEmpty) {
@@ -361,7 +322,9 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
 
   // Select the downloaded Flutter version
   void selectDownloadedVersion(String version) {
-    state = state.copyWith(selectedVersion: version);
+    final DownloadedFlutterSDK? selectedVersion = state.downloadedFlutterSDKs
+        .firstWhereOrNull((element) => element.name == version);
+    state = state.copyWith(selectedVersionToSwitchTo: selectedVersion);
   }
 
   // Open file picker to select project directory
@@ -369,18 +332,14 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
     if (selectedDirectory != null) {
       final currentProject = Project.loadFromPath(selectedDirectory);
-      // Add debug logging before saving
-      DebugLog.info("About to save project path: ${currentProject.path}");
-      DebugLog.info(
-          "Current settings before save: ${Properties.instance.settings.currentTargetProjectPath}");
-
+      // Check if project is Flutter project
+      if (!currentProject.isFlutter) {
+        _showNotAFlutterProjectAlert();
+        return;
+      }
       // Save the current project path
       await Properties.instance.saveSettings(Properties.instance.settings
           .copyWith(currentTargetProjectPath: currentProject.path));
-
-      // Verify the save worked
-      DebugLog.info(
-          "Settings after save: ${Properties.instance.settings.currentTargetProjectPath}");
 
       state = state.copyWith(currentProject: currentProject);
       await reInitialize();
@@ -400,15 +359,17 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
   Future<void> gettingSavedCurrentProjectPath() async {
     // Add debug logging
     DebugLog.info("Getting saved project path");
-    DebugLog.info(
-        "Current settings: ${Properties.instance.settings.toString()}");
 
     final currentTargetProjectPath =
         Properties.instance.settings.currentTargetProjectPath;
-    DebugLog.info("Retrieved project path: $currentTargetProjectPath");
 
     if (currentTargetProjectPath.isNotEmpty) {
       final currentProject = Project.loadFromPath(currentTargetProjectPath);
+      // Check if project is Flutter project
+      if (!currentProject.isFlutter) {
+        return;
+      }
+
       DebugLog.info("Loaded project from path: ${currentProject.path}");
       state = state.copyWith(currentProject: currentProject);
 
@@ -563,5 +524,15 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     }
     DebugLog.info('Available devices is EMPTY');
     return [];
+  }
+
+   _showNotAFlutterProjectAlert() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        rootNavigatorKey.currentContext?.showAlertDialogWithoutAction(
+          title: 'Not a Flutter Project',
+          content:
+              'The selected directory is not a Flutter project. Please select a valid Flutter project.',
+        );
+      });
   }
 }

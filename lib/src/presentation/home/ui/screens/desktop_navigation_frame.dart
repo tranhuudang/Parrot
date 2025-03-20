@@ -75,14 +75,13 @@ class _DesktopNavigationFrameState extends ConsumerState<DesktopNavigationFrame>
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(mainHomeProvider);
-
-    if (isJustOpened) {
-      Future.delayed(const Duration(seconds: 3), () {
-        isJustOpened = false;
+    Future.delayed(const Duration(seconds: 10), () {
+      isJustOpened = false;
+      if (mounted) {
         setState(() {});
-      });
-      return const OpenAppLoading();
-    } else {
+      }
+    });
+    if (!isJustOpened || !state.isDashboardScreenLoading) {
       return Scaffold(
         body: UpgradeAlert(
           showReleaseNotes: false,
@@ -226,6 +225,8 @@ class _DesktopNavigationFrameState extends ConsumerState<DesktopNavigationFrame>
           ),
         ),
       );
+    } else {
+      return const OpenAppLoading();
     }
   }
 }
