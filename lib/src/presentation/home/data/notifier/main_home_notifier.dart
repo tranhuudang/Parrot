@@ -169,6 +169,12 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       DebugLog.error("Error: $e");
       state =
           state.copyWith(isDownloading: false); // Set loading state to false
+      // Show error message to user
+      rootNavigatorKey.currentContext?.showAlertDialogWithoutAction(
+        title: 'Error downloading Flutter SDK',
+        content:
+            'An error occurred while downloading the Flutter SDK. Please try again later.',
+      );
     }
   }
 
@@ -191,6 +197,12 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       DebugLog.error("Error: $e");
       state =
           state.copyWith(isDownloading: false); // Set loading state to false
+      // Show error message to user
+      rootNavigatorKey.currentContext?.showAlertDialogWithoutAction(
+        title: 'Error downloading Flutter SDK',
+        content:
+            'An error occurred while downloading the Flutter SDK. Please try again later.',
+      );
     }
   }
 
@@ -222,8 +234,8 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
           );
         }).toList();
 
-        final DownloadedFlutterSDK? pinnedVersion = downloadedFlutterSDKs
-            .firstWhereOrNull((element) =>
+        final DownloadedFlutterSDK? pinnedVersion =
+            downloadedFlutterSDKs.firstWhereOrNull((element) =>
                 element.name == state.currentProject!.pinnedVersion?.name);
         if (pinnedVersion != null) {
           DebugLog.info('Pinned version found: ${pinnedVersion.name}');
@@ -452,46 +464,11 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
         DebugLog.info('Flutter process exited with code: $exitCode');
         state = state.copyWith(isRunning: false);
       });
-
-      // FvmCommandRunner fvmCommandRunner = FvmCommandRunner();
-      // fvmCommandRunner.run(['flutter','run', '-d', state.selectedPlatform]);
-
-      // This one can working
-      // final result = await runCommand('fvm', args:  ['flutter', 'run', '-d', state.selectedPlatform],
-      //          workingDirectory: state.currentProject!.path, echoOutput: true);
-      // if (result.exitCode != 0) {
-      //   DebugLog.error('Error running Flutter project: ${result.stderr}');
-      //   logger.err('Error running Flutter project: ${result.stderr}');
-      //   state = state.copyWith(isRunning: false);
-      // } else {
-      //   state = state.copyWith(isRunning: false);
-      //   logger.detail('Project exited without error with code: ${result.exitCode}');
-      // }
-
-      //
-      // CacheFlutterVersion cacheFlutterVersion = CacheFlutterVersion(
-      //     FlutterVersion(state.currentFlutterVersionSwitchedTo!.name,
-      //         type: VersionType.release),
-      //     directory: state.currentProject!.path);
-      // runFlutter(['flutter', 'run', '-d', state.selectedPlatform],
-      //     version: cacheFlutterVersion);
     } catch (e) {
       DebugLog.error("Error running Flutter project: $e");
       state = state.copyWith(isRunning: false);
     }
   }
-
-  // Future<void> stopFlutterProject() async {
-  //   if (flutterProcess == null) return;
-  //
-  //   state = state.copyWith(isRunning: false);
-  //   try {
-  //     flutterProcess!.kill();
-  //     flutterProcess = null;
-  //   } catch (e) {
-  //     DebugLog.error("Error stopping Flutter project: $e");
-  //   }
-  // }
 
   Future<void> stopFlutterProject() async {
     if (flutterProcess == null) return;
@@ -563,5 +540,11 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
             'The selected directory is not a Flutter project. Please select a valid Flutter project.',
       );
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    flutterProcess?.kill();
   }
 }
