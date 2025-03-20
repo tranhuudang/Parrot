@@ -6,6 +6,7 @@ import 'package:parrot/src/app/app.dart';
 import 'package:parrot/src/presentation/home/data/model/downloaded_flutter_sdks.dart';
 import 'package:parrot/src/presentation/home/data/model/flutter_versions.dart';
 import 'package:parrot/src/presentation/home/data/notifier/main_home_state.dart';
+import 'package:parrot/src/presentation/home/ui/widgets/log_console_view.dart';
 import 'package:parrot/src/presentation/home/ui/widgets/platform_selector.dart';
 import '../../../presentation.dart';
 import '../../data/notifier/main_home_notifier.dart';
@@ -86,54 +87,6 @@ class MainHomeBody extends ConsumerWidget {
     );
   }
 
-  Row buildAvailableFlutterSDKreleases(
-      MainHomeState state, MainHomeNotifier notifier) {
-    bool isDownloaded = state.downloadedFlutterSDKs
-        .any((element) => element.name == state.selectedOnlineVersion);
-    return Row(
-      children: [
-        Text("${'Flutter SDK releases'.i18n} "),
-        8.width,
-        RoundedDottedDropdownButton<OnlineFlutterSDK>(
-          value: state.selectedOnlineVersion,
-          // hint: Text("Select Flutter Version".i18n),
-          items: state.onlineFlutterVersions.map((flutterSDK) {
-            return DropdownMenuItem<OnlineFlutterSDK>(
-              value: flutterSDK,
-              child: Text(flutterSDK.version),
-            );
-          }).toList(),
-          onChanged: (value) {
-            if (value != null) {
-              notifier.selectOnlineVersion(value);
-            }
-          },
-        ),
-        8.width,
-        IconButton(
-          onPressed: () =>
-              notifier.fetchOnlineFlutterVersions(forceRefresh: true),
-          icon: const Icon(FluentIcons.arrow_sync_16_regular),
-        ),
-        const Spacer(),
-        8.width,
-        DisabledWidget(
-          isDisabled: isDownloaded,
-          child: ElevatedButton.icon(
-            icon: const Icon(FluentIcons.arrow_download_16_regular),
-            onPressed: state.isDownloading
-                ? null
-                : () => notifier.downloadFlutterVersion(),
-            label: state.isDownloading
-                ? const SizedBox(
-                    height: 20, width: 20, child: CircularProgressIndicator())
-                : Text("Download".i18n),
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget buildTargetFlutterProjectSelection(
       MainHomeState state, MainHomeNotifier notifier, BuildContext context) {
     return Column(
@@ -182,10 +135,60 @@ class MainHomeBody extends ConsumerWidget {
     );
   }
 
+  Row buildAvailableFlutterSDKreleases(
+      MainHomeState state, MainHomeNotifier notifier) {
+    bool isDownloaded = state.downloadedFlutterSDKs
+        .any((element) => element.name == state.selectedOnlineVersion?.version);
+    return Row(
+      children: [
+        Text("${'Flutter SDK releases'.i18n} "),
+        8.width,
+        RoundedDottedDropdownButton<OnlineFlutterSDK>(
+          value: state.selectedOnlineVersion,
+          // hint: Text("Select Flutter Version".i18n),
+          items: state.onlineFlutterVersions.map((flutterSDK) {
+            return DropdownMenuItem<OnlineFlutterSDK>(
+              value: flutterSDK,
+              child: Text(flutterSDK.version),
+            );
+          }).toList(),
+          onChanged: (value) {
+            if (value != null) {
+              notifier.selectOnlineVersion(value);
+            }
+          },
+        ),
+        8.width,
+        IconButton(
+          onPressed: () =>
+              notifier.fetchOnlineFlutterVersions(forceRefresh: true),
+          icon: const Icon(FluentIcons.arrow_sync_16_regular),
+        ),
+        const Spacer(),
+        8.width,
+        DisabledWidget(
+          isDisabled: isDownloaded,
+          child: ElevatedButton.icon(
+            icon: const Icon(FluentIcons.arrow_download_16_regular),
+            onPressed: state.isDownloading
+                ? null
+                : () => notifier.downloadFlutterVersion(),
+            label: state.isDownloading
+                ? const SizedBox(
+                height: 20, width: 20, child: CircularProgressIndicator())
+                : Text("Download".i18n),
+          ),
+        ),
+      ],
+    );
+  }
+
   Row buildSelectFlutterVersionToSwitch(
       MainHomeState state, MainHomeNotifier notifier) {
     // Currently Pinned version is buggy, so we are using the selected version to switch to
-    DebugLog.error('Pinned version: ${state.currentProject?.config!.flutter ?? 'null'}');
+    if (state.currentProject?.config != null) {
+      DebugLog.error('Pinned version: ${state.currentProject?.config!.flutter ?? 'null'}');
+    }
     final DownloadedFlutterSDK? pinnedVersion = state.downloadedFlutterSDKs.firstWhereOrNull(
         (element) => element.name == state.currentProject?.pinnedVersion?.name);
     return Row(
@@ -337,7 +340,7 @@ class MainHomeBody extends ConsumerWidget {
         padding: const EdgeInsets.all(8.0),
         decoration:
             BoxDecoration(color: context.theme.colorScheme.surfaceContainer),
-        child: ListView(reverse: true, children: state.commandOutput.toList()),
+        child: LogConsoleView(),
       ),
     );
   }

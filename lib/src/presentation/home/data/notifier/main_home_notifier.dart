@@ -123,13 +123,6 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       // Fetch new data
       DebugLog.info('Fetching new data...');
       await APIService.fromContext.getReleases().then((value) {
-        final prefs = SharedPreferences.getInstance();
-        final jsonData = json.encode(value.toJson());
-        prefs.then((prefs) {
-          prefs.setString(StorageKeys.flutterVersionsCache, jsonData);
-          prefs.setInt(StorageKeys.lastFetchTimestamp,
-              DateTime.now().millisecondsSinceEpoch);
-        });
         final versions =
             value.versions.map((FlutterSdkRelease flutterSdkRelease) {
           return OnlineFlutterSDK(
@@ -253,33 +246,35 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
   // Switch the Flutter version for the project
   Future<void> switchFlutterVersion() async {
     if (state.selectedVersionToSwitchTo == null) return;
-    state = state.copyWith(
-        isSwitching: true,
-        currentFlutterVersionSwitchedTo: null); // Update loading state
+
     try {
-      Process process = await Process.start(
-          'cmd', ['/c', 'echo y | fvm use ${state.selectedVersionToSwitchTo!.name}'],
-          workingDirectory: state.currentProject!.path, runInShell: true);
-      process.stdout.transform(utf8.decoder).listen((data) {
-        List<Widget> newList =
-            List.from(state.commandOutput); // Make a copy of the list
-        newList.insert(0, Text(data)); // Modify the list
+      if (state.currentProject != null &&
+          state.selectedVersionToSwitchTo != null) {
         state = state.copyWith(
-            commandOutput: newList); // Update state with the new list
-      });
-      process.exitCode.then((exitCode) {
+            isSwitching: true,
+            currentFlutterVersionSwitchedTo: null); // Update loading state
+        DebugLog.info('Configuring project...');
+        // VS Code modifications
+        ProjectService.fromContext.update(state.currentProject!,
+            flutterSdkVersion: state.selectedVersionToSwitchTo!.name,
+            updateVscodeSettings: true);
+        // Use Flutter version
+        CacheFlutterVersion cacheFlutterVersion = CacheFlutterVersion(
+            FlutterVersion(state.selectedVersionToSwitchTo!.name,
+                type: VersionType.release),
+            directory: state.selectedVersionToSwitchTo!.directory);
+        // Checks if version is installed, and installs or exits
+        DebugLog.info('Setting up project...');
+        await useVersionWorkflow(
+            version: cacheFlutterVersion,
+            project: state.currentProject!,
+            force: true,
+            skipSetup: false,
+            runPubGetOnSdkChange: true);
+        DebugLog.info('Project configured successfully.');
         state = state.copyWith(
             isSwitching: false,
-            currentFlutterVersionSwitchedTo:
-                state.selectedVersionToSwitchTo); // Set loading state to false
-      });
-      // Fetching available devices after switching successfully
-      if (state.downloadedFlutterSDKs.isNotEmpty) {
-        final isSetup = state.downloadedFlutterSDKs
-            .any((element) => element.isSetup == true);
-        if (isSetup) {
-          await gettingFlutterPlatform();
-        }
+            currentFlutterVersionSwitchedTo: state.selectedVersionToSwitchTo); // Update loading state
       }
     } catch (e) {
       DebugLog.error("Error: $e");
@@ -526,13 +521,13 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     return [];
   }
 
-   _showNotAFlutterProjectAlert() {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        rootNavigatorKey.currentContext?.showAlertDialogWithoutAction(
-          title: 'Not a Flutter Project',
-          content:
-              'The selected directory is not a Flutter project. Please select a valid Flutter project.',
-        );
-      });
+  _showNotAFlutterProjectAlert() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      rootNavigatorKey.currentContext?.showAlertDialogWithoutAction(
+        title: 'Not a Flutter Project',
+        content:
+            'The selected directory is not a Flutter project. Please select a valid Flutter project.',
+      );
+    });
   }
 }
