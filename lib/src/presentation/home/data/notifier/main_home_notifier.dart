@@ -38,6 +38,8 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     await fetchDownloadedFlutterVersions();
     //}
 
+    //final isDartInstalled = await checkDartInstallation();
+
     state = state.copyWith(isJustOpened: false);
   }
 
@@ -48,25 +50,25 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
   }
 
   /// Check if FVM is installed and update the state
-  // Future<bool> checkFvmInstallation() async {
-  //   state =
-  //       state.copyWith(isDashboardScreenLoading: true); // Update loading state
-  //   try {
-  //     ProcessResult result = await Process.run('fvm', ['--version'],
-  //         runInShell: true, workingDirectory: state.currentProject!.path);
-  //     state = state.copyWith(isDashboardScreenLoading: false);
-  //     if (result.exitCode == 0) {
-  //       return true; // FVM is installed
-  //     } else {
-  //       return false;
-  //     }
-  //   } catch (e) {
-  //     DebugLog.error(e.toString());
-  //     state = state.copyWith(
-  //         isDashboardScreenLoading: false); // Set loading state to false
-  //     return false;
-  //   }
-  // }
+  Future<bool> checkFvmInstallation() async {
+    state =
+        state.copyWith(isDashboardScreenLoading: true); // Update loading state
+    try {
+      ProcessResult result = await Process.run('fvm', ['--version'],
+          runInShell: true, workingDirectory: state.currentProject!.path);
+      state = state.copyWith(isDashboardScreenLoading: false);
+      if (result.exitCode == 0) {
+        return true; // FVM is installed
+      } else {
+        return false;
+      }
+    } catch (e) {
+      DebugLog.error(e.toString());
+      state = state.copyWith(
+          isDashboardScreenLoading: false); // Set loading state to false
+      return false;
+    }
+  }
 
   // Check if Dart is installed
   Future<bool> checkDartInstallation() async {
@@ -454,14 +456,20 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     if (state.currentProject != null) return;
     state = state.copyWith(isRunning: true);
     try {
-      flutterProcess = await Process.start(
-          'fvm', ['flutter', 'run', '-d', state.selectedPlatform],
-          workingDirectory: state.currentProject!.path, runInShell: true);
-      DebugLog.info('Run project in :${state.currentProject!.path}');
-
-      flutterProcess!.exitCode.then((exitCode) {
-        state = state.copyWith(isRunning: false);
-      });
+      // flutterProcess = await Process.start(
+      //     'fvm', ['flutter', 'run', '-d', state.selectedPlatform],
+      //     workingDirectory: state.currentProject!.path, runInShell: true);
+      // DebugLog.info('Run project in :${state.currentProject!.path}');
+      //
+      // flutterProcess!.exitCode.then((exitCode) {
+      //   state = state.copyWith(isRunning: false);
+      // });
+      DebugLog.info('Start running Flutter project...');
+      final command = FvmCommandRunner();
+      final result = await command.run(
+        ['flutter', 'run', '-d', state.selectedPlatform],
+      );
+      DebugLog.info(result.toString());
     } catch (e) {
       DebugLog.error("Error running Flutter project: $e");
       state = state.copyWith(isRunning: false);

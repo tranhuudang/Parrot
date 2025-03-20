@@ -40,9 +40,13 @@ class MainHomeBody extends ConsumerWidget {
                       buildSelectFlutterVersionToSwitch(state, notifier),
                       8.height,
                       buildProjectRunningControl(state, notifier, context),
+                      8.height,
                     ],
                   ),
-                )
+                ),
+                if (state.currentProject != null) ...[
+                  buildProjectInfo(state, context),
+                ],
               ],
             ],
           ),
@@ -229,9 +233,7 @@ class MainHomeBody extends ConsumerWidget {
                 size: 14,
               ),
               16.width,
-              Text(state.currentProject != null
-                  ? state.currentProject!.name
-                  : ''),
+              Text('Device:'.i18n),
               16.width,
               const PlatformSelector(),
               16.width,
@@ -296,6 +298,69 @@ class MainHomeBody extends ConsumerWidget {
           },
           label: Text('Configure code editor'.i18n),
         ),
+      ],
+    );
+  }
+
+  Widget buildProjectInfo(MainHomeState state, BuildContext context) {
+    // a expandable widget that shows the project info
+    return ExpansionTile(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      backgroundColor: context.theme.colorScheme.primaryContainer,
+      tilePadding: const EdgeInsets.only(right: 8, left: 8),
+      expandedCrossAxisAlignment: CrossAxisAlignment.start,
+      childrenPadding: const EdgeInsets.only(left: 38, right: 8),
+      title: Row(
+        children: [
+          const Icon(
+            FluentIcons.circle_16_regular,
+            size: 14,
+          ),
+          16.width,
+          state.currentProject != null
+              ? Text(
+                  "${state.currentProject!.name.upperCaseFirstLetter()} project Info"
+                      .i18n,
+                  style: context.theme.textTheme.bodyMedium,
+                )
+              : Text(
+                  "Project Info".i18n,
+                  style: context.theme.textTheme.bodyMedium,
+                ),
+        ],
+      ),
+      children: [
+        Opacity(
+          opacity: .8,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    "Pinned version: ${state.currentProject?.pinnedVersion ?? 'null'}",
+                    style: TextStyle(
+                        color: context.theme.colorScheme.onTertiaryContainer,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              Text(
+                  "SDK Constraint: ${state.currentProject?.sdkConstraint ?? 'null'}"),
+              Text(
+                  "Dart Tool version: ${state.currentProject?.dartToolVersion ?? 'null'}"),
+              Text(
+                  "Has an FVM config file: ${state.currentProject?.hasConfig ?? 'null'}"),
+              Text(
+                  "Is .gitignore updated: ${state.currentProject?.config?.updateGitIgnore ?? 'null'}"),
+              Text(
+                  "Is VS Code Settings updated: ${state.currentProject?.config?.updateVscodeSettings ?? 'null'}"),
+              20.height,
+            ],
+          ),
+        )
       ],
     );
   }

@@ -41,9 +41,9 @@ class _LogConsoleViewState extends State<LogConsoleView> {
   }
 
   void _addLog(LogType type, String message) {
-    setState(() {
+    //setState(() {
       logs.add(LogMessage(type: type, message: message));
-    });
+    //});
 
     // Auto-scroll to bottom
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -61,9 +61,9 @@ class _LogConsoleViewState extends State<LogConsoleView> {
   void didUpdateWidget(covariant LogConsoleView oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.shouldClearLogs ?? false) {
-      setState(() {
+      //setState(() {
         logs.clear();
-      });
+      //});
     }
   }
 
