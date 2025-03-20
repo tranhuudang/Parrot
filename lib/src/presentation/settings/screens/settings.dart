@@ -4,6 +4,7 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parrot/src/app/app.dart';
 import 'package:parrot/src/presentation/presentation.dart';
+import 'package:parrot/src/presentation/settings/widgets/theme_mode_switcher.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});

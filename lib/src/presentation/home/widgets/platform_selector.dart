@@ -2,8 +2,8 @@ import 'package:marina_labs_common/marina_labs_common.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parrot/src/app/app.dart';
 
-import '../../../presentation.dart';
-import '../../data/notifier/main_home_notifier.dart';
+import '../../presentation.dart';
+import '../data/notifier/main_home_notifier.dart';
 
 class PlatformSelector extends ConsumerWidget {
   const PlatformSelector({super.key});

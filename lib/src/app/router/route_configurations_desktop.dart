@@ -2,11 +2,13 @@ import 'package:marina_labs_common/marina_labs_common.dart';
 import 'package:parrot/src/app/router/route_name.dart';
 import 'package:parrot/src/app/router/route_path.dart';
 import 'package:parrot/src/presentation/donation/donation_screen.dart';
-import 'package:parrot/src/presentation/home/ui/screens/flutter_sdks_screen.dart';
+import 'package:parrot/src/presentation/home/screens/flutter_sdks_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:i18n_extension/i18n_extension.dart';
+import 'package:parrot/src/presentation/settings/screens/info.dart';
+import 'package:parrot/src/presentation/settings/screens/settings.dart';
 import 'package:parrot/src/presentation/troubleshooting/screens/troubleshooting_guide_screen.dart';
-import '../../presentation/home/ui/screens/desktop_home_screen.dart';
+import '../../presentation/home/screens/desktop_home_screen.dart';
 import '../../presentation/presentation.dart';
 
 // private navigators key shell

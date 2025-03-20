@@ -1,8 +1,8 @@
 import 'package:marina_labs_common/marina_labs_common.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parrot/bloc_provider_scope.dart';
+import 'package:parrot/src/app/app.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:parrot/src/core/core.dart';
 import 'package:parrot/src/presentation/presentation.dart';
 import 'package:windows_status_bar/windows_status_bar.dart';
 import 'app.dart';

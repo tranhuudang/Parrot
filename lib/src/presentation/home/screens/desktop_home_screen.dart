@@ -2,8 +2,9 @@ import 'package:marina_labs_common/marina_labs_common.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parrot/src/app/app.dart';
 import 'package:parrot/src/presentation/home/data/notifier/main_home_notifier.dart';
-import '../../../../app/utils/utils.dart';
-import '../../../presentation.dart';
+import 'package:parrot/src/presentation/shared/widgets/header_flutters.dart';
+import '../../../app/utils/utils.dart';
+import '../../presentation.dart';
 import '../widgets/main_home_body.dart';
 
 class DesktopHomeScreen extends ConsumerStatefulWidget {

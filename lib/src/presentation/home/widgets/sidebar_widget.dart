@@ -2,7 +2,7 @@ import 'package:marina_labs_common/marina_labs_common.dart';
 import 'package:parrot/src/app/app.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
-import '../../../presentation.dart';
+import '../../presentation.dart';
 
 class SidebarWidget extends StatefulWidget {
   final int selectedIndex;

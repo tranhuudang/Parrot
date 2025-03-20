@@ -6,10 +6,10 @@ import 'package:parrot/src/app/app.dart';
 import 'package:parrot/src/presentation/home/data/model/downloaded_flutter_sdks.dart';
 import 'package:parrot/src/presentation/home/data/model/flutter_versions.dart';
 import 'package:parrot/src/presentation/home/data/notifier/main_home_state.dart';
-import 'package:parrot/src/presentation/home/ui/widgets/log_console_view.dart';
-import 'package:parrot/src/presentation/home/ui/widgets/platform_selector.dart';
-import '../../../presentation.dart';
-import '../../data/notifier/main_home_notifier.dart';
+import 'package:parrot/src/presentation/home/widgets/log_console_view.dart';
+import 'package:parrot/src/presentation/home/widgets/platform_selector.dart';
+import '../../presentation.dart';
+import '../data/notifier/main_home_notifier.dart';
 import 'control_project_button.dart';
 
 class MainHomeBody extends ConsumerWidget {

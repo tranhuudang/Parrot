@@ -13,7 +13,3 @@ void goToStoreListing() async {
 void goToBugReport() async {
   openUrl('https://github.com/tranhuudang/parrot/issues');
 }
-
-void goToGithub() async {
-  openUrl('https://github.com/tranhuudang');
-}

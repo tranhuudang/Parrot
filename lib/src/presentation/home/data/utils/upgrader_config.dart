@@ -1,5 +1,5 @@
 import 'package:marina_labs_common/marina_labs_common.dart';
-import 'package:parrot/src/core/core.dart';
+import 'package:parrot/src/app/app.dart';
 import 'package:upgrader/upgrader.dart';
 
 class UpgraderConfig {

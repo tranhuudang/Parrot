@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:parrot/src/core/core.dart';
+import 'package:parrot/src/app/app.dart';
 
 class HeaderFlutters extends StatelessWidget {
   const HeaderFlutters({
