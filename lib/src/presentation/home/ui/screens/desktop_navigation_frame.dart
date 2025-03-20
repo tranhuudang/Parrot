@@ -32,7 +32,6 @@ class DesktopNavigationFrame extends ConsumerStatefulWidget {
 class _DesktopNavigationFrameState extends ConsumerState<DesktopNavigationFrame>
     with WindowListener {
   Timer? _saveWindowsSizeTimer;
-  bool isJustOpened = true;
 
   // Detect when windows is changing size and save windows size
   @override
@@ -75,13 +74,7 @@ class _DesktopNavigationFrameState extends ConsumerState<DesktopNavigationFrame>
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(mainHomeProvider);
-    Future.delayed(const Duration(seconds: 10), () {
-      isJustOpened = false;
-      if (mounted) {
-        setState(() {});
-      }
-    });
-    if (!isJustOpened || !state.isDashboardScreenLoading) {
+    if (!state.isJustOpened || !state.isDashboardScreenLoading) {
       return Scaffold(
         body: UpgradeAlert(
           showReleaseNotes: false,

@@ -25,10 +25,6 @@ class MainHomeBody extends ConsumerWidget {
       children: [
         4.height,
         buildTargetFlutterProjectSelection(state, notifier, context),
-        // Check if dart is installed
-        if (!state.isDartInstalled && state.currentProject != null)
-          buildDartInstalation(state, context, notifier),
-
         DisabledWidget(
           isDisabled: !state.isDartInstalled || state.currentProject == null,
           child: Column(
@@ -43,7 +39,7 @@ class MainHomeBody extends ConsumerWidget {
                     children: [
                       buildSelectFlutterVersionToSwitch(state, notifier),
                       8.height,
-                      buildProjectRunningControl(state, notifier),
+                      buildProjectRunningControl(state, notifier, context),
                     ],
                   ),
                 )
@@ -53,36 +49,6 @@ class MainHomeBody extends ConsumerWidget {
         ),
         8.height,
         buildConsole(context, state)
-      ],
-    );
-  }
-
-  Widget buildDartInstalation(
-      MainHomeState state, BuildContext context, MainHomeNotifier notifier) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            FilledButton(
-              onPressed: () => openUrl(OnlineDirectory.installFlutterUrl),
-              child: Text('Install Flutter'.i18n),
-            )
-            // Cut off the version if it's too long
-            ,
-            8.width,
-            IconButton(
-              onPressed: () => notifier.checkDartInstallation(),
-              icon: const Icon(FluentIcons.arrow_sync_16_regular),
-            ),
-          ],
-        ),
-        Text(
-          '*You must have Flutter installed to use this app.'.i18n,
-          style:
-              context.theme.textTheme.labelSmall?.copyWith(color: Colors.red),
-        ),
-        8.height,
       ],
     );
   }
@@ -175,7 +141,7 @@ class MainHomeBody extends ConsumerWidget {
                 : () => notifier.downloadFlutterVersion(),
             label: state.isDownloading
                 ? const SizedBox(
-                height: 20, width: 20, child: CircularProgressIndicator())
+                    height: 20, width: 20, child: CircularProgressIndicator())
                 : Text("Download".i18n),
           ),
         ),
@@ -187,10 +153,12 @@ class MainHomeBody extends ConsumerWidget {
       MainHomeState state, MainHomeNotifier notifier) {
     // Currently Pinned version is buggy, so we are using the selected version to switch to
     if (state.currentProject?.config != null) {
-      DebugLog.error('Pinned version: ${state.currentProject?.config!.flutter ?? 'null'}');
+      DebugLog.error(
+          'Pinned version: ${state.currentProject?.config!.flutter ?? 'null'}');
     }
-    final DownloadedFlutterSDK? pinnedVersion = state.downloadedFlutterSDKs.firstWhereOrNull(
-        (element) => element.name == state.currentProject?.pinnedVersion?.name);
+    final DownloadedFlutterSDK? pinnedVersion = state.downloadedFlutterSDKs
+        .firstWhereOrNull((element) =>
+            element.name == state.currentProject?.pinnedVersion?.name);
     return Row(
       children: [
         const Icon(
@@ -242,7 +210,7 @@ class MainHomeBody extends ConsumerWidget {
   }
 
   Widget buildProjectRunningControl(
-      MainHomeState state, MainHomeNotifier notifier) {
+      MainHomeState state, MainHomeNotifier notifier, BuildContext context) {
     // Check if the selected version is setup
     final isSetup = state.downloadedFlutterSDKs.any((element) =>
         element.isSetup == true && element == state.selectedVersionToSwitchTo);
@@ -340,7 +308,9 @@ class MainHomeBody extends ConsumerWidget {
         padding: const EdgeInsets.all(8.0),
         decoration:
             BoxDecoration(color: context.theme.colorScheme.surfaceContainer),
-        child: LogConsoleView(),
+        child: LogConsoleView(
+          shouldClearLogs: state.currentProject == null,
+        ),
       ),
     );
   }

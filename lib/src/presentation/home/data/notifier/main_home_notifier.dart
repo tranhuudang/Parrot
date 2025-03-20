@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:io';
-
 import 'package:collection/collection.dart';
 import 'package:fvm/fvm.dart';
 import 'package:marina_labs_common/marina_labs_common.dart';
@@ -8,9 +6,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parrot/src/app/router/route_configurations_desktop.dart';
-import 'package:parrot/src/core/constants/storages.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../../core/core.dart';
 import '../model/downloaded_flutter_sdks.dart';
 import '../model/flutter_versions.dart';
@@ -28,30 +23,28 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
 
   // Initialize the home page by checking FVM installation and fetching versions
   Future<void> initializeHome() async {
+    state = state.copyWith(isJustOpened: true);
+    // Max time to show the splash screen
+    Future.delayed(const Duration(seconds: 10), () {
+      if (state.isJustOpened == true) {
+        state = state.copyWith(isJustOpened: false);
+      }
+    });
+    // Load the current project path
     await gettingSavedCurrentProjectPath();
-
-    //final isDartInstalled = await checkDartInstallation();
-    // if (isDartInstalled) {
-    //   bool fvmIsNotActivated = await checkFvmInstallation();
-    //   if (fvmIsNotActivated) {
-    //     await installFvm();
-    //   }
+    // Get list of available flutter sdk online
     await fetchOnlineFlutterVersions();
+    // Get downloaded flutter sdk
     await fetchDownloadedFlutterVersions();
     //}
+
+    state = state.copyWith(isJustOpened: false);
   }
 
   /// Reinitialize the after changing the project path
   Future<void> reInitialize() async {
-    final isDartInstalled = await checkDartInstallation();
-    if (isDartInstalled) {
-      // bool fvmIsNotActivated = await checkFvmInstallation();
-      if (true) {
-        await installFvm();
-      }
-      await fetchOnlineFlutterVersions();
-      await fetchDownloadedFlutterVersions();
-    }
+    await fetchOnlineFlutterVersions();
+    await fetchDownloadedFlutterVersions();
   }
 
   /// Check if FVM is installed and update the state
@@ -118,7 +111,6 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
         isFetchingVersions: true,
         isDashboardScreenLoading: true,
         isFlutterSdksScreenLoading: true);
-
     try {
       // Fetch new data
       DebugLog.info('Fetching new data...');
@@ -274,7 +266,8 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
         DebugLog.info('Project configured successfully.');
         state = state.copyWith(
             isSwitching: false,
-            currentFlutterVersionSwitchedTo: state.selectedVersionToSwitchTo); // Update loading state
+            currentFlutterVersionSwitchedTo:
+                state.selectedVersionToSwitchTo); // Update loading state
       }
     } catch (e) {
       DebugLog.error("Error: $e");
@@ -332,6 +325,9 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
         _showNotAFlutterProjectAlert();
         return;
       }
+      // Clear all state before setting new project
+      _resetState();
+
       // Save the current project path
       await Properties.instance.saveSettings(Properties.instance.settings
           .copyWith(currentTargetProjectPath: currentProject.path));
@@ -342,12 +338,47 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     }
   }
 
+  /// Reset the state to initial state
+  _resetState(){
+    final mainHomeStateInit = MainHomeState.initial();
+    state = state.copyWith(
+      isFlutterSdksScreenLoading:
+      mainHomeStateInit.isFlutterSdksScreenLoading,
+      isDashboardScreenLoading: mainHomeStateInit.isDashboardScreenLoading,
+      isDartInstalled: mainHomeStateInit.isDartInstalled,
+      onlineFlutterVersions: mainHomeStateInit.onlineFlutterVersions,
+      selectedOnlineVersion: mainHomeStateInit.selectedOnlineVersion,
+      downloadedFlutterSDKs: mainHomeStateInit.downloadedFlutterSDKs,
+      selectedVersionToSwitchTo: mainHomeStateInit.selectedVersionToSwitchTo,
+      isJustOpened: false,
+      isCheckingDartInstallation:
+      mainHomeStateInit.isCheckingDartInstallation,
+      isInstallingFvm: mainHomeStateInit.isInstallingFvm,
+      isFetchingVersions: mainHomeStateInit.isFetchingVersions,
+      isDownloading: mainHomeStateInit.isDownloading,
+      downloadButtonIndex: mainHomeStateInit.downloadButtonIndex,
+      isFetchingDownloaded: mainHomeStateInit.isFetchingDownloaded,
+      isSwitching: mainHomeStateInit.isSwitching,
+      currentFlutterVersionSwitchedTo:
+      mainHomeStateInit.currentFlutterVersionSwitchedTo,
+      isGettingAvailableDevices: mainHomeStateInit.isGettingAvailableDevices,
+      currentProject: mainHomeStateInit.currentProject,
+      isRunning: mainHomeStateInit.isRunning,
+      isHotReloading: mainHomeStateInit.isHotReloading,
+      selectedPlatform: mainHomeStateInit.selectedPlatform,
+      availablePlatforms: mainHomeStateInit.availablePlatforms,
+      cacheSize: mainHomeStateInit.cacheSize,
+      error: mainHomeStateInit.error,
+    );
+  }
+
   // Delete the current project path
   Future<void> deleteCurrentProjectPath() async {
+    _resetState();
     Properties.instance.saveSettings(
         Properties.instance.settings.copyWith(currentTargetProjectPath: ''));
     state = state.copyWith(currentProject: null);
-    await reInitialize();
+    // await reInitialize();
     // await gettingFlutterPlatform();
   }
 
@@ -427,11 +458,6 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
           'fvm', ['flutter', 'run', '-d', state.selectedPlatform],
           workingDirectory: state.currentProject!.path, runInShell: true);
       DebugLog.info('Run project in :${state.currentProject!.path}');
-      flutterProcess!.stdout.transform(utf8.decoder).listen((data) {
-        List<Widget> newList = List.from(state.commandOutput);
-        newList.insert(0, Text(data));
-        state = state.copyWith(commandOutput: newList);
-      });
 
       flutterProcess!.exitCode.then((exitCode) {
         state = state.copyWith(isRunning: false);

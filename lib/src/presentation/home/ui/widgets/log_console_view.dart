@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:fvm/fvm.dart';
 
 class LogConsoleView extends StatefulWidget {
-  const LogConsoleView({Key? key}) : super(key: key);
+  final bool? shouldClearLogs;
+  const LogConsoleView({Key? key, this.shouldClearLogs = false}) : super(key: key);
 
   @override
   State<LogConsoleView> createState() => _LogConsoleViewState();
@@ -57,10 +58,22 @@ class _LogConsoleViewState extends State<LogConsoleView> {
   }
 
   @override
+  void didUpdateWidget(covariant LogConsoleView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.shouldClearLogs ?? false) {
+      setState(() {
+        logs.clear();
+      });
+    }
+  }
+
+  @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
   }
+
+
 
   @override
   Widget build(BuildContext context) {

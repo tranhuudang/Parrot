@@ -29,7 +29,7 @@ mixin _$MainHomeState {
       throw _privateConstructorUsedError;
   DownloadedFlutterSDK? get currentFlutterVersionSwitchedTo =>
       throw _privateConstructorUsedError;
-  List<Widget> get commandOutput => throw _privateConstructorUsedError;
+  bool get isJustOpened => throw _privateConstructorUsedError;
   bool get isCheckingDartInstallation => throw _privateConstructorUsedError;
   bool get isInstallingFvm => throw _privateConstructorUsedError;
   bool get isFetchingVersions => throw _privateConstructorUsedError;
@@ -68,7 +68,7 @@ abstract class $MainHomeStateCopyWith<$Res> {
       List<DownloadedFlutterSDK> downloadedFlutterSDKs,
       DownloadedFlutterSDK? selectedVersionToSwitchTo,
       DownloadedFlutterSDK? currentFlutterVersionSwitchedTo,
-      List<Widget> commandOutput,
+      bool isJustOpened,
       bool isCheckingDartInstallation,
       bool isInstallingFvm,
       bool isFetchingVersions,
@@ -114,7 +114,7 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
     Object? downloadedFlutterSDKs = null,
     Object? selectedVersionToSwitchTo = freezed,
     Object? currentFlutterVersionSwitchedTo = freezed,
-    Object? commandOutput = null,
+    Object? isJustOpened = null,
     Object? isCheckingDartInstallation = null,
     Object? isInstallingFvm = null,
     Object? isFetchingVersions = null,
@@ -165,10 +165,10 @@ class _$MainHomeStateCopyWithImpl<$Res, $Val extends MainHomeState>
           ? _value.currentFlutterVersionSwitchedTo
           : currentFlutterVersionSwitchedTo // ignore: cast_nullable_to_non_nullable
               as DownloadedFlutterSDK?,
-      commandOutput: null == commandOutput
-          ? _value.commandOutput
-          : commandOutput // ignore: cast_nullable_to_non_nullable
-              as List<Widget>,
+      isJustOpened: null == isJustOpened
+          ? _value.isJustOpened
+          : isJustOpened // ignore: cast_nullable_to_non_nullable
+              as bool,
       isCheckingDartInstallation: null == isCheckingDartInstallation
           ? _value.isCheckingDartInstallation
           : isCheckingDartInstallation // ignore: cast_nullable_to_non_nullable
@@ -310,7 +310,7 @@ abstract class _$$MainHomeStateImplCopyWith<$Res>
       List<DownloadedFlutterSDK> downloadedFlutterSDKs,
       DownloadedFlutterSDK? selectedVersionToSwitchTo,
       DownloadedFlutterSDK? currentFlutterVersionSwitchedTo,
-      List<Widget> commandOutput,
+      bool isJustOpened,
       bool isCheckingDartInstallation,
       bool isInstallingFvm,
       bool isFetchingVersions,
@@ -358,7 +358,7 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
     Object? downloadedFlutterSDKs = null,
     Object? selectedVersionToSwitchTo = freezed,
     Object? currentFlutterVersionSwitchedTo = freezed,
-    Object? commandOutput = null,
+    Object? isJustOpened = null,
     Object? isCheckingDartInstallation = null,
     Object? isInstallingFvm = null,
     Object? isFetchingVersions = null,
@@ -409,10 +409,10 @@ class __$$MainHomeStateImplCopyWithImpl<$Res>
           ? _value.currentFlutterVersionSwitchedTo
           : currentFlutterVersionSwitchedTo // ignore: cast_nullable_to_non_nullable
               as DownloadedFlutterSDK?,
-      commandOutput: null == commandOutput
-          ? _value._commandOutput
-          : commandOutput // ignore: cast_nullable_to_non_nullable
-              as List<Widget>,
+      isJustOpened: null == isJustOpened
+          ? _value.isJustOpened
+          : isJustOpened // ignore: cast_nullable_to_non_nullable
+              as bool,
       isCheckingDartInstallation: null == isCheckingDartInstallation
           ? _value.isCheckingDartInstallation
           : isCheckingDartInstallation // ignore: cast_nullable_to_non_nullable
@@ -489,7 +489,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
       required final List<DownloadedFlutterSDK> downloadedFlutterSDKs,
       required this.selectedVersionToSwitchTo,
       required this.currentFlutterVersionSwitchedTo,
-      required final List<Widget> commandOutput,
+      required this.isJustOpened,
       required this.isCheckingDartInstallation,
       required this.isInstallingFvm,
       required this.isFetchingVersions,
@@ -507,7 +507,6 @@ class _$MainHomeStateImpl implements _MainHomeState {
       required this.error})
       : _onlineFlutterVersions = onlineFlutterVersions,
         _downloadedFlutterSDKs = downloadedFlutterSDKs,
-        _commandOutput = commandOutput,
         _availablePlatforms = availablePlatforms;
 
   @override
@@ -540,14 +539,8 @@ class _$MainHomeStateImpl implements _MainHomeState {
   final DownloadedFlutterSDK? selectedVersionToSwitchTo;
   @override
   final DownloadedFlutterSDK? currentFlutterVersionSwitchedTo;
-  final List<Widget> _commandOutput;
   @override
-  List<Widget> get commandOutput {
-    if (_commandOutput is EqualUnmodifiableListView) return _commandOutput;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_commandOutput);
-  }
-
+  final bool isJustOpened;
   @override
   final bool isCheckingDartInstallation;
   @override
@@ -588,7 +581,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
 
   @override
   String toString() {
-    return 'MainHomeState(isFlutterSdksScreenLoading: $isFlutterSdksScreenLoading, isDashboardScreenLoading: $isDashboardScreenLoading, isDartInstalled: $isDartInstalled, onlineFlutterVersions: $onlineFlutterVersions, selectedOnlineVersion: $selectedOnlineVersion, downloadedFlutterSDKs: $downloadedFlutterSDKs, selectedVersionToSwitchTo: $selectedVersionToSwitchTo, currentFlutterVersionSwitchedTo: $currentFlutterVersionSwitchedTo, commandOutput: $commandOutput, isCheckingDartInstallation: $isCheckingDartInstallation, isInstallingFvm: $isInstallingFvm, isFetchingVersions: $isFetchingVersions, isDownloading: $isDownloading, downloadButtonIndex: $downloadButtonIndex, isFetchingDownloaded: $isFetchingDownloaded, isSwitching: $isSwitching, isGettingAvailableDevices: $isGettingAvailableDevices, currentProject: $currentProject, selectedPlatform: $selectedPlatform, availablePlatforms: $availablePlatforms, isRunning: $isRunning, isHotReloading: $isHotReloading, cacheSize: $cacheSize, error: $error)';
+    return 'MainHomeState(isFlutterSdksScreenLoading: $isFlutterSdksScreenLoading, isDashboardScreenLoading: $isDashboardScreenLoading, isDartInstalled: $isDartInstalled, onlineFlutterVersions: $onlineFlutterVersions, selectedOnlineVersion: $selectedOnlineVersion, downloadedFlutterSDKs: $downloadedFlutterSDKs, selectedVersionToSwitchTo: $selectedVersionToSwitchTo, currentFlutterVersionSwitchedTo: $currentFlutterVersionSwitchedTo, isJustOpened: $isJustOpened, isCheckingDartInstallation: $isCheckingDartInstallation, isInstallingFvm: $isInstallingFvm, isFetchingVersions: $isFetchingVersions, isDownloading: $isDownloading, downloadButtonIndex: $downloadButtonIndex, isFetchingDownloaded: $isFetchingDownloaded, isSwitching: $isSwitching, isGettingAvailableDevices: $isGettingAvailableDevices, currentProject: $currentProject, selectedPlatform: $selectedPlatform, availablePlatforms: $availablePlatforms, isRunning: $isRunning, isHotReloading: $isHotReloading, cacheSize: $cacheSize, error: $error)';
   }
 
   @override
@@ -614,8 +607,8 @@ class _$MainHomeStateImpl implements _MainHomeState {
             (identical(other.currentFlutterVersionSwitchedTo, currentFlutterVersionSwitchedTo) ||
                 other.currentFlutterVersionSwitchedTo ==
                     currentFlutterVersionSwitchedTo) &&
-            const DeepCollectionEquality()
-                .equals(other._commandOutput, _commandOutput) &&
+            (identical(other.isJustOpened, isJustOpened) ||
+                other.isJustOpened == isJustOpened) &&
             (identical(other.isCheckingDartInstallation, isCheckingDartInstallation) ||
                 other.isCheckingDartInstallation ==
                     isCheckingDartInstallation) &&
@@ -655,7 +648,7 @@ class _$MainHomeStateImpl implements _MainHomeState {
         const DeepCollectionEquality().hash(_downloadedFlutterSDKs),
         selectedVersionToSwitchTo,
         currentFlutterVersionSwitchedTo,
-        const DeepCollectionEquality().hash(_commandOutput),
+        isJustOpened,
         isCheckingDartInstallation,
         isInstallingFvm,
         isFetchingVersions,
@@ -692,7 +685,7 @@ abstract class _MainHomeState implements MainHomeState {
       required final List<DownloadedFlutterSDK> downloadedFlutterSDKs,
       required final DownloadedFlutterSDK? selectedVersionToSwitchTo,
       required final DownloadedFlutterSDK? currentFlutterVersionSwitchedTo,
-      required final List<Widget> commandOutput,
+      required final bool isJustOpened,
       required final bool isCheckingDartInstallation,
       required final bool isInstallingFvm,
       required final bool isFetchingVersions,
@@ -726,7 +719,7 @@ abstract class _MainHomeState implements MainHomeState {
   @override
   DownloadedFlutterSDK? get currentFlutterVersionSwitchedTo;
   @override
-  List<Widget> get commandOutput;
+  bool get isJustOpened;
   @override
   bool get isCheckingDartInstallation;
   @override
