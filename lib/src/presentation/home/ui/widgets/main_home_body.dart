@@ -38,14 +38,18 @@ class MainHomeBody extends ConsumerWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       buildSelectFlutterVersionToSwitch(state, notifier),
-                      8.height,
-                      buildProjectRunningControl(state, notifier, context),
-                      8.height,
+                      //8.height,
                     ],
                   ),
                 ),
+
                 if (state.currentProject != null) ...[
                   buildProjectInfo(state, context),
+                  8.height,
+                ],
+                if (state.currentProject != null) ...[
+                  buildProjectRunningControl(state, notifier, context),
+                  8.height,
                 ],
               ],
             ],
@@ -222,12 +226,14 @@ class MainHomeBody extends ConsumerWidget {
         state.selectedVersionToSwitchTo;
     return Row(
       children: [
+        if (state.isDartInstalled && state.availablePlatforms.isNotEmpty)
         DisabledWidget(
           isDisabled: state.selectedVersionToSwitchTo == null ||
               !isSetup ||
               !isSwitched,
           child: Row(
             children: [
+8.width,
               const Icon(
                 FluentIcons.circle_16_regular,
                 size: 14,

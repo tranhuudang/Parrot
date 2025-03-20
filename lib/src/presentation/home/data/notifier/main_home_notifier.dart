@@ -453,7 +453,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
   Process? flutterProcess;
 
   Future<void> runFlutterProject() async {
-    if (state.currentProject != null) return;
+    if (state.currentProject == null) return;
     state = state.copyWith(isRunning: true);
     try {
       // flutterProcess = await Process.start(

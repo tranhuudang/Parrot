@@ -76,7 +76,7 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
     return Row(children: [
       Expanded(
         child: SizedBox(
-          height: 109,
+          height: 82,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Stack(
@@ -93,14 +93,14 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
                           3.height,
                           Row(
                             children: [
-                              Text(
-                                AppFlavor.instance.appName,
-                                style: context.theme.textTheme.titleMedium,
-                              ),
-                              Text(
-                                " | ",
-                                style: context.theme.textTheme.titleMedium,
-                              ),
+                              // Text(
+                              //   AppFlavor.instance.appName,
+                              //   style: context.theme.textTheme.titleMedium,
+                              // ),
+                              // Text(
+                              //   " | ",
+                              //   style: context.theme.textTheme.titleMedium,
+                              // ),
                               Opacity(
                                 opacity: .5,
                                 child: Text(
@@ -117,35 +117,6 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
                                   .i18n,
                               style: context.theme.textTheme.labelMedium),
                           8.height,
-                          Opacity(
-                            opacity: .5,
-                            child: Row(
-                              children: [
-                                MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: GestureDetector(
-                                    onTap: () => openUrl(
-                                        'https://github.com/tranhuudang'),
-                                    child: const Icon(
-                                      FontAwesomeIcons.github,
-                                      size: 16,
-                                    ),
-                                  ),
-                                ),
-                                8.width,
-                                MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: GestureDetector(
-                                      child: const Icon(
-                                        FluentIcons.mail_20_regular,
-                                        size: 20,
-                                      ),
-                                      onTap: () => openUrl(
-                                          'mailto:dt148f148@gmail.com')),
-                                ),
-                              ],
-                            ),
-                          ),
                         ],
                       ),
                     ),
