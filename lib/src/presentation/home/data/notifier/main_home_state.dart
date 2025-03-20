@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:fvm/fvm.dart';
 import 'package:parrot/src/presentation/home/data/model/downloaded_flutter_sdks.dart';
 import 'package:parrot/src/presentation/home/data/model/error.dart';

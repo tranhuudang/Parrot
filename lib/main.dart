@@ -10,7 +10,7 @@ part 'src/app/initializer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  AppFlavor.init(flavor: Flavor.pro);
+  AppFlavor.init(flavor: Flavor.free);
   await _Initializer.start();
   runApp(
     const BlocProviderScope(

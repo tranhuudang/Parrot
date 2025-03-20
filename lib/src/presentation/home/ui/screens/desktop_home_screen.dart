@@ -1,9 +1,7 @@
 import 'package:marina_labs_common/marina_labs_common.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parrot/src/app/app.dart';
 import 'package:parrot/src/presentation/home/data/notifier/main_home_notifier.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../app/utils/utils.dart';
 import '../../../presentation.dart';
 import '../widgets/main_home_body.dart';

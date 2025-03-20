@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:collection/collection.dart';
 import 'package:fvm/fvm.dart';
@@ -221,6 +222,16 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
           );
         }).toList();
 
+        final DownloadedFlutterSDK? pinnedVersion = downloadedFlutterSDKs
+            .firstWhereOrNull((element) =>
+                element.name == state.currentProject!.pinnedVersion?.name);
+        if (pinnedVersion != null) {
+          DebugLog.info('Pinned version found: ${pinnedVersion.name}');
+          state = state.copyWith(
+              selectedVersionToSwitchTo: pinnedVersion,
+              currentFlutterVersionSwitchedTo: pinnedVersion);
+        }
+
         state = state.copyWith(
             cacheSize: cacheSize,
             downloadedFlutterSDKs: downloadedFlutterSDKs,
@@ -270,6 +281,10 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
             isSwitching: false,
             currentFlutterVersionSwitchedTo:
                 state.selectedVersionToSwitchTo); // Update loading state
+        // Reload downloaded Flutter versions
+        await fetchDownloadedFlutterVersions();
+        // Trigger getting available devices for current project
+        await gettingFlutterPlatform();
       }
     } catch (e) {
       DebugLog.error("Error: $e");
@@ -279,9 +294,6 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
 
   // Install FVM if not already installed
   Future<void> installFvm() async {
-    state = state.copyWith(
-        isInstallingFvm: true,
-        isDashboardScreenLoading: true); // Update loading state
     try {
       ProcessResult result = await Process.run(
         'dart',
@@ -291,15 +303,9 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       );
       if (result.exitCode == 0) {
         DebugLog.info("FVM installed successfully!");
-        state = state.copyWith(
-            isInstallingFvm: false,
-            isDashboardScreenLoading: false); // Set loading state to false
       }
     } catch (e) {
       DebugLog.error("Exception installing FVM: $e");
-      state = state.copyWith(
-          isInstallingFvm: false,
-          isDashboardScreenLoading: false); // Set loading state to false
     }
   }
 
@@ -336,16 +342,15 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
 
       state = state.copyWith(currentProject: currentProject);
       await reInitialize();
-      // await gettingFlutterPlatform();
+      await gettingFlutterPlatform();
     }
   }
 
   /// Reset the state to initial state
-  _resetState(){
+  _resetState() {
     final mainHomeStateInit = MainHomeState.initial();
     state = state.copyWith(
-      isFlutterSdksScreenLoading:
-      mainHomeStateInit.isFlutterSdksScreenLoading,
+      isFlutterSdksScreenLoading: mainHomeStateInit.isFlutterSdksScreenLoading,
       isDashboardScreenLoading: mainHomeStateInit.isDashboardScreenLoading,
       isDartInstalled: mainHomeStateInit.isDartInstalled,
       onlineFlutterVersions: mainHomeStateInit.onlineFlutterVersions,
@@ -353,8 +358,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       downloadedFlutterSDKs: mainHomeStateInit.downloadedFlutterSDKs,
       selectedVersionToSwitchTo: mainHomeStateInit.selectedVersionToSwitchTo,
       isJustOpened: false,
-      isCheckingDartInstallation:
-      mainHomeStateInit.isCheckingDartInstallation,
+      isCheckingDartInstallation: mainHomeStateInit.isCheckingDartInstallation,
       isInstallingFvm: mainHomeStateInit.isInstallingFvm,
       isFetchingVersions: mainHomeStateInit.isFetchingVersions,
       isDownloading: mainHomeStateInit.isDownloading,
@@ -362,7 +366,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       isFetchingDownloaded: mainHomeStateInit.isFetchingDownloaded,
       isSwitching: mainHomeStateInit.isSwitching,
       currentFlutterVersionSwitchedTo:
-      mainHomeStateInit.currentFlutterVersionSwitchedTo,
+          mainHomeStateInit.currentFlutterVersionSwitchedTo,
       isGettingAvailableDevices: mainHomeStateInit.isGettingAvailableDevices,
       currentProject: mainHomeStateInit.currentProject,
       isRunning: mainHomeStateInit.isRunning,
@@ -380,8 +384,6 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     Properties.instance.saveSettings(
         Properties.instance.settings.copyWith(currentTargetProjectPath: ''));
     state = state.copyWith(currentProject: null);
-    // await reInitialize();
-    // await gettingFlutterPlatform();
   }
 
   Future<void> gettingSavedCurrentProjectPath() async {
@@ -397,34 +399,12 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       if (!currentProject.isFlutter) {
         return;
       }
-
       DebugLog.info("Loaded project from path: ${currentProject.path}");
-      state = state.copyWith(currentProject: currentProject);
-
-      // ---------------------
-      DebugLog.error("Project Name: ${currentProject.name}");
-      DebugLog.error("Pinned Version: ${currentProject.pinnedVersion}");
-
-      DebugLog.error("Project Path: ${currentProject.path}");
-      DebugLog.error("Config Path: ${currentProject.configPath}");
-      DebugLog.error("Local FVM Path: ${currentProject.localFvmPath}");
-      DebugLog.error("Is Flutter: ${currentProject.isFlutter.toString()}");
-      DebugLog.error(
-          "SDK Constraint: ${currentProject.sdkConstraint.toString()}");
-      DebugLog.error("Pubspec Path: ${currentProject.pubspecPath}");
-      DebugLog.error("Has Config: ${currentProject.hasConfig.toString()}");
-      DebugLog.error(
-          "Local Version Symlink Path: ${currentProject.localVersionSymlinkPath}");
-      DebugLog.error(
-          "Local Versions Cache Path: ${currentProject.localVersionsCachePath}");
-      DebugLog.error(
-          "Local FVM Path: ${currentProject.localFvmPath}"); // Duplicate, but keeping as requested
-      DebugLog.error(
-          "Dart Tool Version: ${currentProject.dartToolVersion ?? ''}");
-      DebugLog.error(
-          "Update Git Ignore: ${currentProject.config!.updateGitIgnore.toString()}");
-      DebugLog.error(
-          "Update VS Code Settings: ${currentProject.config!.updateVscodeSettings.toString()}");
+      state = state.copyWith(
+        currentProject: currentProject,
+      );
+      //
+      await gettingFlutterPlatform();
     } else {
       DebugLog.info("No saved project path found");
     }
@@ -432,7 +412,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
 
   Future<void> gettingFlutterPlatform() async {
     state = state.copyWith(isGettingAvailableDevices: true);
-    List<String> availablePlatforms = await fetchFlutterPlatforms();
+    List<String> availablePlatforms = await _fetchFlutterPlatforms();
     state = state.copyWith(
         availablePlatforms: availablePlatforms,
         isGettingAvailableDevices: false);
@@ -440,7 +420,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
 
   Future<void> refreshAvailableDevices() async {
     state = state.copyWith(isGettingAvailableDevices: true);
-    List<String> availablePlatforms = await fetchFlutterPlatforms();
+    List<String> availablePlatforms = await _fetchFlutterPlatforms();
     state = state.copyWith(
         availablePlatforms: availablePlatforms,
         isGettingAvailableDevices: false);
@@ -456,20 +436,45 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     if (state.currentProject == null) return;
     state = state.copyWith(isRunning: true);
     try {
-      // flutterProcess = await Process.start(
-      //     'fvm', ['flutter', 'run', '-d', state.selectedPlatform],
-      //     workingDirectory: state.currentProject!.path, runInShell: true);
-      // DebugLog.info('Run project in :${state.currentProject!.path}');
-      //
-      // flutterProcess!.exitCode.then((exitCode) {
+      await installFvm();
+      logger
+        ..detail('Project name: ${state.currentProject!.name}')
+        ..detail('Start running project in: ${state.currentProject!.path}');
+      flutterProcess = await Process.start(
+          'fvm', ['flutter', 'run', '-d', state.selectedPlatform],
+          workingDirectory: state.currentProject!.path, runInShell: true);
+      DebugLog.info('Run project in: ${state.currentProject!.path}');
+      flutterProcess!.stdout.transform(utf8.decoder).listen((data) {
+        logger.detail(data);
+      });
+      flutterProcess!.exitCode.then((exitCode) {
+        logger.err('Project exited with code: $exitCode');
+        DebugLog.info('Flutter process exited with code: $exitCode');
+        state = state.copyWith(isRunning: false);
+      });
+
+      // FvmCommandRunner fvmCommandRunner = FvmCommandRunner();
+      // fvmCommandRunner.run(['flutter','run', '-d', state.selectedPlatform]);
+
+      // This one can working
+      // final result = await runCommand('fvm', args:  ['flutter', 'run', '-d', state.selectedPlatform],
+      //          workingDirectory: state.currentProject!.path, echoOutput: true);
+      // if (result.exitCode != 0) {
+      //   DebugLog.error('Error running Flutter project: ${result.stderr}');
+      //   logger.err('Error running Flutter project: ${result.stderr}');
       //   state = state.copyWith(isRunning: false);
-      // });
-      DebugLog.info('Start running Flutter project...');
-      final command = FvmCommandRunner();
-      final result = await command.run(
-        ['flutter', 'run', '-d', state.selectedPlatform],
-      );
-      DebugLog.info(result.toString());
+      // } else {
+      //   state = state.copyWith(isRunning: false);
+      //   logger.detail('Project exited without error with code: ${result.exitCode}');
+      // }
+
+      //
+      // CacheFlutterVersion cacheFlutterVersion = CacheFlutterVersion(
+      //     FlutterVersion(state.currentFlutterVersionSwitchedTo!.name,
+      //         type: VersionType.release),
+      //     directory: state.currentProject!.path);
+      // runFlutter(['flutter', 'run', '-d', state.selectedPlatform],
+      //     version: cacheFlutterVersion);
     } catch (e) {
       DebugLog.error("Error running Flutter project: $e");
       state = state.copyWith(isRunning: false);
@@ -492,14 +497,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     if (flutterProcess == null) return;
 
     try {
-      // Try to gracefully exit Flutter process
-      flutterProcess!.stdin.writeln('q');
-      await Future.delayed(
-          const Duration(seconds: 2)); // Give time for graceful shutdown
-      if (flutterProcess != null && flutterProcess!.kill()) {
-        DebugLog.info("Flutter process killed successfully.");
-      }
-      flutterProcess = null;
+      flutterProcess!.kill();
       state = state.copyWith(isRunning: false);
     } catch (e) {
       DebugLog.error("Error stopping Flutter project: $e");
@@ -519,8 +517,10 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
     }
   }
 
-  Future<List<String>> fetchFlutterPlatforms() async {
+  Future<List<String>> _fetchFlutterPlatforms() async {
     try {
+      // Install FVM if not already installed
+      await installFvm();
       // Run the flutter devices command
       DebugLog.info('Getting available devices...');
       ProcessResult result = await Process.run('fvm', ['flutter', 'devices'],
@@ -545,7 +545,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
           }
         }
         DebugLog.info('Available devices: $platforms');
-
+        state = state.copyWith(availablePlatforms: platforms);
         return platforms;
       }
     } catch (e) {

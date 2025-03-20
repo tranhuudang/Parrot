@@ -38,11 +38,10 @@ class MainHomeBody extends ConsumerWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       buildSelectFlutterVersionToSwitch(state, notifier),
-                      //8.height,
+                      8.height,
                     ],
                   ),
                 ),
-
                 if (state.currentProject != null) ...[
                   buildProjectInfo(state, context),
                   8.height,
@@ -177,9 +176,7 @@ class MainHomeBody extends ConsumerWidget {
         Text("Select new Flutter version to switch:".i18n),
         8.width,
         RoundedDottedDropdownButton<String>(
-          value: state.selectedVersionToSwitchTo != null
-              ? state.selectedVersionToSwitchTo!.name
-              : pinnedVersion?.name,
+          value: state.selectedVersionToSwitchTo?.name,
           hint: Text("Select Flutter Version".i18n),
           items: state.downloadedFlutterSDKs
               .map((DownloadedFlutterSDK flutterSDK) => DropdownMenuItem(
@@ -201,7 +198,8 @@ class MainHomeBody extends ConsumerWidget {
         const Spacer(),
         8.width,
         DisabledWidget(
-          isDisabled: state.selectedVersionToSwitchTo == null,
+          isDisabled: // state.currentFlutterVersionSwitchedTo != null ||
+              (state.selectedVersionToSwitchTo == pinnedVersion),
           child: ElevatedButton.icon(
             icon: const Icon(FluentIcons.arrow_shuffle_16_regular),
             onPressed: state.isSwitching
@@ -222,18 +220,15 @@ class MainHomeBody extends ConsumerWidget {
     // Check if the selected version is setup
     final isSetup = state.downloadedFlutterSDKs.any((element) =>
         element.isSetup == true && element == state.selectedVersionToSwitchTo);
-    final isSwitched = state.currentFlutterVersionSwitchedTo ==
-        state.selectedVersionToSwitchTo;
     return Row(
       children: [
-        if (state.isDartInstalled && state.availablePlatforms.isNotEmpty)
         DisabledWidget(
           isDisabled: state.selectedVersionToSwitchTo == null ||
-              !isSetup ||
-              !isSwitched,
+              state.availablePlatforms.isEmpty ||
+              !(state.currentFlutterVersionSwitchedTo?.isSetup ?? false),
           child: Row(
             children: [
-8.width,
+              8.width,
               const Icon(
                 FluentIcons.circle_16_regular,
                 size: 14,
@@ -262,30 +257,32 @@ class MainHomeBody extends ConsumerWidget {
                 },
               ),
               8.width,
-              ControlProjectButton(
-                backgroundColor: const Color(0xFFF50057),
-                enabled: state.isRunning,
-                icon: const Icon(
-                  FluentIcons.stop_16_regular,
-                  size: 16,
+              if (state.isRunning) ...[
+                ControlProjectButton(
+                  backgroundColor: const Color(0xFFF50057),
+                  enabled: state.isRunning,
+                  icon: const Icon(
+                    FluentIcons.stop_16_regular,
+                    size: 16,
+                  ),
+                  onPressed: () {
+                    notifier.stopFlutterProject();
+                  },
                 ),
-                onPressed: () {
-                  notifier.stopFlutterProject();
-                },
-              ),
-              8.width,
-              ControlProjectButton(
-                backgroundColor: Colors.orange,
-                enabled: state.isRunning,
-                icon: const Icon(
-                  FluentIcons.arrow_sync_24_regular,
-                  size: 16,
+                8.width,
+                ControlProjectButton(
+                  backgroundColor: Colors.orange,
+                  enabled: state.isRunning,
+                  icon: const Icon(
+                    FluentIcons.arrow_sync_24_regular,
+                    size: 16,
+                  ),
+                  onPressed: () {
+                    notifier.hotReloadFlutterProject();
+                  },
                 ),
-                onPressed: () {
-                  notifier.hotReloadFlutterProject();
-                },
-              ),
-              8.width,
+                8.width,
+              ],
               if (isSetup)
                 IconButton(
                   onPressed: () => notifier.refreshAvailableDevices(),
@@ -296,14 +293,15 @@ class MainHomeBody extends ConsumerWidget {
         ),
         const Spacer(),
         // Button navigator to a website that guides user how to configure FVM on their code editor
-        TextButton.icon(
-          icon: const Icon(FluentIcons.question_circle_16_regular),
-          iconAlignment: IconAlignment.end,
-          onPressed: () {
-            openUrl(OnlineDirectory.setupFVMonCodeEditorGuide);
-          },
-          label: Text('Configure code editor'.i18n),
-        ),
+        if (!state.isRunning)
+          TextButton.icon(
+            icon: const Icon(FluentIcons.question_circle_16_regular),
+            iconAlignment: IconAlignment.end,
+            onPressed: () {
+              openUrl(OnlineDirectory.setupFVMonCodeEditorGuide);
+            },
+            label: Text('Configure code editor'.i18n),
+          ),
       ],
     );
   }

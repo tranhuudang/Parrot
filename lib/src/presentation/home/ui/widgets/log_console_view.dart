@@ -4,7 +4,7 @@ import 'package:fvm/fvm.dart';
 
 class LogConsoleView extends StatefulWidget {
   final bool? shouldClearLogs;
-  const LogConsoleView({Key? key, this.shouldClearLogs = false}) : super(key: key);
+  const LogConsoleView({super.key, this.shouldClearLogs = false});
 
   @override
   State<LogConsoleView> createState() => _LogConsoleViewState();
