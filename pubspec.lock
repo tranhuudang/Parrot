@@ -916,7 +916,7 @@ packages:
   marina_labs_common:
     dependency: "direct main"
     description:
-      path: "C:\\Users\\tranh\\StudioProjects\\new\\dak_solutions_common"
+      path: "C:\\Users\\tranh\\StudioProjects\\marina_labs_common"
       relative: false
     source: path
     version: "0.0.44"
