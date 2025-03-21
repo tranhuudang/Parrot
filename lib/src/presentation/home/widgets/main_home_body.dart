@@ -6,6 +6,7 @@ import 'package:parrot/src/app/app.dart';
 import 'package:parrot/src/presentation/home/data/model/downloaded_flutter_sdks.dart';
 import 'package:parrot/src/presentation/home/data/model/flutter_versions.dart';
 import 'package:parrot/src/presentation/home/data/notifier/main_home_state.dart';
+import 'package:parrot/src/presentation/home/widgets/info_row.dart';
 import 'package:parrot/src/presentation/home/widgets/log_console_view.dart';
 import 'package:parrot/src/presentation/home/widgets/platform_selector.dart';
 import '../../presentation.dart';
@@ -20,43 +21,71 @@ class MainHomeBody extends ConsumerWidget {
     final state = ref.watch(mainHomeProvider);
     final notifier = ref.read(mainHomeProvider.notifier);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        4.height,
-        buildTargetFlutterProjectSelection(state, notifier, context),
-        DisabledWidget(
-          isDisabled: !state.isDartInstalled || state.currentProject == null,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              buildAvailableFlutterSDKreleases(state, notifier),
-              if (state.currentProject != null) ...[
-                Padding(
-                  padding: const EdgeInsets.only(left: 8, top: 8),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      buildSelectFlutterVersionToSwitch(state, notifier),
-                      8.height,
-                    ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: buildTargetFlutterProjectSelection(state, notifier, context),
+            ),
+          ),
+          16.height,
+          DisabledWidget(
+            isDisabled: !state.isDartInstalled || state.currentProject == null,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Flutter SDK Management'.i18n, 
+                          style: context.theme.textTheme.titleMedium),
+                        16.height,
+                        buildAvailableFlutterSDKreleases(state, notifier),
+                        if (state.currentProject != null) ...[
+                          16.height,
+                          buildSelectFlutterVersionToSwitch(state, notifier),
+                        ],
+                      ],
+                    ),
                   ),
                 ),
                 if (state.currentProject != null) ...[
-                  buildProjectInfo(state, context),
-                  8.height,
-                ],
-                if (state.currentProject != null) ...[
-                  buildProjectRunningControl(state, notifier, context),
-                  8.height,
+                  16.height,
+                  //buildProjectInfo(state, context),
+                  16.height,
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Project Controls'.i18n, 
+                            style: context.theme.textTheme.titleMedium),
+                          16.height,
+                          buildProjectRunningControl(state, notifier, context),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ],
-            ],
+            ),
           ),
-        ),
-        8.height,
-        buildConsole(context, state)
-      ],
+          16.height,
+          Expanded(
+            child: Card(
+              child: buildConsole(context, state),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -68,7 +97,35 @@ class MainHomeBody extends ConsumerWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('Target Flutter Project:'.i18n),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Target Flutter Project:'.i18n),
+                if (state.currentProject != null) ...[
+                  4.height,
+                  Row(
+                    children: [
+                      Text(
+                        'Pinned version: '.i18n,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: context.theme.colorScheme.onSurface
+                              .withOpacity(0.7),
+                        ),
+                      ),
+                      Text(
+                        state.currentProject?.pinnedVersion?.toString() ?? 'null',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: context.theme.colorScheme.primary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ],
+            ),
             8.width,
             Expanded(
               child: state.currentProject != null
@@ -80,7 +137,17 @@ class MainHomeBody extends ConsumerWidget {
                               .withValues(alpha: .5)),
                     ),
             ),
-            16.width,
+            if (state.currentProject != null) ...[
+              IconButton(
+                onPressed: () => _showProjectInfo(context, state),
+                tooltip: 'Project Info'.i18n,
+                icon: Icon(
+                  FluentIcons.info_16_regular,
+                  size: 18,
+                  color: context.theme.colorScheme.primary,
+                ),
+              ),
+            ],
             DisabledWidget(
               isDisabled: state.currentProject == null,
               child: IconButton(
@@ -105,6 +172,54 @@ class MainHomeBody extends ConsumerWidget {
           ],
         ),
       ],
+    );
+  }
+
+  void _showProjectInfo(BuildContext context, MainHomeState state) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          "${state.currentProject!.name.upperCaseFirstLetter()} project info".i18n,
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            InfoRow(
+              label: 'Pinned version:'.i18n,
+              value: state.currentProject?.pinnedVersion?.toString() ?? 'null',
+              isHighlighted: true,
+            ),
+            InfoRow(
+              label: 'SDK Constraint:'.i18n,
+              value: state.currentProject?.sdkConstraint.toString() ?? 'null',
+            ),
+            InfoRow(
+              label: 'Dart Tool version:'.i18n,
+              value: state.currentProject?.dartToolVersion ?? 'null',
+            ),
+            InfoRow(
+              label: 'Has an FVM config file:'.i18n,
+              value: '${state.currentProject?.hasConfig ?? 'null'}',
+            ),
+            InfoRow(
+              label: 'Is .gitignore updated:'.i18n,
+              value: '${state.currentProject?.config?.updateGitIgnore ?? 'null'}',
+            ),
+            InfoRow(
+              label: 'Is VS Code Settings updated:'.i18n,
+              value: '${state.currentProject?.config?.updateVscodeSettings ?? 'null'}',
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Close'.i18n),
+          ),
+        ],
+      ),
     );
   }
 
@@ -302,69 +417,6 @@ class MainHomeBody extends ConsumerWidget {
             },
             label: Text('Configure code editor'.i18n),
           ),
-      ],
-    );
-  }
-
-  Widget buildProjectInfo(MainHomeState state, BuildContext context) {
-    // a expandable widget that shows the project info
-    return ExpansionTile(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      backgroundColor: context.theme.colorScheme.primaryContainer,
-      tilePadding: const EdgeInsets.only(right: 8, left: 8),
-      expandedCrossAxisAlignment: CrossAxisAlignment.start,
-      childrenPadding: const EdgeInsets.only(left: 38, right: 8),
-      title: Row(
-        children: [
-          const Icon(
-            FluentIcons.circle_16_regular,
-            size: 14,
-          ),
-          16.width,
-          state.currentProject != null
-              ? Text(
-                  "${state.currentProject!.name.upperCaseFirstLetter()} project info"
-                      .i18n,
-                  style: context.theme.textTheme.bodyMedium,
-                )
-              : Text(
-                  "Project Info".i18n,
-                  style: context.theme.textTheme.bodyMedium,
-                ),
-        ],
-      ),
-      children: [
-        Opacity(
-          opacity: .8,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    "${'Pinned version:'.i18n} ${state.currentProject?.pinnedVersion ?? 'null'}",
-                    style: TextStyle(
-                        color: context.theme.colorScheme.onTertiaryContainer,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              Text(
-                  "${'SDK Constraint:'.i18n} ${state.currentProject?.sdkConstraint ?? 'null'}"),
-              Text(
-                  "${'Dart Tool version:'.i18n} ${state.currentProject?.dartToolVersion ?? 'null'}"),
-              Text(
-                  "${'Has an FVM config file:'.i18n} ${state.currentProject?.hasConfig ?? 'null'}"),
-              Text(
-                  "${'Is .gitignore updated:'.i18n} ${state.currentProject?.config?.updateGitIgnore ?? 'null'}"),
-              Text(
-                  "${'Is VS Code Settings updated:'.i18n} ${state.currentProject?.config?.updateVscodeSettings ?? 'null'}"),
-              20.height,
-            ],
-          ),
-        )
       ],
     );
   }

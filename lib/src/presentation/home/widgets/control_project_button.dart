@@ -18,18 +18,19 @@ class ControlProjectButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IgnorePointer(
       ignoring: !enabled,
-      child: Opacity(
+      child: AnimatedOpacity(
+        duration: const Duration(milliseconds: 200),
         opacity: enabled ? 1 : .3,
-        child: InkWell(
+        child: Material(
+          color: backgroundColor ?? const Color(0xFF66BB6A),
           borderRadius: BorderRadius.circular(10),
-          onTap: onPressed ?? () {},
-          child: Container(
-            padding:
-            const EdgeInsets.only(left: 7, right: 9, bottom: 8, top: 8),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: backgroundColor ?? const Color(0xFF66BB6A)),
-            child: icon,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(10),
+            onTap: onPressed ?? () {},
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              child: icon,
+            ),
           ),
         ),
       ),
