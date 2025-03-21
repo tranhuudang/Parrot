@@ -27,8 +27,10 @@ class ControlProjectButton extends StatelessWidget {
           child: InkWell(
             borderRadius: BorderRadius.circular(10),
             onTap: onPressed ?? () {},
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            child: SizedBox(
+              width: 35,
+              height: 35,
+              //padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               child: icon,
             ),
           ),

@@ -60,10 +60,7 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
             Expanded(
                 child: SystemLoadingIndicator(
               isLoading: state.isDashboardScreenLoading,
-              child: const Padding(
-                padding: EdgeInsets.only(left: 16, right: 16),
-                child: MainHomeBody(),
-              ),
+              child: const MainHomeBody(),
             )),
           ],
         ),
@@ -75,7 +72,7 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
     return Row(children: [
       Expanded(
         child: SizedBox(
-          height: 82,
+          height: 109,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Stack(

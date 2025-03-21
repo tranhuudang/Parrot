@@ -31,15 +31,13 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
         state = state.copyWith(isJustOpened: false);
       }
     });
+
     // Load the current project path
     await gettingSavedCurrentProjectPath();
     // Get list of available flutter sdk online
     await fetchOnlineFlutterVersions();
     // Get downloaded flutter sdk
     await fetchDownloadedFlutterVersions();
-    //}
-
-    //final isDartInstalled = await checkDartInstallation();
 
     state = state.copyWith(isJustOpened: false);
   }
@@ -233,15 +231,16 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
             isSetup: cachedVersion.isSetup,
           );
         }).toList();
-
-        final DownloadedFlutterSDK? pinnedVersion =
-            downloadedFlutterSDKs.firstWhereOrNull((element) =>
-                element.name == state.currentProject!.pinnedVersion?.name);
-        if (pinnedVersion != null) {
-          DebugLog.info('Pinned version found: ${pinnedVersion.name}');
-          state = state.copyWith(
-              selectedVersionToSwitchTo: pinnedVersion,
-              currentFlutterVersionSwitchedTo: pinnedVersion);
+        if (state.currentProject != null) {
+          final DownloadedFlutterSDK? pinnedVersion =
+              downloadedFlutterSDKs.firstWhereOrNull((element) =>
+                  element.name == state.currentProject!.pinnedVersion?.name);
+          if (pinnedVersion != null) {
+            DebugLog.info('Pinned version found: ${pinnedVersion.name}');
+            state = state.copyWith(
+                selectedVersionToSwitchTo: pinnedVersion,
+                currentFlutterVersionSwitchedTo: pinnedVersion);
+          }
         }
 
         state = state.copyWith(
@@ -365,11 +364,11 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       isFlutterSdksScreenLoading: mainHomeStateInit.isFlutterSdksScreenLoading,
       isDashboardScreenLoading: mainHomeStateInit.isDashboardScreenLoading,
       isDartInstalled: mainHomeStateInit.isDartInstalled,
-      onlineFlutterVersions: mainHomeStateInit.onlineFlutterVersions,
-      selectedOnlineVersion: mainHomeStateInit.selectedOnlineVersion,
-      downloadedFlutterSDKs: mainHomeStateInit.downloadedFlutterSDKs,
+      //onlineFlutterVersions: mainHomeStateInit.onlineFlutterVersions,
+      //selectedOnlineVersion: mainHomeStateInit.selectedOnlineVersion,
+      //downloadedFlutterSDKs: mainHomeStateInit.downloadedFlutterSDKs,
       selectedVersionToSwitchTo: mainHomeStateInit.selectedVersionToSwitchTo,
-      isJustOpened: false,
+      //isJustOpened: false,
       isCheckingDartInstallation: mainHomeStateInit.isCheckingDartInstallation,
       isInstallingFvm: mainHomeStateInit.isInstallingFvm,
       isFetchingVersions: mainHomeStateInit.isFetchingVersions,
@@ -385,7 +384,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
       isHotReloading: mainHomeStateInit.isHotReloading,
       selectedPlatform: mainHomeStateInit.selectedPlatform,
       availablePlatforms: mainHomeStateInit.availablePlatforms,
-      cacheSize: mainHomeStateInit.cacheSize,
+      //cacheSize: mainHomeStateInit.cacheSize,
       error: mainHomeStateInit.error,
     );
   }
@@ -416,7 +415,7 @@ class MainHomeNotifier extends StateNotifier<MainHomeState> {
         currentProject: currentProject,
       );
       //
-      await gettingFlutterPlatform();
+      gettingFlutterPlatform();
     } else {
       DebugLog.info("No saved project path found");
     }

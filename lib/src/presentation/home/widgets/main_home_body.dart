@@ -3,6 +3,7 @@ import 'package:marina_labs_common/marina_labs_common.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parrot/src/app/app.dart';
+import 'package:parrot/src/app/router/route_configurations_desktop.dart';
 import 'package:parrot/src/presentation/home/data/model/downloaded_flutter_sdks.dart';
 import 'package:parrot/src/presentation/home/data/model/flutter_versions.dart';
 import 'package:parrot/src/presentation/home/data/notifier/main_home_state.dart';
@@ -22,67 +23,39 @@ class MainHomeBody extends ConsumerWidget {
     final notifier = ref.read(mainHomeProvider.notifier);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsets.only(top: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: buildTargetFlutterProjectSelection(state, notifier, context),
-            ),
-          ),
-          16.height,
-          DisabledWidget(
-            isDisabled: !state.isDartInstalled || state.currentProject == null,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
               children: [
                 Card(
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Flutter SDK Management'.i18n, 
-                          style: context.theme.textTheme.titleMedium),
+                        buildTargetFlutterProjectSelection(
+                            state, notifier, context),
                         16.height,
-                        buildAvailableFlutterSDKreleases(state, notifier),
-                        if (state.currentProject != null) ...[
-                          16.height,
-                          buildSelectFlutterVersionToSwitch(state, notifier),
-                        ],
+                        buildSelectFlutterVersionToSwitch(state, notifier),
                       ],
                     ),
                   ),
                 ),
-                if (state.currentProject != null) ...[
-                  16.height,
-                  //buildProjectInfo(state, context),
-                  16.height,
-                  Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Project Controls'.i18n, 
-                            style: context.theme.textTheme.titleMedium),
-                          16.height,
-                          buildProjectRunningControl(state, notifier, context),
-                        ],
-                      ),
-                    ),
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: buildProjectRunningControl(state, notifier, context),
                   ),
-                ],
+                ),
               ],
             ),
           ),
-          16.height,
+          8.height,
           Expanded(
-            child: Card(
-              child: buildConsole(context, state),
-            ),
+            child: buildConsole(context, state),
           ),
         ],
       ),
@@ -95,38 +68,37 @@ class MainHomeBody extends ConsumerWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Target Flutter Project:'.i18n),
-                if (state.currentProject != null) ...[
-                  4.height,
-                  Row(
-                    children: [
-                      Text(
-                        'Pinned version: '.i18n,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: context.theme.colorScheme.onSurface
-                              .withOpacity(0.7),
-                        ),
+                4.height,
+                Row(
+                  children: [
+                    Text(
+                      '${'Current:'.i18n} ',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: context.theme.colorScheme.onSurface
+                            .withOpacity(0.7),
                       ),
-                      Text(
-                        state.currentProject?.pinnedVersion?.toString() ?? 'null',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: context.theme.colorScheme.primary,
-                        ),
+                    ),
+                    Text(
+                      state.currentProject?.pinnedVersion?.toString() ?? '_',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: context.theme.colorScheme.onSurface
+                            .withOpacity(0.7),
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ],
             ),
-            8.width,
+            16.width,
             Expanded(
               child: state.currentProject != null
                   ? Text(state.currentProject!.path)
@@ -137,37 +109,41 @@ class MainHomeBody extends ConsumerWidget {
                               .withValues(alpha: .5)),
                     ),
             ),
-            if (state.currentProject != null) ...[
-              IconButton(
-                onPressed: () => _showProjectInfo(context, state),
-                tooltip: 'Project Info'.i18n,
-                icon: Icon(
-                  FluentIcons.info_16_regular,
-                  size: 18,
-                  color: context.theme.colorScheme.primary,
+            Row(
+              children: [
+                if (state.currentProject != null) ...[
+                  IconButton(
+                    onPressed: () => _showProjectInfo(context, state),
+                    tooltip: 'Project Info'.i18n,
+                    icon: Icon(
+                      FluentIcons.info_16_regular,
+                      size: 18,
+                      color: context.theme.colorScheme.primary,
+                    ),
+                  ),
+                ],
+                DisabledWidget(
+                  isDisabled: state.currentProject == null,
+                  child: IconButton(
+                      onPressed: () => notifier.deleteCurrentProjectPath(),
+                      icon: Icon(
+                        state.currentProject == null
+                            ? FluentIcons.delete_12_regular
+                            : FluentIcons.delete_off_20_regular,
+                        size: 21,
+                        color: context.theme.colorScheme.primary,
+                      )),
                 ),
-              ),
-            ],
-            DisabledWidget(
-              isDisabled: state.currentProject == null,
-              child: IconButton(
-                  onPressed: () => notifier.deleteCurrentProjectPath(),
-                  icon: Icon(
-                    state.currentProject == null
-                        ? FluentIcons.delete_12_regular
-                        : FluentIcons.delete_off_20_regular,
-                    size: 21,
-                    color: context.theme.colorScheme.primary,
-                  )),
-            ),
-            ElevatedButton.icon(
-              icon: state.currentProject == null
-                  ? const Icon(FluentIcons.edit_16_regular)
-                  : const Icon(FluentIcons.folder_16_regular),
-              onPressed: () => notifier.selectProjectPath(),
-              label: state.currentProject != null
-                  ? Text('Edit'.i18n)
-                  : Text('Select Project'.i18n),
+                ElevatedButton.icon(
+                  icon: state.currentProject == null
+                      ? const Icon(FluentIcons.edit_16_regular)
+                      : const Icon(FluentIcons.folder_16_regular),
+                  onPressed: () => notifier.selectProjectPath(),
+                  label: state.currentProject != null
+                      ? Text('Edit'.i18n)
+                      : Text('Select Project'.i18n),
+                ),
+              ],
             ),
           ],
         ),
@@ -180,7 +156,7 @@ class MainHomeBody extends ConsumerWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          "${state.currentProject!.name.upperCaseFirstLetter()} project info".i18n,
+          "${state.currentProject!.name.upperCaseFirstLetter()} ${'project info'.i18n}",
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -188,28 +164,28 @@ class MainHomeBody extends ConsumerWidget {
           children: [
             InfoRow(
               label: 'Pinned version:'.i18n,
-              value: state.currentProject?.pinnedVersion?.toString() ?? 'null',
-              isHighlighted: true,
+              value: state.currentProject?.pinnedVersion?.toString() ?? '_',
             ),
             InfoRow(
               label: 'SDK Constraint:'.i18n,
-              value: state.currentProject?.sdkConstraint.toString() ?? 'null',
+              value: state.currentProject?.sdkConstraint.toString() ?? '_',
             ),
             InfoRow(
               label: 'Dart Tool version:'.i18n,
-              value: state.currentProject?.dartToolVersion ?? 'null',
+              value: state.currentProject?.dartToolVersion ?? '_',
             ),
             InfoRow(
               label: 'Has an FVM config file:'.i18n,
-              value: '${state.currentProject?.hasConfig ?? 'null'}',
+              value: '${state.currentProject?.hasConfig ?? '_'}',
             ),
             InfoRow(
               label: 'Is .gitignore updated:'.i18n,
-              value: '${state.currentProject?.config?.updateGitIgnore ?? 'null'}',
+              value: '${state.currentProject?.config?.updateGitIgnore ?? '_'}',
             ),
             InfoRow(
               label: 'Is VS Code Settings updated:'.i18n,
-              value: '${state.currentProject?.config?.updateVscodeSettings ?? 'null'}',
+              value:
+                  '${state.currentProject?.config?.updateVscodeSettings ?? '_'}',
             ),
           ],
         ),
@@ -246,12 +222,6 @@ class MainHomeBody extends ConsumerWidget {
             }
           },
         ),
-        8.width,
-        IconButton(
-          onPressed: () =>
-              notifier.fetchOnlineFlutterVersions(forceRefresh: true),
-          icon: const Icon(FluentIcons.arrow_sync_16_regular),
-        ),
         const Spacer(),
         8.width,
         DisabledWidget(
@@ -271,62 +241,72 @@ class MainHomeBody extends ConsumerWidget {
     );
   }
 
-  Row buildSelectFlutterVersionToSwitch(
+  Widget buildSelectFlutterVersionToSwitch(
       MainHomeState state, MainHomeNotifier notifier) {
-    // Currently Pinned version is buggy, so we are using the selected version to switch to
-    if (state.currentProject?.config != null) {
-      DebugLog.error(
-          'Pinned version: ${state.currentProject?.config!.flutter ?? 'null'}');
-    }
     final DownloadedFlutterSDK? pinnedVersion = state.downloadedFlutterSDKs
         .firstWhereOrNull((element) =>
             element.name == state.currentProject?.pinnedVersion?.name);
-    return Row(
-      children: [
-        const Icon(
-          FluentIcons.circle_16_regular,
-          size: 14,
-        ),
-        16.width,
-        Text("Select new Flutter version to switch:".i18n),
-        8.width,
-        RoundedDottedDropdownButton<String>(
-          value: state.selectedVersionToSwitchTo?.name,
-          hint: Text("Select Flutter Version".i18n),
-          items: state.downloadedFlutterSDKs
-              .map((DownloadedFlutterSDK flutterSDK) => DropdownMenuItem(
-                    value: flutterSDK.name,
-                    child: Text(flutterSDK.name),
-                  ))
-              .toList(),
-          onChanged: (value) {
-            if (value != null) {
-              notifier.selectDownloadedVersion(value);
-            }
-          },
-        ),
-        8.width,
-        IconButton(
-          onPressed: () => notifier.fetchDownloadedFlutterVersions(),
-          icon: const Icon(FluentIcons.arrow_sync_16_regular),
-        ),
-        const Spacer(),
-        8.width,
-        DisabledWidget(
-          isDisabled: // state.currentFlutterVersionSwitchedTo != null ||
-              (state.selectedVersionToSwitchTo == pinnedVersion),
-          child: ElevatedButton.icon(
-            icon: const Icon(FluentIcons.arrow_shuffle_16_regular),
-            onPressed: state.isSwitching
-                ? null
-                : () => notifier.switchFlutterVersion(),
-            label: state.isSwitching
-                ? const SizedBox(
-                    height: 20, width: 20, child: CircularProgressIndicator())
-                : Text("Switch".i18n),
+
+    if (state.downloadedFlutterSDKs.isEmpty) {
+      return Row(
+        children: [
+          const Icon(
+            FluentIcons.warning_16_regular,
+            color: Colors.orange,
+            size: 16,
           ),
-        ),
-      ],
+          8.width,
+          Text(
+            "Please download a Flutter SDK version first".i18n,
+            style: const TextStyle(color: Colors.orange),
+          ),
+          const Spacer(),
+          FilledButton(
+            onPressed: () => goBranch(5),
+            child: Text("Download Flutter SDK".i18n),
+          ),
+        ],
+      );
+    }
+
+    return DisabledWidget(
+      isDisabled: state.currentProject == null,
+      child: Row(
+        children: [
+          Text("Select new Flutter version to switch:".i18n),
+          8.width,
+          RoundedDottedDropdownButton<String>(
+            value: state.selectedVersionToSwitchTo?.name,
+            hint: Text("Select Flutter Version".i18n),
+            items: state.downloadedFlutterSDKs
+                .map((DownloadedFlutterSDK flutterSDK) => DropdownMenuItem(
+                      value: flutterSDK.name,
+                      child: Text(flutterSDK.name),
+                    ))
+                .toList(),
+            onChanged: (value) {
+              if (value != null) {
+                notifier.selectDownloadedVersion(value);
+              }
+            },
+          ),
+          const Spacer(),
+          8.width,
+          DisabledWidget(
+            isDisabled: (state.selectedVersionToSwitchTo == pinnedVersion),
+            child: ElevatedButton.icon(
+              icon: const Icon(FluentIcons.arrow_shuffle_16_regular),
+              onPressed: state.isSwitching
+                  ? null
+                  : () => notifier.switchFlutterVersion(),
+              label: state.isSwitching
+                  ? const SizedBox(
+                      height: 20, width: 20, child: CircularProgressIndicator())
+                  : Text("Switch".i18n),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -340,24 +320,15 @@ class MainHomeBody extends ConsumerWidget {
         DisabledWidget(
           isDisabled: state.selectedVersionToSwitchTo == null ||
               state.availablePlatforms.isEmpty ||
-              !(state.currentFlutterVersionSwitchedTo?.isSetup ?? false),
+              !(state.currentFlutterVersionSwitchedTo?.isSetup ?? false) ||
+              !state.isDartInstalled ||
+              state.currentProject == null,
           child: Row(
             children: [
-              8.width,
-              const Icon(
-                FluentIcons.circle_16_regular,
-                size: 14,
-              ),
-              16.width,
               Text('Device:'.i18n),
               16.width,
               const PlatformSelector(),
               16.width,
-              if (state.isGettingAvailableDevices) ...[
-                const SizedBox(
-                    height: 20, width: 20, child: CircularProgressIndicator()),
-                16.width,
-              ],
               ControlProjectButton(
                 backgroundColor: const Color(0xFF66BB6A),
                 enabled: !state.isRunning &&
@@ -421,17 +392,21 @@ class MainHomeBody extends ConsumerWidget {
     );
   }
 
-  Expanded buildConsole(BuildContext context, MainHomeState state) {
-    return Expanded(
-      child: Container(
-        width: double.infinity,
-        height: double.infinity,
-        padding: const EdgeInsets.all(8.0),
-        decoration:
-            BoxDecoration(color: context.theme.colorScheme.surfaceContainer),
-        child: LogConsoleView(
-          shouldClearLogs: state.currentProject == null,
-        ),
+  Widget buildConsole(BuildContext context, MainHomeState state) {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      //padding: const EdgeInsets.only(top: 16),
+      decoration: BoxDecoration(
+        color: context.theme.colorScheme.surfaceContainerLowest,
+        border: Border(
+            top: BorderSide(
+          color: context.theme.colorScheme.onSurface.withOpacity(.1),
+          width: 1,
+        )),
+      ),
+      child: LogConsoleView(
+        shouldClearLogs: state.currentProject == null,
       ),
     );
   }

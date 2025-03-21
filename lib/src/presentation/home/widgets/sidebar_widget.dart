@@ -53,9 +53,9 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                   label: 'Flutter SDKs',
                   selectedIcon: FluentIcons.drawer_arrow_download_24_filled,
                   index: 5),
-              // const Divider(
-              //   thickness: .3,
-              // ),
+              const Divider(
+                thickness: .3,
+              ),
               // _buildSidebarItem(
               //     icon: FluentIcons.bug_16_regular,
               //     label: 'Troubleshooting'.i18n,

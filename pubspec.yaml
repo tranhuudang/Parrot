@@ -97,25 +97,25 @@ flutter:
     - docs/troubleshooting/
 
 # FREE VERSION    
-# msix_config:
-#   display_name: Parrot Preview
-#   publisher_display_name: Marina Labs
-#   identity_name: 24555Zeroboy.FlutterVersionManager
-#   publisher: CN=DA7D2C99-987C-4B69-8953-17157F6E0E1A
-#   msix_version: 2025.3.19.0
-#   trim_logo: false
-#   logo_path: C:\Users\tranh\StudioProjects\parrot\assets\images\parrot-preview.png
-#   store: true
-#   language: en-us, vi-vi, zh-cn, de_de, ja_jp
-
-#PRO VERSION    
 msix_config:
-  display_name: Parrot Pro
+  display_name: Parrot Preview
   publisher_display_name: Marina Labs
-  identity_name: 24555Zeroboy.ParrotPro
+  identity_name: 24555Zeroboy.FlutterVersionManager
   publisher: CN=DA7D2C99-987C-4B69-8953-17157F6E0E1A
-  msix_version: 2025.3.19.0
+  msix_version: 2025.3.21.0
   trim_logo: false
-  logo_path: C:\Users\tranh\StudioProjects\parrot\assets\images\parrot-pro.png
+  logo_path: C:\Users\tranh\StudioProjects\parrot\assets\images\parrot-preview.png
   store: true
   language: en-us, vi-vi, zh-cn, de_de, ja_jp
+
+#PRO VERSION    
+# msix_config:
+#   display_name: Parrot Pro
+#   publisher_display_name: Marina Labs
+#   identity_name: 24555Zeroboy.ParrotPro
+#   publisher: CN=DA7D2C99-987C-4B69-8953-17157F6E0E1A
+#   msix_version: 2025.3.21.0
+#   trim_logo: false
+#   logo_path: C:\Users\tranh\StudioProjects\parrot\assets\images\parrot-pro.png
+#   store: true
+#   language: en-us, vi-vi, zh-cn, de_de, ja_jp

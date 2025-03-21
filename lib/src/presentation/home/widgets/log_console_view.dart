@@ -1,16 +1,19 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fvm/fvm.dart';
+import 'package:marina_labs_common/marina_labs_common.dart';
+import 'package:parrot/src/presentation/home/data/notifier/main_home_notifier.dart';
 
-class LogConsoleView extends StatefulWidget {
+class LogConsoleView extends ConsumerStatefulWidget {
   final bool? shouldClearLogs;
   const LogConsoleView({super.key, this.shouldClearLogs = false});
 
   @override
-  State<LogConsoleView> createState() => _LogConsoleViewState();
+  ConsumerState<LogConsoleView> createState() => _LogConsoleViewState();
 }
 
-class _LogConsoleViewState extends State<LogConsoleView> {
+class _LogConsoleViewState extends ConsumerState<LogConsoleView> {
   final List<LogMessage> logs = [];
   final ScrollController _scrollController = ScrollController();
 
@@ -42,7 +45,7 @@ class _LogConsoleViewState extends State<LogConsoleView> {
 
   void _addLog(LogType type, String message) {
     //setState(() {
-      logs.add(LogMessage(type: type, message: message));
+    logs.add(LogMessage(type: type, message: message));
     //});
 
     // Auto-scroll to bottom
@@ -62,7 +65,7 @@ class _LogConsoleViewState extends State<LogConsoleView> {
     super.didUpdateWidget(oldWidget);
     if (widget.shouldClearLogs ?? false) {
       //setState(() {
-        logs.clear();
+      logs.clear();
       //});
     }
   }
@@ -73,32 +76,75 @@ class _LogConsoleViewState extends State<LogConsoleView> {
     super.dispose();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(mainHomeProvider);
+    final notifier = ref.read(mainHomeProvider.notifier);
     return Container(
-      height: 300,
+      //height: 300,
       decoration: BoxDecoration(
         //color: Colors.black,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView.builder(
-          controller: _scrollController,
-          itemCount: logs.length,
-          itemBuilder: (context, index) {
-            final log = logs[index];
-            return Text(
-              log.message,
-              style: TextStyle(
-                color: _getColorForLogType(log.type),
-                fontFamily: 'monospace',
+      child: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              border: Border(
+                  bottom: BorderSide(
+                      width: 1,
+                      color:
+                          context.theme.colorScheme.onSurface.withOpacity(.1))),
+            ),
+            //color: Colors.yellow,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              child: Row(
+                children: [
+                  Text(
+                    state.currentProject?.name.toUpperCase() ?? '_',
+                    style: TextStyle(
+                      color:
+                          context.theme.colorScheme.onSurface.withOpacity(.5),
+                      fontSize: 12,
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    'OUTPUT',
+                    style: TextStyle(
+                      color:
+                          context.theme.colorScheme.onSurface.withOpacity(.5),
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
               ),
-            );
-          },
-        ),
+            ),
+          ),
+          Expanded(
+            child: StreamBuilder<Object>(
+                stream: consoleController.unifiedStream,
+                builder: (context, snapshot) {
+                  return ListView.builder(
+                    padding:
+                        const EdgeInsets.only(left: 24, right: 24, bottom: 24),
+                    controller: _scrollController,
+                    itemCount: logs.length,
+                    itemBuilder: (context, index) {
+                      final log = logs[index];
+                      return Text(
+                        log.message,
+                        style: TextStyle(
+                          color: _getColorForLogType(log.type),
+                          fontFamily: 'monospace',
+                        ),
+                      );
+                    },
+                  );
+                }),
+          ),
+        ],
       ),
     );
   }
@@ -119,12 +165,7 @@ class _LogConsoleViewState extends State<LogConsoleView> {
   }
 }
 
-enum LogType {
-  info,
-  error,
-  warning,
-  detail
-}
+enum LogType { info, error, warning, detail }
 
 class LogMessage {
   final LogType type;

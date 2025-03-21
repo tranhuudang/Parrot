@@ -692,7 +692,36 @@ extension Localization on Object {
       "zh_cn": "VS Code 设置是否已更新：",
       "ja_jp": "VS Code 設定は更新済み：",
       "de_de": "Sind VS Code-Einstellungen aktualisiert:"
-    }
+    },
+        "Close": {
+      "en_us": "Close",
+      "vi_vi": "Đóng",
+      "zh_cn": "关闭",
+      "ja_jp": "閉じる",
+      "de_de": "Schließen"
+    },
+    "Current:": {
+      "en_us": "Current:",
+      "vi_vi": "Hiện tại:",
+      "zh_cn": "当前：",
+      "ja_jp": "現在：",
+      "de_de": "Aktuell:"
+    },
+        "Please download a Flutter SDK version first": {
+      "en_us": "Please download a Flutter SDK version first",
+      "vi_vi": "Vui lòng tải xuống phiên bản Flutter SDK trước",
+      "zh_cn": "请先下载 Flutter SDK 版本",
+      "ja_jp": "まず Flutter SDK バージョンをダウンロードしてください",
+      "de_de": "Bitte laden Sie zuerst eine Flutter SDK-Version herunter"
+    },
+
+    "Download Flutter SDK": {
+      "en_us": "Download Flutter SDK",
+      "vi_vi": "Tải xuống Flutter SDK",
+      "zh_cn": "下载 Flutter SDK",
+      "ja_jp": "Flutter SDK をダウンロード",
+      "de_de": "Flutter SDK herunterladen"
+    },
   });
 
   String get i18n => localize(this, _t);
