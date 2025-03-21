@@ -629,6 +629,69 @@ extension Localization on Object {
       "zh_cn": "故障排除",
       "ja_jp": "トラブルシューティング",
       "de_de": "Fehlersuche"
+    },
+      "Device:": {
+      "en_us": "Device:",
+      "vi_vi": "Thiết bị:",
+      "zh_cn": "设备：",
+      "ja_jp": "デバイス：",
+      "de_de": "Gerät:"
+    },
+    "Project Info": {
+      "en_us": "Project Info",
+      "vi_vi": "Thông tin dự án",
+      "zh_cn": "项目信息",
+      "ja_jp": "プロジェクト情報",
+      "de_de": "Projekt-Info"
+    },
+    "project info": {
+      "en_us": "project info",
+      "vi_vi": "thông tin dự án",
+      "zh_cn": "项目信息",
+      "ja_jp": "プロジェクト情報",
+      "de_de": "projekt-info"
+    },
+    "Pinned version:": {
+      "en_us": "Pinned version:",
+      "vi_vi": "Phiên bản ghim:",
+      "zh_cn": "固定版本：",
+      "ja_jp": "固定バージョン：",
+      "de_de": "Fixierte Version:"
+    },
+    "SDK Constraint:": {
+      "en_us": "SDK Constraint:",
+      "vi_vi": "Ràng buộc SDK:",
+      "zh_cn": "SDK 约束：",
+      "ja_jp": "SDK 制約：",
+      "de_de": "SDK-Einschränkung:"
+    },
+    "Dart Tool version:": {
+      "en_us": "Dart Tool version:",
+      "vi_vi": "Phiên bản Dart Tool:",
+      "zh_cn": "Dart Tool 版本：",
+      "ja_jp": "Dart Tool バージョン：",
+      "de_de": "Dart Tool-Version:"
+    },
+    "Has an FVM config file:": {
+      "en_us": "Has an FVM config file:",
+      "vi_vi": "Có tệp cấu hình FVM:",
+      "zh_cn": "有 FVM 配置文件：",
+      "ja_jp": "FVM 設定ファイルあり：",
+      "de_de": "Hat eine FVM-Konfigurationsdatei:"
+    },
+    "Is .gitignore updated:": {
+      "en_us": "Is .gitignore updated:",
+      "vi_vi": "Đã cập nhật .gitignore:",
+      "zh_cn": ".gitignore 是否已更新：",
+      "ja_jp": ".gitignore は更新済み：",
+      "de_de": "Ist .gitignore aktualisiert:"
+    },
+    "Is VS Code Settings updated:": {
+      "en_us": "Is VS Code Settings updated:",
+      "vi_vi": "Đã cập nhật cài đặt VS Code:",
+      "zh_cn": "VS Code 设置是否已更新：",
+      "ja_jp": "VS Code 設定は更新済み：",
+      "de_de": "Sind VS Code-Einstellungen aktualisiert:"
     }
   });
 

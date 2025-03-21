@@ -325,7 +325,7 @@ class MainHomeBody extends ConsumerWidget {
           16.width,
           state.currentProject != null
               ? Text(
-                  "${state.currentProject!.name.upperCaseFirstLetter()} project Info"
+                  "${state.currentProject!.name.upperCaseFirstLetter()} project info"
                       .i18n,
                   style: context.theme.textTheme.bodyMedium,
                 )
@@ -344,7 +344,7 @@ class MainHomeBody extends ConsumerWidget {
               Row(
                 children: [
                   Text(
-                    "Pinned version: ${state.currentProject?.pinnedVersion ?? 'null'}",
+                    "${'Pinned version:'.i18n} ${state.currentProject?.pinnedVersion ?? 'null'}",
                     style: TextStyle(
                         color: context.theme.colorScheme.onTertiaryContainer,
                         fontWeight: FontWeight.bold),
@@ -352,15 +352,15 @@ class MainHomeBody extends ConsumerWidget {
                 ],
               ),
               Text(
-                  "SDK Constraint: ${state.currentProject?.sdkConstraint ?? 'null'}"),
+                  "${'SDK Constraint:'.i18n} ${state.currentProject?.sdkConstraint ?? 'null'}"),
               Text(
-                  "Dart Tool version: ${state.currentProject?.dartToolVersion ?? 'null'}"),
+                  "${'Dart Tool version:'.i18n} ${state.currentProject?.dartToolVersion ?? 'null'}"),
               Text(
-                  "Has an FVM config file: ${state.currentProject?.hasConfig ?? 'null'}"),
+                  "${'Has an FVM config file:'.i18n} ${state.currentProject?.hasConfig ?? 'null'}"),
               Text(
-                  "Is .gitignore updated: ${state.currentProject?.config?.updateGitIgnore ?? 'null'}"),
+                  "${'Is .gitignore updated:'.i18n} ${state.currentProject?.config?.updateGitIgnore ?? 'null'}"),
               Text(
-                  "Is VS Code Settings updated: ${state.currentProject?.config?.updateVscodeSettings ?? 'null'}"),
+                  "${'Is VS Code Settings updated:'.i18n} ${state.currentProject?.config?.updateVscodeSettings ?? 'null'}"),
               20.height,
             ],
           ),
