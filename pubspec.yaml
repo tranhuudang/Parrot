@@ -1,5 +1,5 @@
 name: parrot
-description: A new Flutter project.
+description: Manage your Flutter SDK versions with ease. Parrot simplifies switching and installing Flutter versions.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -12,11 +12,11 @@ dependencies:
   flutter:
     sdk: flutter
   marina_labs_common:
-    path: C:/Users/tranh/StudioProjects/marina_labs_common
+    git: https://github.com/marina-labs/marina_labs_common.git
   windows_status_bar:
     git: https://github.com/tranhuudang/windows_status_bar
   fvm:
-    path: C:/Users/tranh/StudioProjects/fvm   
+    git: https://github.com/tranhuudang/fvm.git
   ## DATA HANDLE PACKAGES
   # This lib to set windows size on Windows.
   window_manager: ^0.4.2

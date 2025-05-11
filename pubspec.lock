@@ -621,9 +621,11 @@ packages:
   fvm:
     dependency: "direct main"
     description:
-      path: "C:\\Users\\tranh\\StudioProjects\\fvm"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "01e779b2732237227175fd1f78cd651c8d7575f7"
+      url: "https://github.com/tranhuudang/fvm.git"
+    source: git
     version: "3.2.1"
   get_it:
     dependency: transitive
@@ -916,10 +918,12 @@ packages:
   marina_labs_common:
     dependency: "direct main"
     description:
-      path: "C:\\Users\\tranh\\StudioProjects\\marina_labs_common"
-      relative: false
-    source: path
-    version: "0.0.45"
+      path: "."
+      ref: HEAD
+      resolved-ref: d3b66e04f7b983ca6cc8895c0e7152acfb992acf
+      url: "https://github.com/marina-labs/marina_labs_common.git"
+    source: git
+    version: "0.0.51"
   markdown:
     dependency: transitive
     description:
